@@ -1856,7 +1856,7 @@
 
 /datum/uplink_item/implants/freedom/prototype
 	name = "Prototype Freedom Implant"
-	desc = "An implant injected into the body and later activated manually to break out of any restraints. This prototype can be activated 1 time."
+	desc = "Имплант вводимый в тело, для возможной последующей активации. При при активации импланта убирает все ограничивающие передвижения предметы, такие как наручники или болы. Этот имплант можно активировать не более одного раза."
 	item = /obj/item/implanter/freedom/prototype
 	cost = 6
 
@@ -1890,8 +1890,8 @@
 	surplus = 0
 
 /datum/uplink_item/implants/adrenal/prototype
-	name = "Prototype Adrenal Implant"
-	desc = "An implant injected into the body, and later activated manually to inject a chemical cocktail, which has a mild healing effect along with removing and reducing the time of all stuns and increasing movement speed. This prototype can be activated 1 time."
+	name = "Имплант вводимый в тело, для возможной последующей активации. При при активации импланта вводит в организм коктейль из лечащих и стимулирующих реагентов для ведения боя. Этот имплант можно активировать не более одного раза."
+	desc = "An implant injected int"
 	item = /obj/item/implanter/adrenalin/prototype
 	cost = 16
 
