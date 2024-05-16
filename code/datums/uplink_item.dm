@@ -136,7 +136,7 @@
 	if(!istype(target_uplink))
 		return FALSE
 
-	if(buyer.stat || buyer.restrained())
+	if(buyer.stat || HAS_TRAIT(buyer, TRAIT_HANDS_BLOCKED))
 		return FALSE
 
 	if(!ishuman(buyer))
@@ -448,6 +448,13 @@
 	name = "Briefcase Full of Bees"
 	desc = "A seemingly innocent briefcase full of not-so-innocent Syndicate-bred bees. Inject the case with blood to train the bees to ignore the donor(s). It also wirelessly taps into station intercomms to broadcast a message of TERROR."
 	item = /obj/item/bee_briefcase
+	cost = 22
+	job = list(JOB_TITLE_BOTANIST)
+
+/datum/uplink_item/jobspecific/gatfruit
+	name = "Gatfruit seeds"
+	desc = "Seeds of the Gatfruit plant, the fruits eaten will produce a .36 caliber revolver! It also contains chemicals 10% sulfur, 10% carbon, 7% nitrogen, 5% potassium."
+	item = /obj/item/seeds/gatfruit
 	cost = 22
 	job = list(JOB_TITLE_BOTANIST)
 
@@ -1854,6 +1861,12 @@
 	item = /obj/item/implanter/freedom
 	cost = 18
 
+/datum/uplink_item/implants/freedom/prototype
+	name = "Prototype Freedom Implant"
+	desc = "An implant injected into the body and later activated manually to break out of any restraints. This prototype can be activated 1 time."
+	item = /obj/item/implanter/freedom/prototype
+	cost = 6
+
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
 	desc = "An implant injected into the body, and later activated manually to open an uplink with 10 telecrystals. The ability for an agent to open an uplink after their possessions have been stripped from them makes this implant excellent for escaping confinement."
@@ -1882,6 +1895,12 @@
 	cost = 44
 	can_discount = FALSE
 	surplus = 0
+
+/datum/uplink_item/implants/adrenal/prototype
+	name = "Prototype Adrenal Implant"
+	desc = "An implant injected into the body, and later activated manually to inject a chemical cocktail, which has a mild healing effect along with removing and reducing the time of all stuns and increasing movement speed. This prototype can be activated 1 time."
+	item = /obj/item/implanter/adrenalin/prototype
+	cost = 16
 
 /datum/uplink_item/implants/microbomb
 	name = "Microbomb Implant"
