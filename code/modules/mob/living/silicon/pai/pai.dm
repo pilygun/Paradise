@@ -263,7 +263,10 @@
 /mob/living/silicon/pai/verb/fold_out()
 	set category = "pAI Commands"
 	set name = "Unfold Chassis"
-
+	icon_icon = 'icons/obj/aicards.dmi'
+	button_icon_state = "pai-action"
+	check_flags = AB_CHECK_CONSCIOUS
+	
 	if(stat || IsSleeping() || IsParalyzed() || IsWeakened())
 		return
 
@@ -630,3 +633,6 @@
 /datum/action/innate/pai_soft/Activate()
 	var/mob/living/silicon/pai/P = owner
 	P.ui_interact(P)
+
+
+
