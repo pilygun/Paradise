@@ -172,7 +172,7 @@
 	SIGNAL_HANDLER
 
 	var/obj/item/check = parent
-	var/abstract_check = !(check.flags & ABSTRACT)
+	var/abstract_check = !(check.item_flags & ABSTRACT)
 	if(wielded)
 		return
 
@@ -268,7 +268,7 @@
 	offhand_item.desc = "Your second grip on [original_name]."
 	offhand_item.wielded = TRUE
 	RegisterSignal(offhand_item, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-	RegisterSignal(offhand_item, COMSIG_PARENT_QDELETING, PROC_REF(on_destroy))
+	RegisterSignal(offhand_item, COMSIG_QDELETING, PROC_REF(on_destroy))
 	user.put_in_inactive_hand(offhand_item)
 
 
@@ -329,7 +329,7 @@
 
 		// Show message if requested
 		if(show_message)
-			var/abstract_check = !(item.flags & ABSTRACT)
+			var/abstract_check = !(item.item_flags & ABSTRACT)
 			if(isrobot(parent))
 				to_chat(user, span_notice("Вы снизили нагрузку на [parent_item]."))
 			else
@@ -352,7 +352,7 @@
 
 	// Remove the object in the offhand
 	if(offhand_item)
-		UnregisterSignal(offhand_item, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(offhand_item, list(COMSIG_ITEM_DROPPED, COMSIG_QDELETING))
 		qdel(offhand_item)
 	// Clear any old refrence to an item that should be gone now
 	offhand_item = null
@@ -415,7 +415,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT
+	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	wielded = FALSE // Off Hand tracking of wielded status
 

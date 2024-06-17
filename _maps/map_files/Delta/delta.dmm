@@ -55,11 +55,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/bed/dogbed,
 /obj/machinery/computer/guestpass{
 	pixel_x = 30
 	},
-/mob/living/simple_animal/pet/sloth/paperwork,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Quartermaster's Desk";
@@ -67,6 +65,8 @@
 	name = "Quartermaster Requests Console";
 	pixel_y = -30
 	},
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/pet/sloth/paperwork,
 /turf/simulated/floor/plasteel{
 	dir = 6;
 	icon_state = "brown"
@@ -661,14 +661,6 @@
 	locked = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "port4";
-	name = "exterior access button";
-	pixel_x = 24;
-	pixel_y = -4
-	},
 /turf/simulated/floor/plating,
 /area/hallway/secondary/entry/additional)
 "aeI" = (
@@ -701,6 +693,15 @@
 	dir = 5
 	},
 /obj/effect/decal/warning_stripes/yellow,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	layer = 3.3;
+	master_tag = "port4";
+	name = "exterior access button";
+	pixel_x = 24;
+	pixel_y = 28
+	},
 /turf/simulated/floor/plasteel,
 /area/hallway/secondary/entry/additional)
 "afy" = (
@@ -786,14 +787,6 @@
 	},
 /area/quartermaster/storage)
 "agC" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "port4";
-	name = "exterior access button";
-	pixel_x = 24;
-	pixel_y = 4
-	},
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "port4_outer";
@@ -870,6 +863,7 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	id_tag = "port4";
+	layer = 3.3;
 	pixel_x = 25;
 	tag_airpump = "port4_pump";
 	tag_chamber_sensor = "port4_sensor";
@@ -878,6 +872,7 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "port4_sensor";
+	layer = 3.3;
 	pixel_x = 25;
 	pixel_y = 5
 	},
@@ -8426,6 +8421,9 @@
 	pixel_x = -8;
 	pixel_y = 2
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "brown"
@@ -11203,9 +11201,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "bvT" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/plating,
 /area/maintenance/bar)
@@ -16353,6 +16349,9 @@
 /obj/item/radio/intercom{
 	pixel_x = 28;
 	pixel_y = -2
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plasteel{
 	dir = 5;
@@ -31227,7 +31226,10 @@
 	},
 /area/crew_quarters/chief)
 "dhb" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/table/reinforced,
+/obj/machinery/photocopier/faxmachine/longrange{
+	department = "Quartermaster's Office"
+	},
 /turf/simulated/floor/plasteel{
 	dir = 9;
 	icon_state = "brown"
@@ -32559,6 +32561,7 @@
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1379;
+	layer = 3.3;
 	master_tag = "solar_tool_airlock";
 	name = "exterior access button";
 	pixel_x = 25;
@@ -32636,6 +32639,7 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	id_tag = "solar_tool_airlock";
+	layer = 3.3;
 	pixel_y = 25;
 	req_access = list(32);
 	tag_airpump = "solar_tool_pump";
@@ -32645,6 +32649,7 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "solar_tool_sensor";
+	layer = 3.3;
 	pixel_y = 32
 	},
 /obj/effect/decal/warning_stripes/yellow,
@@ -32729,6 +32734,7 @@
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1379;
+	layer = 3.3;
 	master_tag = "solar_tool_airlock";
 	name = "interior access button";
 	pixel_x = -25;
@@ -35278,6 +35284,9 @@
 /obj/structure/sign/poster/official/help_others{
 	pixel_x = -32
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/plasteel{
 	dir = 8;
 	icon_state = "whitepurple";
@@ -35401,11 +35410,11 @@
 	},
 /area/engine/controlroom)
 "dzs" = (
-/obj/machinery/photocopier,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -26
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/plasteel{
 	dir = 10;
 	icon_state = "brown"
@@ -41293,6 +41302,9 @@
 	name = "north bump";
 	pixel_y = 26
 	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "brown"
@@ -41470,6 +41482,7 @@
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1379;
+	layer = 3.3;
 	master_tag = "solar_chapel_airlock";
 	name = "interior access button";
 	pixel_x = 25;
@@ -42335,6 +42348,7 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	id_tag = "solar_chapel_airlock";
+	layer = 3.3;
 	pixel_y = 25;
 	req_access = list(13);
 	tag_airpump = "solar_chapel_pump";
@@ -42344,6 +42358,7 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "solar_chapel_sensor";
+	layer = 3.3;
 	pixel_y = 32
 	},
 /obj/machinery/light/small,
@@ -43000,6 +43015,7 @@
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1379;
+	layer = 3.3;
 	master_tag = "robotics_solar_airlock";
 	name = "exterior access button";
 	pixel_x = 25;
@@ -43314,6 +43330,7 @@
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1379;
+	layer = 3.3;
 	master_tag = "solar_chapel_airlock";
 	name = "exterior access button";
 	pixel_x = -25;
@@ -44960,6 +44977,7 @@
 /obj/machinery/door_control{
 	desc = "A remote control-switch for the pod doors.";
 	id = "secpilot";
+	layer = 3.3;
 	name = "Pod Door Control";
 	pixel_x = -26;
 	pixel_y = 26;
@@ -48317,11 +48335,6 @@
 /area/quartermaster/storage)
 "fvg" = (
 /obj/structure/closet/secure_closet/detective,
-/obj/item/flash,
-/obj/item/restraints/handcuffs,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
 /turf/simulated/floor/wood,
 /area/security/detectives_office)
 "fvo" = (
@@ -49305,6 +49318,7 @@
 /obj/machinery/door_control{
 	desc = "A remote control-switch for the pod doors.";
 	id = "secpilot";
+	layer = 3.3;
 	name = "Pod Door Control";
 	pixel_x = 26;
 	pixel_y = 26;
@@ -51318,6 +51332,9 @@
 /obj/machinery/computer/supplycomp{
 	dir = 8
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "brown"
 	},
@@ -51461,6 +51478,7 @@
 /area/crew_quarters/cabin2)
 "gib" = (
 /obj/effect/spawner/window/reinforced/polarized,
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/quartermaster/qm)
 "gig" = (
@@ -58712,8 +58730,8 @@
 "hRD" = (
 /obj/structure/bed,
 /obj/machinery/flasher{
-	id = "Cell 5";
-	name = "Cell 5 Flasher";
+	id = "Cell 4";
+	name = "Cell 4 Flasher";
 	pixel_y = -28
 	},
 /obj/item/radio/intercom/locked/prison{
@@ -64969,7 +64987,7 @@
 "jsC" = (
 /obj/structure/grille/broken,
 /obj/effect/landmark/tiles/burnturf,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "jsJ" = (
 /turf/simulated/wall/r_wall,
@@ -67816,6 +67834,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/storage/tech)
+"kcs" = (
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	layer = 3.3;
+	master_tag = "port4";
+	name = "exterior access button";
+	pixel_x = 24;
+	pixel_y = -28
+	},
+/turf/space,
+/area/space)
 "kcN" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -68656,7 +68686,7 @@
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1379;
-	layer = 4;
+	layer = 3.3;
 	master_tag = "solar_xeno_airlock";
 	name = "South-East Solar Panels";
 	pixel_x = -23;
@@ -69786,7 +69816,7 @@
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1379;
-	layer = 3.5;
+	layer = 3.3;
 	master_tag = "solar_xeno_airlock";
 	name = "exterior access button";
 	pixel_x = -23;
@@ -73479,6 +73509,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/trading)
+"lzu" = (
+/obj/effect/spawner/window/reinforced/polarized{
+	id = "qm"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/quartermaster/qm)
 "lzy" = (
 /obj/effect/spawner/random_spawners/wall_rusted_maybe,
 /turf/simulated/wall,
@@ -73653,6 +73695,13 @@
 	icon_state = "red"
 	},
 /area/security/holding_cell)
+"lBB" = (
+/obj/effect/spawner/window/reinforced/polarized{
+	id = "qm"
+	},
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/quartermaster/qm)
 "lBD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/landmark/event/lightsout,
@@ -80834,6 +80883,12 @@
 	name = "Quartermaster";
 	req_access = list(41)
 	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "neutralfull"
 	},
@@ -82371,7 +82426,8 @@
 	id = "Cell 3";
 	name = "Cell 3 Locker"
 	},
-/obj/structure/sign/poster/official/random{
+/obj/machinery/treadmill_monitor{
+	id = "Cell 3";
 	pixel_y = 32
 	},
 /turf/simulated/floor/plasteel{
@@ -82865,8 +82921,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed,
 /obj/machinery/flasher{
-	id = "Cell 4";
-	name = "Cell 4 Flasher";
+	id = "Cell 5";
+	name = "Cell 5 Flasher";
 	pixel_y = 28
 	},
 /obj/item/radio/intercom/locked/prison{
@@ -83184,14 +83240,15 @@
 /area/toxins/lab)
 "nJf" = (
 /obj/machinery/power/treadmill{
-	dir = 8
+	dir = 8;
+	id = "Cell 3"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
 	},
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
 	},
 /turf/simulated/floor/plasteel{
 	dir = 8;
@@ -88605,7 +88662,7 @@
 /obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/landmark/tiles/burnturf,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "oWK" = (
 /obj/item/radio/beacon,
@@ -90595,6 +90652,7 @@
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1379;
+	layer = 3.3;
 	master_tag = "robotics_solar_airlock";
 	name = "interior access button";
 	pixel_x = -25;
@@ -90675,6 +90733,7 @@
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1379;
+	layer = 3.3;
 	master_tag = "ai_airlock";
 	name = "interior access button";
 	pixel_x = 25;
@@ -92142,6 +92201,10 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/tape_roll,
 /obj/item/hand_labeler,
+/obj/item/stack/tape_roll{
+	pixel_x = -9;
+	pixel_y = 7
+	},
 /turf/simulated/floor/plasteel{
 	dir = 1
 	},
@@ -92931,6 +92994,16 @@
 	icon_state = "neutralfull"
 	},
 /area/hallway/primary/aft)
+"pRX" = (
+/obj/effect/spawner/window/reinforced/polarized{
+	id = "qm"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/quartermaster/qm)
 "pSd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -96035,14 +96108,15 @@
 /area/maintenance/kitchen)
 "qzP" = (
 /obj/machinery/power/treadmill{
-	dir = 8
+	dir = 8;
+	id = "Cell 4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
 	},
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
 	},
 /turf/simulated/floor/plasteel{
 	dir = 8;
@@ -99853,8 +99927,9 @@
 	id = "Cell 4";
 	name = "Cell 4 Locker"
 	},
-/obj/structure/sign/poster/official/random{
-	pixel_y = -32
+/obj/machinery/treadmill_monitor{
+	id = "Cell 4";
+	pixel_y = -29
 	},
 /turf/simulated/floor/plasteel{
 	dir = 10;
@@ -100936,7 +101011,7 @@
 /obj/effect/decal/warning_stripes/yellow,
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	id_tag = "solar_xeno_airlock";
-	layer = 3.1;
+	layer = 3.3;
 	pixel_x = 24;
 	pixel_y = -6;
 	req_access = list(13);
@@ -100947,7 +101022,7 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "solar_xeno_sensor";
-	layer = 3.1;
+	layer = 3.3;
 	pixel_x = 24;
 	pixel_y = 4
 	},
@@ -112765,10 +112840,6 @@
 	icon_state = "whitehall"
 	},
 /area/maintenance/tourist)
-"utf" = (
-/obj/effect/landmark/tiles/burnturf,
-/turf/simulated/floor/plating,
-/area/space)
 "utt" = (
 /turf/simulated/wall/r_wall,
 /area/storage/secure)
@@ -113633,6 +113704,9 @@
 "uDx" = (
 /obj/effect/spawner/window/reinforced/polarized{
 	id = "qm"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/quartermaster/qm)
@@ -115835,6 +115909,14 @@
 	icon_state = "neutralfull"
 	},
 /area/hallway/primary/port)
+"vft" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plasteel{
+	icon_state = "neutralfull"
+	},
+/area/quartermaster/qm)
 "vfC" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -116241,6 +116323,29 @@
 	icon_state = "vault"
 	},
 /area/maintenance/asmaint4)
+"vjO" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plasteel{
+	icon_state = "neutralfull"
+	},
+/area/quartermaster/qm)
 "vjQ" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/sop_engineering,
@@ -116440,6 +116545,10 @@
 	},
 /obj/item/taperecorder,
 /obj/item/storage/briefcase,
+/obj/item/hand_labeler,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/tapes,
 /turf/simulated/floor/wood,
 /area/security/detectives_office)
 "vmb" = (
@@ -117481,6 +117590,7 @@
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1379;
+	layer = 3.3;
 	master_tag = "ai_airlock";
 	name = "exterior access button";
 	pixel_x = 25;
@@ -122653,9 +122763,7 @@
 	},
 /area/security/securehallway)
 "wHj" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -123004,6 +123112,7 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	id_tag = "ai_airlock";
+	layer = 3.3;
 	pixel_x = 28;
 	tag_airpump = "ai_pump";
 	tag_chamber_sensor = "ai_sensor";
@@ -123012,6 +123121,7 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "ai_sensor";
+	layer = 3.3;
 	pixel_x = -28
 	},
 /turf/simulated/floor/plasteel{
@@ -130097,6 +130207,7 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	id_tag = "robotics_solar_airlock";
+	layer = 3.3;
 	pixel_y = -25;
 	req_access = list(13);
 	tag_airpump = "robotics_solar_pump";
@@ -130106,6 +130217,7 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "robotics_solar_sensor";
+	layer = 3.3;
 	pixel_x = 12;
 	pixel_y = -25
 	},
@@ -160901,7 +161013,7 @@ aaq
 aaq
 aaq
 aaq
-aaq
+kcs
 agC
 ahh
 aeG
@@ -173300,10 +173412,10 @@ tRm
 fnK
 dRG
 uDx
-uDx
+lzu
 nit
-uDx
-uDx
+pRX
+lBB
 dDb
 bSH
 dJl
@@ -173814,9 +173926,9 @@ dNr
 qbl
 uDx
 bgT
-duw
-fdQ
-duw
+vft
+vjO
+vft
 gfk
 gib
 bSH
@@ -183426,7 +183538,7 @@ aaq
 aaq
 aaq
 coE
-utf
+htO
 jsC
 fsG
 fsG
@@ -184706,8 +184818,8 @@ wLN
 rSm
 edb
 kTT
-utf
-utf
+htO
+htO
 coE
 aaq
 aaq
@@ -184965,7 +185077,7 @@ aAE
 kTT
 kTT
 acF
-utf
+htO
 coE
 aaq
 aaq

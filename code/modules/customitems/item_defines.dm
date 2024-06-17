@@ -66,7 +66,7 @@
 
 	else
 		user.visible_message("<span class='notice'>[user] begins to apply a [tattoo_name] [target] with the [src].</span>", "<span class='notice'>You begin to tattoo [target] with the [src]!</span>")
-		if(!do_after(user, 30 * toolspeed * gettoolspeedmod(user), target = M))
+		if(!do_after(user, 3 SECONDS * toolspeed * gettoolspeedmod(user), M))
 			return
 		user.visible_message("<span class='notice'>[user] finishes the [tattoo_name] on [target].</span>", "<span class='notice'>You finish the [tattoo_name].</span>")
 
@@ -433,7 +433,7 @@
 		sallet.put_on_delay = helm.put_on_delay
 		sallet.resistance_flags = helm.resistance_flags
 		sallet.flags_cover = helm.flags_cover
-		sallet.visor_flags = helm.visor_flags
+		sallet.visor_clothing_flags = helm.visor_clothing_flags
 		sallet.visor_flags_inv = helm.visor_flags_inv
 		sallet.flags_inv |= HIDEHAIR
 
@@ -682,7 +682,6 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 	toggle_cooldown = 20
 	toggle_sound = 'sound/items/change_jaws.ogg'
-	flags = NONE
 	flags_inv = HIDEGLASSES|HIDEMASK|HIDENAME|HIDEHEADSETS|HIDEHAIR
 	var/state = "Soldier Up"
 
@@ -859,8 +858,8 @@
 	set category = "Object"
 	set src in usr
 
-	if(usr.stat || usr.restrained())
-		return 0
+	if(usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+		return FALSE
 
 	switch(icon_state)
 		if("Kluysfluff1")
@@ -968,7 +967,7 @@
 		return
 
 	update_icon(UPDATE_ICON_STATE)
-	update_equipped_item()
+	update_equipped_item(update_speedmods = FALSE)
 	to_chat(user, "You turn the [src]'s lighting system [suit_adjusted ? "off" : "on"].")
 	suit_adjusted = !suit_adjusted
 
@@ -1139,27 +1138,35 @@
 	icon_state = "jane_sid_suit"
 	item_state = "jane_sid_suit"
 	item_color = "jane_sid_suit"
-	has_sensor = 2
+	has_sensor = SENSOR_VITALS
 	sensor_mode = 3
+	up = TRUE
+
+
+/obj/item/clothing/under/fluff/jane_sidsuit/Initialize(mapload)
+	. = ..()
+	verbs -= /obj/item/clothing/under/verb/rollsuit
+
 
 /obj/item/clothing/under/fluff/jane_sidsuit/verb/toggle_zipper()
 	set name = "Toggle Jumpsuit Zipper"
 	set category = "Object"
 	set src in usr
 
-	if(usr.stat || usr.restrained())
-		return 0
+	if(usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+		return FALSE
 
-	if(src.icon_state == "jane_sid_suit_down")
-		src.item_color = "jane_sid_suit"
-		to_chat(usr, "You zip up \the [src].")
-	else
-		src.item_color = "jane_sid_suit_down"
-		to_chat(usr, "You unzip and roll down \the [src].")
+	up = !up
+	to_chat(usr, "You [up ? "zip up" : "unzip and roll down"] [src].")
+	update_icon(UPDATE_ICON_STATE)
+	update_equipped_item(update_speedmods = FALSE)
 
-	src.icon_state = "[item_color]"
-	src.item_state = "[item_color]"
-	usr.update_inv_w_uniform()
+
+/obj/item/clothing/under/fluff/jane_sidsuit/update_icon_state()
+	var/new_state = "[replacetext("[item_color]", "_d", "")][up ? "" : "_d"]"
+	icon_state = new_state
+	item_state = new_state
+
 
 /obj/item/clothing/under/fluff/honourable // MrBarrelrolll: Maximus Greenwood
 	name = "Viridi Protegat"
@@ -1331,7 +1338,7 @@
 
 /obj/item/clothing/head/fluff/chronx/proc/adjust()
 	update_icon(UPDATE_ICON_STATE)
-	update_equipped_item()
+	update_equipped_item(update_speedmods = FALSE)
 	to_chat(usr, "You untransform [src].")
 	adjusted = !adjusted
 
@@ -1471,7 +1478,6 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "fethasnecklace"
 	item_state = "fethasnecklace"
-	item_color = "fethasnecklace"
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_ACCESSORY
 
 /obj/item/bedsheet/fluff/hugosheet //HugoLuman: Dan Martinez
