@@ -98,7 +98,6 @@
 /obj/item/storage/wallet/GetAccess()
 	return front_id ? front_id.GetAccess() : ..()
 
-
 /obj/item/storage/wallet/random/populate_contents()
 	var/cash = pick(/obj/item/stack/spacecash,
 		/obj/item/stack/spacecash/c10,
@@ -112,6 +111,11 @@
 	if(prob(50))
 		new cash(src)
 	new coin(src)
+
+
+/obj/item/storage/wallet/MR_Ch/populate_contents()
+		for(var/i = 1 to 5)
+			new /obj/item/coin/iron(src)
 
 //////////////////////////////////////
 //			Color Wallets			//
