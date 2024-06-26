@@ -941,8 +941,9 @@
 /datum/reagent/msg/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
 	if(istype(M.mind?.martial_art, /datum/martial_art/mr_chang))
-		update_flags |= M.adjustBruteLoss(-0.75)
-		update_flags |= M.adjustFireLoss(-0.75)
+		update_flags |= M.adjustBruteLoss(-1)
+		update_flags |= M.adjustFireLoss(-1)
+		update_flags |= M.adjustStaminaLoss(-2)
 	else
 		if(prob(5))
 			if(prob(10))
