@@ -140,6 +140,7 @@
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
+	item_state = "mining_satchel"
 	origin_tech = "engineering=2"
 	slot_flags = ITEM_SLOT_BELT
 	slot_flags_2 = ITEM_FLAG_POCKET_LARGE
@@ -171,6 +172,7 @@
 	max_combined_w_class = INFINITY
 	origin_tech = "bluespace=4;materials=3;engineering=3"
 	icon_state = "satchel_bspace"
+	item_state = "satchel_holding"
 
 /obj/item/storage/bag/ore/holding/cyborg
 	name = "cyborg mining satchel of holding"
@@ -186,6 +188,7 @@
 	desc = "You thought it would be more like what those cartoon robbers wear."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "gem_satchel"
+	item_state = "gem_satchel"
 	slot_flags = ITEM_SLOT_BELT
 	slot_flags_2 = ITEM_FLAG_POCKET_LARGE
 	w_class = WEIGHT_CLASS_NORMAL
@@ -212,6 +215,7 @@
 	name = "plant bag"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
+	item_state = "plantbag"
 	storage_slots = 100 //the number of plant pieces it can carry.
 	max_combined_w_class = 100 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
 	max_w_class = WEIGHT_CLASS_NORMAL
@@ -597,7 +601,7 @@
 	name = "chemistry bag"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bag"
-	item_state = "chembag"
+	item_state = "chemistry_bag"
 	desc = "A bag for storing pills, patches, and bottles."
 	storage_slots = 50
 	max_combined_w_class = 200
@@ -612,6 +616,7 @@
 	name = "bio bag"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "biobag"
+	item_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
 	storage_slots = 25
 	max_combined_w_class = 200
