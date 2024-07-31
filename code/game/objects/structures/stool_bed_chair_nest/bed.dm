@@ -74,7 +74,7 @@
 	name = "roller bed"
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
-	icon_state = "rollerbed"
+	item_state = "rollerbed"
 	resistance_flags = NONE
 	anchored = FALSE
 	comfort = 1
@@ -120,7 +120,7 @@
 /obj/structure/bed/roller/holo
 	name = "holo stretcher"
 	icon_state = "holo_down"
-	icon_state = "holo_stretcher"
+	item_state = "holo_stretcher"
 	icon_up = "holo_up"
 	icon_down = "holo_down"
 	folded = /obj/item/roller/holo
