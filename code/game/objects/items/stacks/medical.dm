@@ -135,6 +135,7 @@
 	singular_name = "gauze length"
 	desc = "Some sterile gauze to wrap around bloody stumps."
 	icon_state = "gauze"
+	item_state = "roll_of_gauze"
 	origin_tech = "biotech=2"
 	heal_brute = 10
 	stop_bleeding = 1800
@@ -185,6 +186,7 @@
 	singular_name = "advanced trauma kit"
 	desc = "An advanced trauma kit for severe injuries."
 	icon_state = "traumakit"
+	item_state = "adv_trauma_kit"
 	belt_icon = "advanced_trauma_kit"
 	heal_brute = 25
 	stop_bleeding = 0
@@ -237,6 +239,7 @@
 	singular_name = "advanced burn kit"
 	desc = "An advanced treatment kit for severe burns."
 	icon_state = "burnkit"
+	item_state = "adv_burn_kit"
 	belt_icon = "advanced_burn_kit"
 	heal_burn = 25
 
@@ -279,6 +282,7 @@
 	name = "medical splints"
 	singular_name = "medical splint"
 	icon_state = "splint"
+	item_state = "medical _splints"
 	unique_handling = TRUE
 	self_delay = 10 SECONDS
 	var/other_delay = 0
@@ -346,6 +350,7 @@
 
 /obj/item/stack/medical/splint/tribal
 	name = "tribal splints"
+	item_state = "splint_tribal"
 	icon_state = "tribal_splint"
 	other_delay = 5 SECONDS
 
@@ -354,6 +359,7 @@
 	name = "makeshift splints"
 	desc = "Makeshift splint for fixing bones. Better than nothing and more based than others."
 	icon_state = "makeshift_splint"
+	item_state = "splint_makeshift"
 	other_delay = 3 SECONDS
 	self_delay = 15 SECONDS
 
