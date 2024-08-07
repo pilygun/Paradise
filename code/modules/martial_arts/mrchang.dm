@@ -11,7 +11,9 @@
 	if(can_use(defender) && defender.in_throw_mode && !defender.incapacitated(INC_IGNORE_GRABBED) && defender.a_intent == INTENT_DISARM && !stun_on_cooldown)
 		defender.visible_message("<span class='warning'>[defender] intercept attack of [attacker]!</span>")
 		attacker.forceMove(defender.loc)
-		attacker.apply_damage(200, STAMINA)
+		attacker.apply_damage(60, STAMINA)
+		attacker.knockdown_time(2 SECONDS)
+		attacker.throw(throw_target, 1, 14, user, callback = CALLBACK(src, PROC_REF(unregister_bump_impact), target))
 		stun_on_cooldown = TRUE
 		defender.SpinAnimation(10,1)
 		attacker.SpinAnimation(10,1)
