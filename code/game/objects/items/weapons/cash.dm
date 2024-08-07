@@ -44,22 +44,22 @@
 								 "Деньги, деньги, деньги!!!", "Это лучшая сделка!!"))
 		switch(amount)
 			if(CASH1 to CASH2 - 1)
-				throwforce = 5,
+				throwforce = 5
 				staminaforce = 10
 			if(CASH2 to CASH3 - 1)
-				throwforce = 10,
+				throwforce = 10
 				staminaforce = 15
 			if(CASH3 to CASH4 - 1)
-				throwforce = 15,
+				throwforce = 15
 				staminaforce = 20
 			if(CASH4 to CASH5 - 1)
-				throwforce = 20,
+				throwforce = 20
 				staminaforce = 25
 			if(CASH5 to CASHMAX - 1)
-				throwforce = 25,
+				throwforce = 25
 				staminaforce = 30
 			if(CASHMAX to INFINITY)
-				throwforce = 30,
+				throwforce = 30
 				staminaforce = 35
 	. = ..()
 
