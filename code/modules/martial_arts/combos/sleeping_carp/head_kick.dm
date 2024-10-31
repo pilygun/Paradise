@@ -1,7 +1,7 @@
 /datum/martial_combo/sleeping_carp/head_kick
 	name = "Head Kick"
 	steps = list(MARTIAL_COMBO_STEP_DISARM, MARTIAL_COMBO_STEP_HARM, MARTIAL_COMBO_STEP_HARM)
-	explaination_text = "Пинает оппонента в голову, нанося приличный урон и заставляя выбросить вещь из активной руки."
+	explaination_text = "Пинает оппонента в голову, нанося ему приличный урон и заставляя его выбросить вещь из активной руки."
 
 /datum/martial_combo/sleeping_carp/head_kick/perform_combo(mob/living/carbon/human/user, mob/living/target, datum/martial_art/MA)
 	if(!target.stat && !target.IsWeakened())
