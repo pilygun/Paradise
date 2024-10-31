@@ -1,7 +1,7 @@
 /datum/martial_combo/sleeping_carp/wrist_wrench
 	name = "Wrist Wrench"
 	steps = list(MARTIAL_COMBO_STEP_DISARM, MARTIAL_COMBO_STEP_DISARM)
-	explaination_text = "Сворачивает запястье оппоненту, заставляя выбросить вещь из активной руки."
+	explaination_text = "Сворачивает запястье оппоненту, заставляя его выбросить вещь из активной руки."
 
 /datum/martial_combo/sleeping_carp/wrist_wrench/perform_combo(mob/living/carbon/human/user, mob/living/target, datum/martial_art/MA)
 	if(!target.stat && !target.IsStunned() && !target.IsWeakened())
