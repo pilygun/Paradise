@@ -15,6 +15,6 @@
 		playsound(get_turf(target), 'sound/weapons/punch1.ogg', 75, 1, -1)
 		add_attack_logs(user, target, "Melee attacked with martial-art [src] :  Elbow Drop", ATKLOG_ALL)
 		if(prob(80))
-			user.say(pick("БАНЗАЙ!", "КИЯЯЯЯ!", "Я ХОЧУ ПИЦЦЫ!", "ТЫ МЕНЯ НЕ УВИДИШЬ!", "МОЕ ВРЕМЯ СЕЙЧАС!", "КОВАБАНГА!"))
+			user.say(pick("БАНЗАЙ!", "КИЯЯЯЯ!", "Я ХОЧУ ПИЦЦЫ!", "ТЫ МЕНЯ НЕ ВИДИШЬ!", "МОЕ ВРЕМЯ СЕЙЧАС!", "КАВАБАНГА!"))
 		return MARTIAL_COMBO_DONE
 	return MARTIAL_COMBO_DONE_BASIC_HIT
