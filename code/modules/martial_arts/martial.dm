@@ -399,7 +399,7 @@
 			return
 
 	if(istype(user.mind.martial_art, /datum/martial_art/the_sleeping_carp))
-		to_chat(user, span_warning("Вы понимаете, что узнали все из Учения Карпа и решили не читать этот свиток."))
+		to_chat(user, span_warning("Вы понимаете, что узнали всё из Учения Карпа и его дальнейшее изучение бессмысленно."))
 		return
 
 	to_chat(user, "<span class='sciradio'>Вы изучили древнее боевое искусство Спящего карпа! \
