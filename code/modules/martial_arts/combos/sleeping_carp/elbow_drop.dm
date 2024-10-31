@@ -1,7 +1,7 @@
 /datum/martial_combo/sleeping_carp/elbow_drop
 	name = "Elbow Drop"
 	steps = list(MARTIAL_COMBO_STEP_HARM, MARTIAL_COMBO_STEP_DISARM, MARTIAL_COMBO_STEP_HARM, MARTIAL_COMBO_STEP_DISARM, MARTIAL_COMBO_STEP_HARM)
-	explaination_text = "Вы прыгаете на оппонента локтём ударяя по спине. Нанося приличный урон, и если враг в критическом состоянии - мгновенно убиваете его."
+	explaination_text = "Вы прыгаете на лежачего оппонента, ударяя локтем по спине. Наносит приличный урон и мгновенно убивает жертву, если она находится в критическом состоянии."
 
 /datum/martial_combo/sleeping_carp/elbow_drop/perform_combo(mob/living/carbon/human/user, mob/living/target, datum/martial_art/MA)
 	if(target.body_position == LYING_DOWN)
