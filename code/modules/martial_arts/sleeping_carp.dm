@@ -4,7 +4,7 @@
 	weight = 9
 	deflection_chance = 100
 	no_guns = TRUE
-	no_guns_message = "Будь как карп. Карпы не стреляют из пушек. CARP!"
+	no_guns_message = "Использование огнестрельного оружия позорит ваш клан."
 	reroute_deflection = FALSE
 	has_explaination_verb = TRUE
 	grab_speed = 2 SECONDS
