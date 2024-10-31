@@ -1,7 +1,7 @@
 /datum/martial_combo/sleeping_carp/stomach_knee
 	name = "Stomach Knee"
 	steps = list(MARTIAL_COMBO_STEP_GRAB, MARTIAL_COMBO_STEP_HARM)
-	explaination_text = "Заводит ваше колено в живот оппонента, заставляя его лежать от боли и неровно дышать"
+	explaination_text = "Вы пинаете оппонента по животу, заставляя его скорчится от боли и неровно дышать."
 	combo_text_override = "Grab, switch hands, Harm"
 
 /datum/martial_combo/sleeping_carp/stomach_knee/perform_combo(mob/living/carbon/human/user, mob/living/target, datum/martial_art/MA)
