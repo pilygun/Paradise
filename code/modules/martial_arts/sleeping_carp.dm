@@ -42,7 +42,7 @@
 
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, 1, -1)
 	if(prob(50))
-		A.say(pick("КУАХ!", "ХАЙЯ!", "КУОХ!", "ХУ!", "КИЯ!", "ХУХ!", "БУЙЯ!", "ХЛЫСТ ПРАВНИКА!", "УДАР КАРПА!"))
+		A.say(pick("КУАХ!", "ХАЙЯ!", "КУОХ!", "ХУ!", "КИЯ!", "ХУХ!", "БУЙЯ!", "ХЛЫСТ ПЛАВНИКА!", "УДАР КАРПА!"))
 	if(prob(D.getBruteLoss()) && D.body_position != LYING_DOWN)
 		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>Удар отправляет тебя на землю!</span>")
 		D.Weaken(6 SECONDS)
