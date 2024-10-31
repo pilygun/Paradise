@@ -395,7 +395,7 @@
 			to_chat(user, "<span class ='warning'>Мы пытаемся много раз, но не можем понять содержимое свитка!</span>")
 			return
 		else //Vampires
-			to_chat(user, "<span class ='warning'>Жажда крови отвлекает вас слишком сильно, чтобы вы могли сосредоточиться на содержимом свитка!</span>")
+			to_chat(user, span_warning("Ваши мысли полностью окутаны жаждой крови, вы не в состоянии сосредоточиться на содержимом свитка!"))
 			return
 
 	if(istype(user.mind.martial_art, /datum/martial_art/the_sleeping_carp))
