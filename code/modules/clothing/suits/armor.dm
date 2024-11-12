@@ -314,7 +314,7 @@
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "Ablative Armor Vest"
-	desc = "Экспериментальный прототип лазеро-отражающей брони. Устаревшая амуниция, была списана с вооружения NT."
+	desc = "Экспериментальный прототип лазеро-отражающей брони. Устаревшая амуниция, была списана с вооружения НТ."
 	icon_state = "armor_reflec"
 	item_state = "armor_reflec"
 	blood_overlay_type = "armor"
