@@ -11,7 +11,7 @@
 		playsound(get_turf(user), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		add_attack_logs(user, target, "Melee attacked with martial-art [src] :  Wrist Wrench", ATKLOG_ALL)
 		if(prob(60))
-			user.say(pick("КРУТИМ ЗАПЯТЬЕ!", "ВЕДИ СЕБЯ КАК МУЖЧИНА СОСУНОК!", "НЕ ПОЗОРЬСЯ!", "ВУХАХАХА!", "И ГДЕ ТВОЙ СТАНБАТОН?", "НЕ НАДО ДЯДЯ!"))
+			user.say(pick("КРУТИМ ЗАПЯТЬЕ!", "ВЕДИ СЕБЯ КАК МУЖЧИНА СОСУНОК!", "НЕ ПОЗОРЬСЯ!", "ВУХАХАХА!", "И ГДЕ ТЕПЕРЬ ТВОЙ СТАНБАТОН?", "НЕ НАДО ДЯДЯ!"))
 		target.emote("scream")
 		target.drop_from_active_hand()
 		target.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
