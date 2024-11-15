@@ -6,8 +6,8 @@
 /datum/martial_combo/sleeping_carp/back_kick/perform_combo(mob/living/carbon/human/user, mob/living/target, datum/martial_art/MA)
 	if(user.dir == target.dir && !target.stat && !target.IsWeakened())
 		user.do_attack_animation(target, ATTACK_EFFECT_KICK)
-		target.visible_message("<span class='warning'>[user] пинает [target] в спину!</span>", \
-						  "<span class='userdanger'>[user] ударяет вас в спину, заставляя споткнуться и упасть!</span>")
+		target.visible_message("span_warning("[user] пинает [target] в спину!"), \
+						  "span_warning("[user] ударяет вас в спину, заставляя споткнуться и упасть!"))
 		step_to(target,get_step(target,target.dir),1)
 		target.Weaken(6 SECONDS)
 		playsound(get_turf(target), 'sound/weapons/punch1.ogg', 50, 1, -1)
