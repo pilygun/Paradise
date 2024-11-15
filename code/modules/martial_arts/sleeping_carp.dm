@@ -44,7 +44,7 @@
 	if(prob(50))
 		A.say(pick("КУАХ!", "ХАЙЯ!", "КУОХ!", "ХУ!", "КИЯ!", "ХУХ!", "БУЙЯ!", "ХЛЫСТ ПЛАВНИКА!", "УДАР КАРПА!"))
 	if(prob(D.getBruteLoss()) && D.body_position != LYING_DOWN)
-		D.visible_message(span_warning("[D] stumbles and falls!"), span_userdanger'>Удар отправляет тебя на землю!"))
+		D.visible_message(span_warning("[D] stumbles and falls!"), span_userdanger("Удар отправляет тебя на землю!"))
 		D.Weaken(6 SECONDS)
 	add_attack_logs(A, D, "Melee attacked with martial-art [src] : Punched", ATKLOG_ALL)
 	return TRUE
