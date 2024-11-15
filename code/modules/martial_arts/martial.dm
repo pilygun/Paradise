@@ -392,7 +392,7 @@
 		return
 	if(user.mind && (ischangeling(user) || isvampire(user))) //Prevents changelings and vampires from being able to learn it
 		if(ischangeling(user)) //Changelings
-			to_chat(user, "<span class ='warning'>Мы пытаемся много раз, но не можем понять содержимое свитка!</span>")
+			to_chat(user, span_warning("Мы пытаемся много раз, но не можем понять содержимое свитка!"))
 			return
 		else //Vampires
 			to_chat(user, span_warning("Ваши мысли полностью окутаны жаждой крови, вы не в состоянии сосредоточиться на содержимом свитка!"))
