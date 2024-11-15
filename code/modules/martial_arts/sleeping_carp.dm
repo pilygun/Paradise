@@ -4,7 +4,7 @@
 	weight = 9
 	deflection_chance = 100
 	no_guns = TRUE
-	no_guns_message = "Использование огнестрельного оружия позорит ваш клан."
+	no_guns_message = "использование огнестрела позорит клан" // уменьшен текст так как используется баллун алерт
 	reroute_deflection = FALSE
 	has_explaination_verb = TRUE
 	grab_speed = 2 SECONDS
@@ -33,8 +33,8 @@
 	MARTIAL_ARTS_ACT_CHECK
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("кусает", "пинает", "ломает", "бьет", "крушит")
-	D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
-					  "<span class='userdanger'>[A] [atk_verb] вас!</span>")
+	D.visible_message(span_danger("[A] [atk_verb] [D]!"), \
+					  span_userdanger("[A] [atk_verb] вас!"))
 
 	var/damage = rand(10,15)
 	D.apply_damage(damage, BRUTE)
@@ -44,7 +44,7 @@
 	if(prob(50))
 		A.say(pick("КУАХ!", "ХАЙЯ!", "КУОХ!", "ХУ!", "КИЯ!", "ХУХ!", "БУЙЯ!", "ХЛЫСТ ПЛАВНИКА!", "УДАР КАРПА!"))
 	if(prob(D.getBruteLoss()) && D.body_position != LYING_DOWN)
-		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>Удар отправляет тебя на землю!</span>")
+		D.visible_message(span_warning("[D] stumbles and falls!"), span_userdanger'>Удар отправляет тебя на землю!"))
 		D.Weaken(6 SECONDS)
 	add_attack_logs(A, D, "Melee attacked with martial-art [src] : Punched", ATKLOG_ALL)
 	return TRUE
