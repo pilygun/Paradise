@@ -1,7 +1,8 @@
 /obj/item/projectile/bullet
 	name = "bullet"
 	icon_state = "bullet"
-	damage = 50
+	damage = 30
+	armour_penetration = 75
 	damage_type = BRUTE
 	flag = "bullet"
 	hitsound = "bullet"
@@ -9,8 +10,8 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
 /obj/item/projectile/bullet/slug
-	armour_penetration = 40
-	damage = 30
+	armour_penetration = 35
+	damage = 25
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	name = "beanbag slug"
@@ -44,19 +45,19 @@
 	icon_state = "bullet-r"
 
 /obj/item/projectile/bullet/hp38 //Detective hollow-point
-	damage = 33
-	armour_penetration = -50
+	damage = 28
+	armour_penetration = -35
 
 /obj/item/projectile/bullet/hp38/on_hit(atom/target, blocked, hit_zone)
 	if(..(target, blocked))
 		var/mob/living/M = target
-		M.Slowed(2 SECONDS)
+		M.Slowed(1 SECONDS)
 
 /obj/item/projectile/bullet/weakbullet2/invisible //finger gun bullets
 	name = "invisible bullet"
 	damage = 0
-	weaken = 2 SECONDS
-	stamina = 45
+	knockdown = 3 SECONDS
+	stamina = 35
 	icon_state = null
 	hitsound_wall = null
 
