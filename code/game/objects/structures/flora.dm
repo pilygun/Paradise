@@ -27,6 +27,13 @@
 	icon_state = "pine_c"
 	randomize_tree = FALSE
 
+/obj/structure/flora/tree/pine/xmas/indestructible
+	name = "Новогодняя ёлочка"
+	desc = "Праздник к нам приходит"
+	resistance_flags = INDESTRUCTIBLE
+	max_integrity = 1000
+	armor = list("melee" = 99, "bullet" = 99, "laser" = 99, "energy" = 100, "bomb" = 99, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"

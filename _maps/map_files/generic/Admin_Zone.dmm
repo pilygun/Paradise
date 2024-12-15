@@ -4,17 +4,13 @@
 /turf/simulated/floor/wood,
 /area/admin)
 "ac" = (
-/turf/simulated/floor/indestructible{
-	icon_state = "floor"
-	},
+/turf/simulated/floor/indestructible/snow,
 /area/tdome/newtdome)
 "ad" = (
 /obj/machinery/door/poddoor/shutters/invincible{
 	id_tag = "TD_CloseCombat"
 	},
-/turf/simulated/floor/indestructible{
-	icon_state = "floor"
-	},
+/turf/simulated/floor/indestructible/snow,
 /area/tdome/newtdome)
 "ah" = (
 /obj/structure/table/wood/poker,
@@ -56,6 +52,9 @@
 	icon_state = "grimy"
 	},
 /area/admin)
+"at" = (
+/turf/simulated/floor/indestructible/lubed,
+/area/tdome/newtdome)
 "ax" = (
 /obj/structure/table/wood,
 /obj/item/gun/projectile/automatic/speargun,
@@ -318,6 +317,10 @@
 	icon_state = "rampbottom"
 	},
 /area/tdome/tdomeobserve)
+"df" = (
+/obj/structure/punji_sticks/indestructible,
+/turf/simulated/floor/indestructible/asteroid,
+/area/tdome/newtdome)
 "dn" = (
 /obj/mecha/combat/marauder/loaded{
 	operation_req_access = list(114)
@@ -356,6 +359,9 @@
 	icon_state = "hierophant1"
 	},
 /area/admin)
+"dP" = (
+/turf/simulated/floor/indestructible/bluespace,
+/area/tdome/newtdome)
 "dS" = (
 /obj/effect/landmark/tdome/tdome1,
 /obj/machinery/camera{
@@ -594,6 +600,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/admin)
+"fB" = (
+/obj/structure/barricade/sandbags/indestructible,
+/turf/simulated/floor/indestructible/snow,
+/area/tdome/newtdome)
 "fC" = (
 /obj/structure/table/wood,
 /obj/item/gun/energy/immolator,
@@ -630,7 +640,7 @@
 /turf/simulated/floor/wood,
 /area/admin)
 "ga" = (
-/turf/simulated/wall/indestructible,
+/turf/simulated/wall/indestructible/snow,
 /area/tdome/newtdome/CQC)
 "ge" = (
 /obj/structure/table/wood,
@@ -775,6 +785,12 @@
 	icon_state = "darkgrey"
 	},
 /area/tdome/tdome2)
+"hE" = (
+/obj/structure/window/full{
+	armor = list("melee" = 200, "bullet" = 200, "laser" = 200, "energy" = 200, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	},
+/turf/simulated/floor/indestructible/grass,
+/area/tdome/newtdome)
 "hF" = (
 /obj/machinery/teleport/station,
 /turf/simulated/floor/plasteel{
@@ -795,6 +811,14 @@
 /obj/effect/overlay/palmtree_r,
 /turf/simulated/floor/beach/sand,
 /area/holodeck/source_beach)
+"hK" = (
+/obj/structure/table/wood,
+/obj/item/melee/rapier/captain,
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/adminconstruction)
 "hM" = (
 /obj/structure/chair/stool/holostool,
 /turf/simulated/floor/holofloor{
@@ -802,6 +826,13 @@
 	tag = "icon-asteroid"
 	},
 /area/holodeck/source_picnicarea)
+"hR" = (
+/obj/structure/sign/drop{
+	armor = list("melee" = 99, "bullet" = 99, "laser" = 99, "energy" = 100, "bomb" = 99, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100);
+	desc = "Время падать и ронять."
+	},
+/turf/simulated/wall/indestructible,
+/area/space)
 "hV" = (
 /turf/simulated/floor/holofloor{
 	icon_state = "snow";
@@ -902,12 +933,21 @@
 /obj/item/gun/projectile/automatic/sniper_rifle/toy,
 /turf/simulated/floor/carpet/arcade,
 /area/admin)
+"iN" = (
+/turf/simulated/floor/indestructible/sepia,
+/area/tdome/newtdome)
 "iQ" = (
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "dark"
 	},
 /area/tdome/tdome2)
+"iW" = (
+/obj/structure/healingfountain{
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	},
+/turf/simulated/floor/indestructible/carpet,
+/area/tdome/newtdome)
 "iZ" = (
 /obj/structure/table/wood,
 /obj/item/suppressor,
@@ -1216,6 +1256,9 @@
 /obj/machinery/bluespace_beacon/syndicate,
 /turf/simulated/floor/wood,
 /area/admin)
+"lw" = (
+/turf/simulated/wall/indestructible/metal,
+/area/tdome/newtdome)
 "lx" = (
 /turf/simulated/floor/holofloor{
 	icon_state = "grimy";
@@ -1287,6 +1330,14 @@
 /obj/item/grenade/clusterbuster/mega_syndieminibomb,
 /turf/simulated/floor/wood,
 /area/admin)
+"mL" = (
+/obj/mecha/combat/lockersyndie,
+/turf/simulated/floor/wood,
+/area/admin)
+"mM" = (
+/obj/structure/table/reinforced/indestructible,
+/turf/simulated/floor/indestructible/snow,
+/area/tdome/newtdome/CQC)
 "mO" = (
 /obj/structure/table/wood,
 /obj/item/twohanded/chainsaw,
@@ -1363,6 +1414,10 @@
 	icon_state = "red"
 	},
 /area/holodeck/source_basketball)
+"ny" = (
+/obj/structure/flora/tree/pine/xmas/indestructible,
+/turf/simulated/floor/indestructible/snow,
+/area/tdome/newtdome/CQC)
 "nK" = (
 /obj/structure/table/wood,
 /obj/item/gun/syringe/blowgun,
@@ -1398,6 +1453,9 @@
 /obj/structure/table,
 /turf/simulated/floor/carpet/black,
 /area/tdome/tdomeobserve)
+"nT" = (
+/turf/simulated/wall/indestructible/hierophant,
+/area/tdome/newtdome)
 "nV" = (
 /turf/simulated/floor/holofloor{
 	dir = 9;
@@ -1664,6 +1722,23 @@
 	icon_state = "vault"
 	},
 /area/tdome/arena)
+"sD" = (
+/turf/simulated/wall/shuttle,
+/area/tdome/newtdome)
+"sV" = (
+/obj/structure/snowman/medium{
+	name = "Снеговик Фантик";
+	desc = "Снеговик которого нет."
+	},
+/turf/simulated/floor/indestructible/snow,
+/area/tdome/newtdome/CQC)
+"sW" = (
+/obj/structure/snowman/short{
+	name = "Снеговик Витя";
+	desc = "Этот снеговик установлен неправельно с геймдизайнерской точки зрения."
+	},
+/turf/simulated/floor/indestructible/snow,
+/area/tdome/newtdome/CQC)
 "sZ" = (
 /obj/structure/table/wood,
 /obj/item/twohanded/fireaxe,
@@ -1928,6 +2003,14 @@
 /obj/effect/landmark/tdome/tdome_observer,
 /turf/simulated/floor/carpet/black,
 /area/tdome/tdomeobserve)
+"vZ" = (
+/obj/structure/table/wood,
+/obj/item/melee/rapier/centcomm,
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/adminconstruction)
 "wc" = (
 /obj/structure/table/holotable,
 /turf/simulated/floor/holofloor{
@@ -2067,6 +2150,9 @@
 /obj/item/gun/projectile/automatic/toy/pistol,
 /turf/simulated/floor/carpet/arcade,
 /area/admin)
+"xl" = (
+/turf/simulated/floor/indestructible/necropolis/air,
+/area/tdome/newtdome)
 "xo" = (
 /turf/simulated/floor/holofloor{
 	dir = 8;
@@ -2094,6 +2180,14 @@
 /obj/item/gun/projectile/revolver/russian,
 /turf/simulated/floor/wood,
 /area/admin)
+"xG" = (
+/obj/structure/table/wood,
+/obj/item/melee/rapier/syndie,
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/adminconstruction)
 "xT" = (
 /turf/simulated/floor/plasteel{
 	dir = 8;
@@ -2175,9 +2269,7 @@
 	},
 /area/admin)
 "yQ" = (
-/turf/simulated/floor/indestructible{
-	icon_state = "floor"
-	},
+/turf/simulated/floor/indestructible/snow,
 /area/tdome/newtdome/CQC)
 "yT" = (
 /obj/structure/table/wood,
@@ -2211,6 +2303,13 @@
 	icon_state = "vault"
 	},
 /area/tdome/arena)
+"zf" = (
+/obj/structure/snowman/short{
+	name = "Снеговик Ваня";
+	desc = "Снеговик облитый зазой."
+	},
+/turf/simulated/floor/indestructible/snow,
+/area/tdome/newtdome)
 "zh" = (
 /obj/structure/table/wood,
 /obj/item/gun/throw/piecannon,
@@ -2500,6 +2599,9 @@
 	icon_state = "vault"
 	},
 /area/tdome/arena)
+"Cd" = (
+/turf/simulated/wall/indestructible/sandstone,
+/area/tdome/newtdome)
 "Cf" = (
 /obj/structure/table/holotable,
 /obj/machinery/readybutton,
@@ -2583,6 +2685,9 @@
 /obj/item/gun/projectile/shotgun/automatic,
 /turf/simulated/floor/wood,
 /area/admin)
+"Dd" = (
+/turf/simulated/floor/chasm/straight_down/lava_land_surface/normal_air,
+/area/tdome/newtdome)
 "Dn" = (
 /turf/simulated/floor/holofloor{
 	dir = 1;
@@ -2600,6 +2705,10 @@
 	icon_state = "navybluecorners"
 	},
 /area/adminconstruction)
+"Ds" = (
+/obj/structure/pianoclassic/ghostpiano/indestructible,
+/turf/simulated/floor/indestructible/wood,
+/area/tdome/newtdome)
 "DF" = (
 /obj/structure/table/wood,
 /obj/item/gun/magic/wand/fireball,
@@ -2680,6 +2789,9 @@
 	icon_state = "darkgrey"
 	},
 /area/tdome/arena)
+"EX" = (
+/turf/simulated/floor/indestructible/beach/sand,
+/area/tdome/newtdome)
 "EZ" = (
 /obj/structure/table/wood,
 /obj/item/gun/projectile/shotgun/lethal,
@@ -2730,6 +2842,12 @@
 	icon_state = "grimy"
 	},
 /area/admin)
+"Fz" = (
+/obj/structure/window/full{
+	armor = list("melee" = 200, "bullet" = 200, "laser" = 200, "energy" = 200, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	},
+/turf/simulated/floor/indestructible/shuttle,
+/area/tdome/newtdome)
 "FB" = (
 /turf/simulated/floor/holofloor{
 	dir = 8;
@@ -2788,6 +2906,10 @@
 	icon_state = "red"
 	},
 /area/holodeck/source_boxingcourt)
+"Gp" = (
+/obj/structure/plasticflaps/indestructible,
+/turf/simulated/floor/indestructible/grass,
+/area/tdome/newtdome)
 "Gq" = (
 /obj/structure/table,
 /obj/item/tank/internals/oxygen/yellow,
@@ -2945,14 +3067,27 @@
 /obj/item/gun/energy/alien,
 /turf/simulated/floor/wood,
 /area/admin)
+"Io" = (
+/turf/simulated/wall/indestructible/mineral_rock,
+/area/tdome/newtdome)
 "Iq" = (
 /obj/effect/turf_decal/mech,
 /turf/simulated/floor/wood,
 /area/admin)
+"Ir" = (
+/obj/structure/sign/fire{
+	armor = list("melee" = 99, "bullet" = 99, "laser" = 99, "energy" = 99, "bomb" = 99, "bio" = 0, "rad" = 0, "fire" = 99, "acid" = 50);
+	desc = "Осторожно кипяток)'"
+	},
+/turf/simulated/wall/indestructible/snow,
+/area/tdome/newtdome)
 "Iu" = (
 /obj/item/twohanded/required/kirbyplants,
 /turf/simulated/floor/wood,
 /area/admin)
+"Iw" = (
+/turf/simulated/floor/indestructible/beach/coastline,
+/area/tdome/newtdome)
 "Ix" = (
 /obj/structure/table/wood,
 /obj/item/gun/projectile/automatic/toy,
@@ -3066,6 +3201,13 @@
 	icon_state = "green"
 	},
 /area/holodeck/source_basketball)
+"JH" = (
+/obj/item/decorations/sticky_decorations/flammable/snowman{
+	name = "Снеговик Петя";
+	desc = "Снеговик с кисточкой в руке."
+	},
+/turf/simulated/floor/indestructible/snow,
+/area/tdome/newtdome)
 "JR" = (
 /turf/simulated/floor/holofloor{
 	icon_state = "green"
@@ -3076,6 +3218,9 @@
 /obj/item/gun/energy/gun/pdw9,
 /turf/simulated/floor/wood,
 /area/admin)
+"Kb" = (
+/turf/simulated/wall/indestructible/bananium,
+/area/tdome/newtdome)
 "Ke" = (
 /obj/structure/table/wood,
 /obj/item/gun/projectile/automatic/c20r/toy,
@@ -3118,6 +3263,10 @@
 /obj/item/twohanded/dualsaber/toy,
 /turf/simulated/floor/carpet/arcade,
 /area/admin)
+"KU" = (
+/obj/structure/sign/holy,
+/turf/simulated/wall/indestructible/snow,
+/area/tdome/newtdome)
 "Lb" = (
 /obj/structure/table/wood,
 /obj/item/whetstone,
@@ -3131,6 +3280,16 @@
 	icon_state = "green"
 	},
 /area/holodeck/source_emptycourt)
+"Ln" = (
+/obj/machinery/door/airlock{
+	damage_deflection = 999;
+	armor = list("melee" = 200, "bullet" = 200, "laser" = 200, "energy" = 200, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	},
+/turf/simulated/floor/indestructible/shuttle,
+/area/tdome/newtdome)
+"Lp" = (
+/turf/simulated/floor/indestructible/grass,
+/area/tdome/newtdome)
 "Lr" = (
 /turf/simulated/wall/indestructible,
 /area/adminconstruction)
@@ -3164,6 +3323,9 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/holofloor/grass,
 /area/holodeck/source_picnicarea)
+"LZ" = (
+/turf/simulated/floor/indestructible/asteroid,
+/area/tdome/newtdome)
 "Ma" = (
 /turf/simulated/floor/holofloor{
 	dir = 5;
@@ -3339,6 +3501,9 @@
 	icon_state = "grimy"
 	},
 /area/admin)
+"Oa" = (
+/turf/simulated/floor/indestructible/noslip,
+/area/tdome/newtdome)
 "Ob" = (
 /obj/machinery/camera{
 	c_tag = "Thunderdome Arena";
@@ -3438,6 +3603,9 @@
 /obj/item/reagent_containers/glass/bottle/adminordrazine,
 /turf/simulated/floor/wood,
 /area/admin)
+"Pb" = (
+/turf/simulated/floor/indestructible/wood,
+/area/tdome/newtdome)
 "Pn" = (
 /obj/structure/table/wood,
 /obj/item/gun/magic/staff/animate,
@@ -3497,6 +3665,10 @@
 /obj/item/gun/projectile/automatic/tommygun,
 /turf/simulated/floor/wood,
 /area/admin)
+"PZ" = (
+/obj/structure/plasticflaps/indestructible,
+/turf/simulated/floor/indestructible/snow,
+/area/tdome/newtdome/CQC)
 "Qa" = (
 /obj/structure/table/wood,
 /turf/simulated/floor/wood,
@@ -3581,16 +3753,38 @@
 /obj/machinery/chem_heater,
 /turf/simulated/floor/wood,
 /area/admin)
+"RE" = (
+/obj/structure/sacrificealtar{
+	armor = list("melee" = 200, "bullet" = 200, "laser" = 200, "energy" = 200, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	},
+/turf/simulated/floor/indestructible/wood,
+/area/tdome/newtdome)
 "RF" = (
 /obj/structure/table/wood,
 /obj/item/gun/projectile/automatic/l6_saw,
 /turf/simulated/floor/wood,
 /area/admin)
+"RP" = (
+/obj/structure/bonfire{
+	armor = list("melee" = 99, "bullet" = 99, "laser" = 99, "energy" = 99, "bomb" = 99, "bio" = 0, "rad" = 0, "fire" = 99, "acid" = 50)
+	},
+/turf/simulated/floor/indestructible/beach/sand,
+/area/tdome/newtdome)
+"RU" = (
+/obj/structure/sink/puddle{
+	armor = list("melee" = 200, "bullet" = 200, "laser" = 200, "energy" = 200, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	},
+/turf/simulated/floor/indestructible/grass,
+/area/tdome/newtdome)
 "Sc" = (
 /obj/structure/table/wood,
 /obj/item/gun/magic/staff/slipping,
 /turf/simulated/floor/wood,
 /area/admin)
+"Sl" = (
+/obj/structure/table/reinforced/indestructible,
+/turf/simulated/floor/indestructible/shuttle,
+/area/tdome/newtdome)
 "Sm" = (
 /turf/simulated/floor/plasteel{
 	dir = 10;
@@ -3676,6 +3870,13 @@
 /obj/machinery/syndicatebomb/emp,
 /turf/simulated/floor/wood,
 /area/admin)
+"Tf" = (
+/obj/structure/snowman/built{
+	desc = "Строит мосты";
+	name = "Снеговик Миша"
+	},
+/turf/simulated/floor/indestructible/snow,
+/area/tdome/newtdome)
 "Tg" = (
 /obj/structure/table/wood,
 /obj/item/gun/energy/gun/advtaser/cyborg,
@@ -3802,6 +4003,7 @@
 "Uu" = (
 /obj/structure/table/wood,
 /obj/item/gun/projectile/bow,
+/obj/item/gun/projectile/bow/ashen,
 /turf/simulated/floor/plasteel{
 	dir = 6;
 	icon_state = "darkgrey"
@@ -3816,9 +4018,7 @@
 /obj/minigame_anchor/thunderdome_poller/melee,
 /obj/minigame_anchor/thunderdome_poller/mixed,
 /obj/minigame_anchor/thunderdome_poller/ranged,
-/turf/simulated/floor/indestructible{
-	icon_state = "floor"
-	},
+/turf/simulated/floor/indestructible/snow,
 /area/tdome/newtdome/CQC)
 "UB" = (
 /obj/structure/table/wood,
@@ -3928,6 +4128,9 @@
 /obj/machinery/reagentgrinder,
 /turf/simulated/floor/wood,
 /area/admin)
+"Vz" = (
+/turf/simulated/floor/indestructible/shuttle,
+/area/tdome/newtdome)
 "VD" = (
 /obj/machinery/light/small{
 	brightness_range = 6;
@@ -4024,6 +4227,9 @@
 /obj/mecha/combat/reticence/loaded,
 /turf/simulated/floor/wood,
 /area/admin)
+"WT" = (
+/turf/simulated/floor/lava,
+/area/tdome/newtdome)
 "Xk" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
@@ -4094,6 +4300,10 @@
 	icon_state = "darkgrey"
 	},
 /area/tdome/tdome2)
+"XR" = (
+/obj/structure/sign/clown,
+/turf/simulated/wall/indestructible/bananium,
+/area/tdome/newtdome)
 "XT" = (
 /obj/structure/table/wood,
 /obj/item/gun/projectile/shotgun/automatic/combat,
@@ -4182,7 +4392,7 @@
 /turf/space,
 /area/space)
 "Yz" = (
-/turf/simulated/wall/indestructible,
+/turf/simulated/wall/indestructible/snow,
 /area/tdome/newtdome)
 "YC" = (
 /turf/simulated/floor/beach/sand,
@@ -4294,6 +4504,14 @@
 	icon_state = "redgreenfull"
 	},
 /area/holodeck/source_emptycourt)
+"ZL" = (
+/obj/structure/table/reinforced/indestructible,
+/obj/item/reagent_containers/food/drinks/zaza{
+	desc = "Бутылка зазы для первого ранда тандердрома. Кто же её выпьет?";
+	name = "Бутылка зазы первого раунда"
+	},
+/turf/simulated/floor/indestructible/snow,
+/area/tdome/newtdome/CQC)
 "ZM" = (
 /obj/structure/table/wood,
 /obj/item/gun/projectile/automatic/m90,
@@ -4316,6 +4534,10 @@
 	tag = "icon-asteroid"
 	},
 /area/holodeck/source_picnicarea)
+"ZX" = (
+/obj/structure/table/reinforced/indestructible,
+/turf/simulated/floor/indestructible/bluespace,
+/area/tdome/newtdome)
 
 (1,1,1) = {"
 fE
@@ -8714,9 +8936,9 @@ fE
 fE
 fE
 Lr
-Br
-Br
-Br
+hK
+vZ
+xG
 Br
 Br
 Lr
@@ -11004,11 +11226,11 @@ fE
 oM
 cz
 aa
+mL
 yJ
 dn
 lP
 jd
-io
 PY
 Iu
 ZG
@@ -11265,7 +11487,7 @@ fE
 fE
 fE
 fE
-Qa
+io
 cX
 Iu
 ZG
@@ -58601,35 +58823,35 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
 Yq
 Yq
 Yq
@@ -58858,35 +59080,35 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+QQ
+LZ
+xl
+LZ
+LZ
+LZ
+LZ
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+Io
+ac
+ac
+ac
+LZ
+Io
+Io
+ac
+ac
+LZ
+df
+QQ
 Yq
 Yq
 Yq
@@ -59115,35 +59337,35 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+hR
+xl
+Dd
+xl
+LZ
+Cd
+Tf
+ac
+ac
+ac
+ac
+ac
+Yz
+Yz
+ac
+ac
+ac
+Io
+ac
+ac
+Io
+df
+LZ
+ac
+ac
+ac
+Io
+LZ
+QQ
 Yq
 Yq
 Yq
@@ -59372,35 +59594,35 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
+LZ
+xl
+LZ
+Cd
+ac
+ac
+ac
+ac
+fB
+ac
+ac
+ac
+ac
+ac
+Io
+ac
+ac
+ac
+ac
+ac
+Io
+ac
+ac
+Io
+Io
+ac
+ac
 QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -59629,14 +59851,16 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
+LZ
+LZ
+Cd
 ac
 Yz
 ac
 ac
+fB
+fB
 ac
 ac
 ac
@@ -59644,20 +59868,18 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
+Io
+Io
 ac
 ac
 ac
 ac
 Yz
+Io
+Io
 ac
+Io
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -59886,17 +60108,9 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
-ac
-ac
-Yz
-ac
-ac
-ac
-ac
+LZ
+Cd
 ac
 ac
 ac
@@ -59911,10 +60125,18 @@ ac
 Yz
 ac
 ac
+ac
+ac
+Io
+ac
+ac
+KU
+Pb
+Pb
+Pb
+Pb
+Pb
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -60143,10 +60365,10 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
+LZ
+ac
+ac
 ac
 ac
 ac
@@ -60166,12 +60388,12 @@ ac
 ac
 ac
 ac
-ac
-ac
+Pb
+RE
+RE
+Ds
+Pb
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -60400,13 +60622,13 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
 ac
 ac
 ac
+ac
+ac
+ac
 ad
 ad
 ad
@@ -60423,12 +60645,12 @@ ad
 ad
 ad
 ac
-ac
-ac
+Pb
+Pb
+Pb
+Pb
+Pb
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -60657,10 +60879,10 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
+ac
+ac
+ac
 ac
 ac
 ac
@@ -60682,10 +60904,10 @@ ad
 ac
 ac
 ac
+ac
+nT
+dP
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -60914,10 +61136,10 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
+ac
+ac
+ac
 ac
 ac
 ac
@@ -60939,10 +61161,10 @@ ad
 ac
 ac
 ac
+ac
+nT
+dP
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -61171,17 +61393,17 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
+Gp
+lw
+ac
 ac
 ac
 Yz
 ad
-yQ
-yQ
-yQ
+ga
+PZ
+ga
 yQ
 yQ
 yQ
@@ -61196,10 +61418,10 @@ ad
 Yz
 ac
 ac
+nT
+nT
+dP
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -61428,11 +61650,11 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
-ac
+Lp
+RU
+lw
+lw
 ac
 ac
 ad
@@ -61444,19 +61666,19 @@ ga
 yQ
 yQ
 yQ
-ga
+mM
 yQ
-yQ
+sV
 yQ
 yQ
 ad
 ac
 ac
 ac
+nT
+dP
+dP
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -61685,11 +61907,11 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
-ac
+Lp
+Lp
+Lp
+hE
 ac
 ac
 ad
@@ -61700,8 +61922,8 @@ yQ
 yQ
 ga
 yQ
-ga
-yQ
+mM
+mM
 yQ
 yQ
 yQ
@@ -61710,10 +61932,10 @@ ad
 ac
 ac
 ac
+nT
+dP
+dP
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -61942,11 +62164,11 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
-ac
+Lp
+lw
+Lp
+hE
 ac
 ac
 ad
@@ -61967,10 +62189,10 @@ ad
 ac
 ac
 ac
+nT
+dP
+ZX
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -62199,12 +62421,12 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
+Lp
+Lp
+Lp
+hE
 ac
-Yz
 ac
 ad
 yQ
@@ -62212,10 +62434,10 @@ ga
 yQ
 yQ
 ga
-yQ
+ny
 Uw
 yQ
-ga
+ZL
 yQ
 yQ
 ga
@@ -62224,10 +62446,10 @@ ad
 ac
 Yz
 ac
+ac
+ac
+ac
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -62456,17 +62678,17 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
-ac
+Lp
+Lp
+Lp
+hE
 ac
 ac
 ad
 yQ
 yQ
-yQ
+ga
 yQ
 yQ
 yQ
@@ -62481,10 +62703,10 @@ ad
 ac
 ac
 ac
+ac
+ac
+ac
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -62713,11 +62935,11 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
-ac
+Lp
+lw
+Lp
+hE
 ac
 ac
 ad
@@ -62728,8 +62950,8 @@ yQ
 yQ
 ga
 yQ
-ga
-yQ
+mM
+mM
 yQ
 yQ
 yQ
@@ -62738,10 +62960,10 @@ ad
 ac
 ac
 ac
+ac
+ac
+ac
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -62970,23 +63192,23 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
-ac
+Lp
+Lp
+Lp
+hE
 ac
 ac
 ad
 yQ
 yQ
-yQ
-yQ
-ga
-yQ
-yQ
+sW
 yQ
 ga
+yQ
+yQ
+yQ
+mM
 yQ
 yQ
 yQ
@@ -62995,10 +63217,10 @@ ad
 ac
 ac
 ac
+ac
+ac
+ac
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -63227,13 +63449,13 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
+Lp
+RU
+lw
+lw
 ac
-ac
-Yz
+fB
 ad
 yQ
 yQ
@@ -63252,10 +63474,10 @@ ad
 Yz
 ac
 ac
+ac
+ac
+ac
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -63484,13 +63706,13 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
+Gp
+lw
 ac
 ac
 ac
+fB
 ad
 yQ
 yQ
@@ -63509,10 +63731,10 @@ ad
 ac
 ac
 ac
+ac
+ac
+ac
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -63741,13 +63963,13 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
 ac
 ac
+JH
 ac
+ac
+fB
 ad
 yQ
 yQ
@@ -63766,10 +63988,10 @@ ad
 ac
 ac
 ac
+ac
+ac
+ac
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -63998,13 +64220,13 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
 ac
 ac
 ac
+ac
+ac
+fB
 ad
 ad
 ad
@@ -64020,13 +64242,13 @@ ad
 ad
 ad
 ad
+ac
+ac
+ac
 ac
 ac
 ac
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -64255,13 +64477,13 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
 ac
 ac
 ac
+ac
+ac
+fB
 ac
 ac
 ac
@@ -64280,10 +64502,10 @@ ac
 ac
 ac
 ac
+ac
+EX
+ac
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -64512,12 +64734,12 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
-ac
-ac
+Oa
+Oa
+Oa
+iN
+iN
 Yz
 ac
 ac
@@ -64526,21 +64748,21 @@ ac
 ac
 ac
 ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 Yz
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-Yz
-ac
+zf
+EX
 ac
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -64769,35 +64991,35 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
-ac
-Yz
-ac
-ac
-ac
-ac
-ac
-ac
+Oa
+Kb
+at
+Kb
+iN
+iN
 ac
 ac
-ac
-ac
-ac
-ac
-ac
+sD
+sD
+Fz
+sD
+sD
 ac
 ac
 ac
 ac
-Yz
 ac
+fB
+fB
+ac
+ac
+Ir
+WT
+WT
+EX
+WT
 QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -65026,35 +65248,35 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
 QQ
+Oa
+Oa
+at
+iW
+XR
+iN
+ac
+ac
+Sl
+Vz
+Vz
+Vz
+sD
+ac
+ac
+ac
+ac
+ac
+fB
+ac
+ac
+ac
+ac
+WT
+EX
+EX
+Iw
 QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-Yq
-Yq
-Yq
 Yq
 Yq
 Yq
@@ -65283,35 +65505,35 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+QQ
+Oa
+Kb
+at
+Kb
+iN
+iN
+ac
+ac
+Sl
+Vz
+Vz
+Vz
+Ln
+ac
+ac
+ac
+ac
+ac
+fB
+ac
+ac
+EX
+EX
+EX
+EX
+RP
+Iw
+QQ
 Yq
 Yq
 Yq
@@ -65540,35 +65762,35 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+QQ
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
+ac
+ac
+Sl
+Vz
+Vz
+Vz
+sD
+ac
+ac
+ac
+ac
+ac
+fB
+ac
+ac
+ac
+ac
+WT
+EX
+EX
+Iw
+QQ
 Yq
 Yq
 Yq
@@ -65797,35 +66019,35 @@ Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
 Yq
 Yq
 Yq

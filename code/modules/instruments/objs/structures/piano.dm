@@ -57,3 +57,10 @@
 
 /obj/structure/pianoclassic/ghostpiano/attack_ghost(mob/dead/observer/user)
 	ui_interact(user)
+
+/obj/structure/pianoclassic/ghostpiano/indestructible
+	name = "тандердромное пианино"
+	desc = "Умер? Поплачь об этом через музыку"
+	resistance_flags = INDESTRUCTIBLE
+	max_integrity = 1000
+	armor = list("melee" = 99, "bullet" = 99, "laser" = 99, "energy" = 100, "bomb" = 99, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)

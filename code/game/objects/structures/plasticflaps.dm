@@ -113,3 +113,10 @@
 
 /obj/structure/plasticflaps/mining/CanAtmosPass(turf/T, vertical)
 	return FALSE
+
+/obj/structure/plasticflaps
+
+/obj/structure/plasticflaps/indestructible
+	resistance_flags = INDESTRUCTIBLE
+	max_integrity = 1000
+	armor = list("melee" = 100, "bullet" = 99, "laser" = 99, "energy" = 100, "bomb" = 99, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)

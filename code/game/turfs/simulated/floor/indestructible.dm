@@ -342,3 +342,47 @@
 
 /turf/simulated/floor/indestructible/view_portal/dense
 	density = TRUE
+
+
+/turf/simulated/floor/indestructible/bluespace
+	slowdown = -1
+	icon_state = "bluespace"
+	desc = "Through a series of micro-teleports, these tiles let people move at incredible speeds."
+	floor_tile = /obj/item/stack/tile/bluespace
+
+/turf/simulated/floor/indestructible/sepia
+	slowdown = 2
+	icon_state = "sepia"
+	desc = "Time seems to flow very slowly around these tiles."
+	floor_tile = /obj/item/stack/tile/sepia
+
+/turf/simulated/floor/indestructible/wood
+	icon_state = "wood"
+	floor_tile = /obj/item/stack/tile/wood
+
+/turf/simulated/floor/indestructible/shuttle
+	name = "floor"
+	icon = 'icons/turf/shuttle/floors.dmi'
+	icon_state = "floor"
+
+/turf/simulated/floor/indestructible/noslip
+	name = "high-traction floor"
+	icon_state = "noslip"
+	floor_tile = /obj/item/stack/tile/noslip
+	slowdown = -0.3
+
+
+/turf/simulated/floor/indestructible/lubed
+	name = "slippery floor"
+	icon_state = "floor"
+
+/turf/simulated/floor/indestructible/lubed/Initialize(mapload)
+	. = ..()
+	MakeSlippery(TURF_WET_LUBE, INFINITY, 0, INFINITY, TRUE)
+
+/turf/simulated/floor/indestructible/lubed/pry_tile(obj/item/C, mob/user, silent = FALSE) //I want to get off Mr Honk's Wild Ride
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		to_chat(H, span_warning("You lose your footing trying to pry off the tile!"))
+		H.slip(10 SECONDS, src, TURF_WET_LUBE)
+	return

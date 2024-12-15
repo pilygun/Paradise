@@ -154,6 +154,13 @@
 /obj/structure/punji_sticks/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, 20, 30, 100, 6 SECONDS, CALTROP_BYPASS_SHOES)
+	
+/obj/structure/punji_sticks/indestructible
+	name = "Подляный бабук"
+	desc = "Лучше не бегать рядом с ним"
+	resistance_flags = INDESTRUCTIBLE
+	max_integrity = 1000
+	armor = list("melee" = 99, "bullet" = 99, "laser" = 99, "energy" = 100, "bomb" = 99, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 
 /////////BONFIRES//////////
 

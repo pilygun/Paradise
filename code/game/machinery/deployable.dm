@@ -137,6 +137,13 @@
 	canSmoothWith = SMOOTH_GROUP_SECURITY_BARRICADE + SMOOTH_GROUP_SANDBAGS + SMOOTH_GROUP_WALLS
 	stacktype = null
 
+/obj/structure/barricade/sandbags/indestructible
+	name = "мешки с песком"
+	desc = "Там точно песок? Кажется что бетон"
+	resistance_flags = INDESTRUCTIBLE
+	max_integrity = 1000
+	armor = list("melee" = 99, "bullet" = 99, "laser" = 99, "energy" = 100, "bomb" = 99, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+
 /obj/structure/barricade/security
 	name = "security barrier"
 	desc = "A deployable barrier. Provides good cover in fire fights."
