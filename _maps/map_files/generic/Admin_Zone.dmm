@@ -4,17 +4,13 @@
 /turf/simulated/floor/wood,
 /area/admin)
 "ac" = (
-/turf/simulated/floor/indestructible{
-	icon_state = "floor"
-	},
+/turf/simulated/floor/indestructible/snow,
 /area/tdome/newtdome)
 "ad" = (
 /obj/machinery/door/poddoor/shutters/invincible{
 	id_tag = "TD_CloseCombat"
 	},
-/turf/simulated/floor/indestructible{
-	icon_state = "floor"
-	},
+/turf/simulated/floor/indestructible/snow,
 /area/tdome/newtdome)
 "ah" = (
 /obj/structure/table/wood/poker,
@@ -630,7 +626,7 @@
 /turf/simulated/floor/wood,
 /area/admin)
 "ga" = (
-/turf/simulated/wall/indestructible,
+/turf/simulated/wall/indestructible/snow,
 /area/tdome/newtdome/CQC)
 "ge" = (
 /obj/structure/table/wood,
@@ -1345,6 +1341,12 @@
 	icon_state = "floor"
 	},
 /area/holodeck/source_basketball)
+"nl" = (
+/obj/structure/flora/tree/pine/xmas{
+	armor = list("melee" = 1000, "bullet" = 1000, "laser" = 1000, "energy" = 1000, "bomb" = 1000, "bio" = 1000, "rad" = 1000, "fire" = 500, "acid" = 500)
+	},
+/turf/simulated/floor/indestructible/snow,
+/area/tdome/newtdome/CQC)
 "nu" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/simulated/floor/holofloor{
@@ -2175,9 +2177,7 @@
 	},
 /area/admin)
 "yQ" = (
-/turf/simulated/floor/indestructible{
-	icon_state = "floor"
-	},
+/turf/simulated/floor/indestructible/snow,
 /area/tdome/newtdome/CQC)
 "yT" = (
 /obj/structure/table/wood,
@@ -2535,6 +2535,9 @@
 	icon_state = "green"
 	},
 /area/holodeck/source_boxingcourt)
+"CC" = (
+/turf/simulated/wall/indestructible/snow,
+/area/space)
 "CD" = (
 /obj/structure/chair/stool/holostool,
 /turf/simulated/floor/holofloor{
@@ -3816,9 +3819,7 @@
 /obj/minigame_anchor/thunderdome_poller/melee,
 /obj/minigame_anchor/thunderdome_poller/mixed,
 /obj/minigame_anchor/thunderdome_poller/ranged,
-/turf/simulated/floor/indestructible{
-	icon_state = "floor"
-	},
+/turf/simulated/floor/indestructible/snow,
 /area/tdome/newtdome/CQC)
 "UB" = (
 /obj/structure/table/wood,
@@ -4182,7 +4183,7 @@
 /turf/space,
 /area/space)
 "Yz" = (
-/turf/simulated/wall/indestructible,
+/turf/simulated/wall/indestructible/snow,
 /area/tdome/newtdome)
 "YC" = (
 /turf/simulated/floor/beach/sand,
@@ -59375,29 +59376,29 @@ Yq
 Yq
 Yq
 Yq
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
 Yq
 Yq
 Yq
@@ -59632,7 +59633,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 Yz
 ac
@@ -59654,7 +59655,7 @@ ac
 ac
 Yz
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -59889,7 +59890,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 Yz
@@ -59911,7 +59912,7 @@ ac
 Yz
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -60146,7 +60147,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -60168,7 +60169,7 @@ ac
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -60403,7 +60404,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -60425,7 +60426,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -60660,7 +60661,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -60682,7 +60683,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -60917,7 +60918,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -60939,7 +60940,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -61174,7 +61175,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 Yz
@@ -61196,7 +61197,7 @@ ad
 Yz
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -61431,7 +61432,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -61453,7 +61454,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -61688,7 +61689,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -61710,7 +61711,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -61945,7 +61946,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -61967,7 +61968,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -62202,7 +62203,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 Yz
 ac
@@ -62212,7 +62213,7 @@ ga
 yQ
 yQ
 ga
-yQ
+nl
 Uw
 yQ
 ga
@@ -62224,7 +62225,7 @@ ad
 ac
 Yz
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -62459,7 +62460,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -62481,7 +62482,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -62716,7 +62717,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -62738,7 +62739,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -62973,7 +62974,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -62995,7 +62996,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -63230,7 +63231,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 Yz
@@ -63252,7 +63253,7 @@ ad
 Yz
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -63487,7 +63488,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -63509,7 +63510,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -63744,7 +63745,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -63766,7 +63767,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -64001,7 +64002,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -64023,7 +64024,7 @@ ad
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -64258,7 +64259,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 ac
@@ -64280,7 +64281,7 @@ ac
 ac
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -64515,7 +64516,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 ac
 Yz
@@ -64537,7 +64538,7 @@ ac
 Yz
 ac
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -64772,7 +64773,7 @@ Yq
 Yq
 Yq
 Yq
-QQ
+CC
 ac
 Yz
 ac
@@ -64794,7 +64795,7 @@ ac
 ac
 Yz
 ac
-QQ
+CC
 Yq
 Yq
 Yq
@@ -65029,29 +65030,29 @@ Yq
 Yq
 Yq
 Yq
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
-QQ
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
+CC
 Yq
 Yq
 Yq
