@@ -378,6 +378,7 @@
 			else
 				occupant_message("<font color='red'>Recalibration failed.</font>")
 				log_message("Recalibration of coordination system failed with 1 error.",1)
+
 	if(href_list["drop_from_cargo"])
 		var/atom/movable/cargo_thing = locateUID(href_list["drop_from_cargo"])
 		if(istype(cargo_thing) && (cargo_thing in cargo))
@@ -385,4 +386,15 @@
 			cargo_thing.forceMove(loc)
 			cargo -= cargo_thing
 			log_message("Unloaded [cargo_thing]. Cargo compartment capacity: [cargo_capacity - length(cargo)]")
+
+	//debug
+	/*
+	if(href_list["debug"])
+		if(href_list["set_i_dam"])
+			setInternalDamage(afilter.getNum("set_i_dam"))
+		if(href_list["clear_i_dam"])
+			clearInternalDamage(afilter.getNum("clear_i_dam"))
+		return
+	*/
+
 	return

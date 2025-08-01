@@ -589,7 +589,6 @@
 /area/security/permabrig)
 "afs" = (
 /obj/structure/chair/stool,
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plating,
 /area/security/permabrig)
 "afz" = (
@@ -665,7 +664,6 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel,
 /area/security/permabrig)
 "agf" = (
@@ -1127,7 +1125,6 @@
 "ajO" = (
 /obj/structure/chair/stool,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plating{
 	icon_state = "asteroidplating"
 	},
@@ -1569,7 +1566,6 @@
 	network = list("Prison","SS13")
 	},
 /obj/item/bedsheet/patriot,
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel,
 /area/security/permabrig)
 "amj" = (
@@ -8594,7 +8590,6 @@
 	dir = 1;
 	initialize_directions = 11
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel,
 /area/security/permabrig)
 "bne" = (
@@ -33303,7 +33298,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel,
 /area/security/permabrig)
 "fHT" = (
@@ -39251,12 +39245,6 @@
 	},
 /turf/simulated/floor/plasteel,
 /area/security/main)
-"hvB" = (
-/obj/effect/landmark/join_late_prisoner,
-/turf/simulated/floor/plating{
-	icon_state = "asteroidplating"
-	},
-/area/security/permabrig)
 "hvH" = (
 /obj/machinery/autolathe,
 /obj/machinery/door/firedoor,
@@ -39482,7 +39470,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/atmospherics)
 "hyJ" = (
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
@@ -61777,10 +61764,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/crew_quarters/fitness)
-"nMU" = (
-/obj/effect/landmark/join_late_prisoner,
-/turf/simulated/floor/plating,
-/area/security/permabrig)
 "nNd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
@@ -73509,13 +73492,6 @@
 	icon_state = "asteroidplating"
 	},
 /area/crew_quarters/theatre)
-"raz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/prisoner,
-/turf/simulated/floor/plating{
-	icon_state = "asteroidplating"
-	},
-/area/security/permabrig)
 "raH" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/simulated/floor/plasteel{
@@ -74844,12 +74820,6 @@
 /obj/effect/spawner/window/reinforced,
 /turf/simulated/floor/plating,
 /area/medical/cmostore)
-"rwm" = (
-/obj/effect/landmark/start/prisoner,
-/turf/simulated/floor/plating{
-	icon_state = "asteroidplating"
-	},
-/area/security/permabrig)
 "rwo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -78465,7 +78435,6 @@
 	network = list("Prison","SS13")
 	},
 /obj/item/bedsheet/purple,
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel,
 /area/security/permabrig)
 "swq" = (
@@ -89349,7 +89318,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -90385,10 +90353,7 @@
 /area/security/podbay)
 "vZR" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/library/checkout{
-	dir = 4;
-	pixel_y = 5
-	},
+/obj/machinery/computer/library/checkout,
 /turf/simulated/floor/carpet,
 /area/library)
 "vZZ" = (
@@ -91348,10 +91313,6 @@
 /obj/effect/spawner/lootdrop/maintenance/double,
 /turf/simulated/floor/plating,
 /area/maintenance/disposal/north)
-"woT" = (
-/obj/effect/landmark/start/prisoner,
-/turf/simulated/floor/plasteel,
-/area/security/permabrig)
 "woU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/bluespace_beacon,
@@ -97431,10 +97392,7 @@
 /area/quartermaster/office)
 "ydI" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/library/public{
-	dir = 4;
-	pixel_y = 5
-	},
+/obj/machinery/computer/library/public,
 /turf/simulated/floor/wood/fancy/light,
 /area/library)
 "yep" = (
@@ -116488,7 +116446,7 @@ abO
 xvE
 aQL
 rHj
-woT
+vdq
 vdq
 adD
 bna
@@ -116497,7 +116455,7 @@ bEW
 dJs
 ajN
 akf
-nMU
+vNP
 alp
 afd
 htk
@@ -116755,7 +116713,7 @@ oQy
 ajO
 adc
 vdq
-hvB
+rHj
 afd
 cIY
 iMa
@@ -117002,7 +116960,7 @@ abO
 dmK
 vNP
 aQL
-raz
+adc
 rHj
 vNP
 aQL
@@ -117784,7 +117742,7 @@ dpl
 dpl
 vNC
 vNP
-rwm
+rHj
 vdq
 afd
 sPV

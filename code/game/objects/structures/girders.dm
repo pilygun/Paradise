@@ -5,17 +5,11 @@
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	var/state = GIRDER_NORMAL
-	/// Percentage chance that a projectile passes through the girder.
-	var/girderpasschance = 20
+	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	max_integrity = 200
-	/// If the girder can be moved around by crowbarring it.
-	var/can_displace = TRUE
-	/// Used to determine amount returned in deconstruction.
-	var/metalUsed = 2
+	var/can_displace = TRUE //If the girder can be moved around by crowbarring it
+	var/metalUsed = 2 //used to determine amount returned in deconstruction
 	var/metal_type = /obj/item/stack/sheet/metal
-
-/obj/structure/girder/add_debris_element()
-	AddElement(/datum/element/debris, DEBRIS_SPARKS, -40, 8, 1)
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()

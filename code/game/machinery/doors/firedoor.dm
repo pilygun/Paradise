@@ -94,10 +94,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		set_light_on(FALSE)
 		return
-	if(active_alarm)
-		set_light(1, 0.5, COLOR_RED_LIGHT)
-	else
-		set_light(1, LIGHTING_MINIMUM_POWER)
+	set_light_on(active_alarm)
 
 
 /obj/machinery/door/firedoor/extinguish_light(force = FALSE)
@@ -230,10 +227,10 @@
 	switch(animation)
 		if("opening")
 			flick("door_opening", src)
-			playsound(src, 'sound/machines/airlock_ext_open.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/firedoor.ogg', 60, 1)
 		if("closing")
 			flick("door_closing", src)
-			playsound(src, 'sound/machines/airlock_ext_close.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/firedoor.ogg', 60, 1)
 
 
 /obj/machinery/door/firedoor/update_icon_state()

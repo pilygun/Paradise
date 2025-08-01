@@ -103,14 +103,6 @@ GLOBAL_LIST_EMPTY(BSA_modes_list)
 	name = "Блюспейс Артиллерия"
 
 /datum/station_goal/bluespace_cannon/get_report()
-	if(SSmapping.lavaland_theme.lavaland_type == LAVALAND_TYPE_PLASMA)
-		return {"<b>Постройка Блюспейс Артиллерии</b><br>
-			Вам необходимо построить Блюспейс Артиллерию №[rand(1,99)]. \
-			После постройки необходимо проверить работоспособность выстрелив по любой цели.
-			<br><br>
-			Основные части артиллерии должны быть доступны для заказа в отделе снабжения.
-			<br>
-			– Центральное Командование Nanotrasen"}
 	return {"<b>Смена цикла Лазиса</b><br>
 		Вам необходимо построить Блюспейс Артиллерию №[rand(1,99)]. \
 		После постройки необходимо выстрелить по огромному месторождению плазмы на Лазисе, отмеченному как \"[/obj/item/gps/internal/bfl_crack::gpstag]\"".
@@ -118,6 +110,10 @@ GLOBAL_LIST_EMPTY(BSA_modes_list)
 		Основные части артиллерии должны быть доступны для заказа в отделе снабжения.
 		<br>
 		– Центральное Командование Nanotrasen"}
+
+
+/datum/station_goal/bluespace_cannon/can_gain()
+	return SSmapping.lavaland_theme.lavaland_type != LAVALAND_TYPE_PLASMA
 
 
 /datum/station_goal/bluespace_cannon/on_report()
@@ -129,9 +125,10 @@ GLOBAL_LIST_EMPTY(BSA_modes_list)
 /datum/station_goal/bluespace_cannon/check_completion()
 	if(..())
 		return TRUE
-	for(var/obj/machinery/bsa/full/bsa in SSmachines.get_by_type(/obj/machinery/bsa/full))
-		if(bsa.bfl_crack_fired)
-			return TRUE
+
+	if(SSmapping.lavaland_theme.lavaland_type == LAVALAND_TYPE_PLASMA)
+		return TRUE
+
 	return FALSE
 
 /obj/machinery/bsa
@@ -288,7 +285,6 @@ GLOBAL_LIST_EMPTY(BSA_modes_list)
 	var/obj/machinery/computer/bsa_control/controller
 	var/cannon_direction = WEST
 	var/static/image/top_layer = null
-	var/bfl_crack_fired = FALSE
 	var/last_fire_time = 0 // The time at which the gun was last fired
 	var/last_calibrate_time = 0 // The time at which the gun was last fired
 	var/reload_cooldown = BSA_INITIAL_COOLDOWN
@@ -389,15 +385,8 @@ GLOBAL_LIST_EMPTY(BSA_modes_list)
 	new /obj/effect/overlay/temp/blinking_laser(target)
 
 /obj/machinery/bsa/full/proc/check_goal_complete(target_signal)
-	// if lavaland is plasma, goal complete after any shot
-	if(SSmapping.lavaland_theme.lavaland_type == LAVALAND_TYPE_PLASMA)
-		bfl_crack_fired = TRUE
-		return
-	// else check target gps
 	if(!istype(target_signal, /obj/item/gps/internal/bfl_crack))
 		return
-	// Fire at target gps - change lavaland to plasma
-	bfl_crack_fired = TRUE
 	to_chat(usr, span_big("Вы замечаете как планета начинается трястись!"))
 	set_lazis_type(/datum/lavaland_theme/plasma)
 

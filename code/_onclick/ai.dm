@@ -273,8 +273,6 @@
 // AREAS
 
 /mob/living/silicon/ai/proc/MiddleControlClickOn(atom/A)
-	if(!ismalfAI(mind))
-		return
 	var/turf/turf = get_turf(A)
 	if (!turf)
 		return
@@ -285,8 +283,6 @@
 		airlock.AICtrlClick(src)
 
 /mob/living/silicon/ai/MiddleShiftClickOn(atom/A)
-	if(!ismalfAI(mind))
-		return
 	var/turf/turf = get_turf(A)
 	if (!turf)
 		return
@@ -297,8 +293,6 @@
 		airlock.AIShiftClick(src)
 
 /mob/living/silicon/ai/proc/MiddleAltClickOn(atom/A)
-	if(!ismalfAI(mind))
-		return
 	var/turf/turf = get_turf(A)
 	if (!turf)
 		return
@@ -309,8 +303,6 @@
 		airlock.ai_click_alt(src)
 
 /mob/living/silicon/ai/proc/MiddleShiftAltClickOn(atom/A)
-	if(!ismalfAI(mind))
-		return
 	var/turf/turf = get_turf(A)
 	if (!turf)
 		return

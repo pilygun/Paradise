@@ -9,7 +9,7 @@
 	resistance_flags = NONE
 	max_integrity = 250
 	integrity_failure = 25
-	pull_push_slowdown = 1.5
+	pull_push_slowdown = 0.5
 	interaction_flags_click = NEED_HANDS | ALLOW_RESTING
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
@@ -17,7 +17,6 @@
 	var/movable = FALSE // For mobility checks
 	var/propelled = FALSE // Check for fire-extinguisher-driven chairs
 	var/comfort = 0.3
-	var/flip_on_buckled_move = TRUE
 
 /obj/structure/chair/narsie_act()
 	if(prob(20))
@@ -33,22 +32,7 @@
 /obj/structure/chair/Move(atom/newloc, direct = NONE, glide_size_override = 0, update_dir = TRUE)
 	. = ..()
 	handle_rotation()
-	if(flip_on_buckled_move && has_buckled_mobs() && item_chair)
-		addtimer(CALLBACK(src, PROC_REF(flip_buckled_mobs)), 1)
 
-/obj/structure/chair/proc/flip_buckled_mobs()
-	var/flipped = TRUE
-	for(var/mob/living/buckled_mob as anything in buckled_mobs)
-		var/mob/living/carbon/carbon = buckled_mob
-		if(istype(carbon) && carbon.handcuffed)
-			flipped = FALSE
-			continue
-		buckled_mob.Weaken(1 SECONDS)
-		unbuckle_mob(buckled_mob, force = TRUE)
-	if(!flipped)
-		return
-	new item_chair(drop_location())
-	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -204,7 +188,6 @@
 	item_chair = null
 	comfort = 0.6
 	var/image/armrest = null
-	flip_on_buckled_move = FALSE
 
 /obj/structure/chair/comfy/Initialize(mapload)
 	armrest = GetArmrest()
@@ -281,8 +264,6 @@
 	movable = TRUE
 	item_chair = null
 	buildstackamount = 5
-	pull_push_slowdown = 0.5
-	flip_on_buckled_move = FALSE
 
 
 /obj/structure/chair/office/Bump(atom/bumped_atom)
@@ -318,7 +299,6 @@
 	item_chair = null
 	comfort = 0.6
 	var/mutable_appearance/armrest
-	flip_on_buckled_move = FALSE
 
 /obj/structure/chair/sofa/Initialize(mapload)
 	armrest = GetArmrest()
@@ -530,7 +510,6 @@
 	icon_state = "chairold"
 	item_chair = null
 	comfort = 0
-	flip_on_buckled_move = FALSE
 
 // Brass chair
 /obj/structure/chair/brass
@@ -542,7 +521,6 @@
 	item_chair = null
 	comfort = 0.2
 	var/turns = 0
-	flip_on_buckled_move = FALSE
 
 /obj/structure/chair/brass/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)

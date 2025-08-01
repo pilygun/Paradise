@@ -21,8 +21,7 @@
 #define FLOOR_PLANE -10
 
 #define WALL_PLANE -9
-#define BELOW_GAME_PLANE -8
-#define GAME_PLANE -7
+#define GAME_PLANE -8
 
 #define ABOVE_GAME_PLANE -2
 

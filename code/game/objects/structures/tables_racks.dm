@@ -595,9 +595,6 @@
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES
 	resistance_flags = FLAMMABLE
 
-/obj/structure/table/wood/add_debris_element()
-	AddElement(/datum/element/debris, DEBRIS_WOOD, -40, 5)
-
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
 		..()
@@ -853,16 +850,7 @@
  */
 /obj/structure/rack
 	name = "rack"
-	desc = "Белый крупный стелаж, удобен для хранения различных вещей."
-	ru_names = list(
-		NOMINATIVE = "стеллаж",
-		GENITIVE = "стеллажа",
-		DATIVE = "стеллажу",
-		ACCUSATIVE = "стеллаж",
-		INSTRUMENTAL = "стеллажом",
-		PREPOSITIONAL = "стеллаже"
-	)
-	gender = MALE
+	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	layer = TABLE_LAYER
@@ -1076,19 +1064,9 @@
 
 /obj/item/rack_parts
 	name = "rack parts"
-	desc = "Детали разобранного стелажа."
-	ru_names = list(
-		NOMINATIVE = "детали стеллажа",
-		GENITIVE = "деталей стеллажа",
-		DATIVE = "деталям стеллажа",
-		ACCUSATIVE = "детали стеллажа",
-		INSTRUMENTAL = "деталями стеллажа",
-		PREPOSITIONAL = "деталях стеллажа"
-	)
-	gender = MALE
+	desc = "Parts of a rack."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rack_parts"
-	item_state = "rack_parts"
 	flags = CONDUCT
 	materials = list(MAT_METAL=2000)
 	var/building = FALSE

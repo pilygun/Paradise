@@ -14661,10 +14661,6 @@
 	icon_state = "neutral"
 	},
 /area/crew_quarters/serviceyard)
-"bWn" = (
-/obj/effect/landmark/start/prisoner,
-/turf/simulated/floor/plating,
-/area/security/permabrig)
 "bWo" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -18769,7 +18765,6 @@
 /obj/structure/mirror{
 	pixel_x = 26
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
@@ -21909,7 +21904,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plating,
 /area/security/permabrig)
 "cUA" = (
@@ -28734,7 +28728,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plating,
 /area/security/permabrig)
 "eeT" = (
@@ -29466,7 +29459,6 @@
 	},
 /area/toxins/mixing)
 "enz" = (
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "green"
@@ -29862,7 +29854,6 @@
 /obj/item/radio/intercom/locked/prison{
 	pixel_y = -28
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel,
 /area/security/permabrig)
 "erG" = (
@@ -42659,12 +42650,6 @@
 /obj/structure/lattice/catwalk,
 /turf/space/openspace,
 /area/space)
-"gLv" = (
-/obj/effect/landmark/start/prisoner,
-/turf/simulated/floor/plating{
-	icon_state = "asteroidplating"
-	},
-/area/security/permabrig)
 "gLA" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/plasteel{
@@ -47858,7 +47843,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plating{
 	icon_state = "asteroidplating"
 	},
@@ -63723,10 +63707,6 @@
 	icon_state = "darkyellow"
 	},
 /area/engineering/break_room)
-"kPF" = (
-/obj/effect/landmark/join_late_prisoner,
-/turf/simulated/floor/plating,
-/area/security/permabrig)
 "kPI" = (
 /obj/structure/cable/orange{
 	icon_state = "0-2"
@@ -102752,7 +102732,6 @@
 	},
 /obj/item/bedsheet/purple,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel,
 /area/security/permabrig)
 "swz" = (
@@ -107322,11 +107301,6 @@
 	icon_state = "navyblue"
 	},
 /area/turret_protected/ai)
-"toH" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/landmark/start/prisoner,
-/turf/simulated/floor/plating,
-/area/security/permabrig)
 "toM" = (
 /obj/machinery/status_display/supply_display,
 /turf/simulated/wall,
@@ -111690,7 +111664,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plating,
 /area/security/permabrig)
 "udX" = (
@@ -113347,7 +113320,6 @@
 /area/assembly/robotics)
 "uuu" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/effect/landmark/join_late_prisoner,
 /turf/simulated/floor/plating{
 	icon_state = "asteroidplating"
 	},
@@ -113528,7 +113500,6 @@
 /obj/item/radio/intercom/locked/prison{
 	pixel_y = -28
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel,
 /area/security/permabrig)
 "uvZ" = (
@@ -121585,10 +121556,7 @@
 /area/hallway/primary/starboard/south)
 "vZR" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/library/checkout{
-	dir = 4;
-	pixel_y = 5
-	},
+/obj/machinery/computer/library/checkout,
 /turf/simulated/floor/carpet,
 /area/library)
 "vZS" = (
@@ -127109,12 +127077,6 @@
 	},
 /turf/simulated/floor/plasteel,
 /area/security/prisonershuttle)
-"xbY" = (
-/obj/effect/landmark/start/prisoner,
-/turf/simulated/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/security/permabrig)
 "xbZ" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -132667,10 +132629,7 @@
 /area/quartermaster/lobby)
 "ydI" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/library/public{
-	pixel_y = 5;
-	dir = 1
-	},
+/obj/machinery/computer/library/public,
 /turf/simulated/floor/wood/fancy/light,
 /area/library)
 "ydJ" = (
@@ -149476,7 +149435,7 @@ kdD
 akf
 tqJ
 xhG
-bWn
+vlC
 taF
 loL
 xrV
@@ -150506,9 +150465,9 @@ vlC
 fkp
 jOu
 iWD
-bWn
+vlC
 qHh
-toH
+aqa
 aqa
 veJ
 vvl
@@ -150750,7 +150709,7 @@ mvI
 naQ
 fkp
 aYV
-kPF
+vlC
 qQM
 uwa
 fRw
@@ -151020,14 +150979,14 @@ dQE
 fkp
 fop
 vlC
-bWn
+vlC
 eub
-toH
+aqa
 veJ
 aqa
 vvl
 pGM
-xbY
+aZj
 aZj
 fkp
 aeM
@@ -151271,7 +151230,7 @@ xvE
 loL
 enz
 bzl
-gLv
+loL
 aeI
 dnW
 fkp

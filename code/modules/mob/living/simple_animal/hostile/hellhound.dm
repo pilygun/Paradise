@@ -2,16 +2,7 @@
 /mob/living/simple_animal/hostile/hellhound
 	// Sprites by FoS: https://www.paradisestation.org/forum/profile/335-fos
 	name = "lesser hellhound"
-	desc = "Чёрное существо с демоническим обликом, горящими красными глазами и острыми клыками, словно вышедшее из преисподней. С его тела стекает лава."
-	ru_names = list(
-		NOMINATIVE = "низший адский пёс",
-		GENITIVE = "низшего адского пса",
-		DATIVE = "низшему адскому псу",
-		ACCUSATIVE = "низшего адского пса",
-		INSTRUMENTAL = "низшим адским псом",
-		PREPOSITIONAL = "низшем адском псе"
-	)
-	gender = MALE
+	desc = "A demonic-looking black canine monster with glowing red eyes and sharp teeth. A firey, lava-like substance drips from it."
 	icon_state = "hellhound"
 	icon_living = "hellhound"
 	icon_dead = "hellhound_dead"
@@ -74,20 +65,20 @@
 	if(stat != DEAD)
 		var/list/msgs = list()
 		if(key)
-			msgs += span_warning("Its eyes have the spark of intelligence.")
+			msgs += "<span class='warning'>Its eyes have the spark of intelligence.</span>"
 		if(health > (maxHealth*0.95))
-			msgs += span_notice("It appears to be in excellent health.")
+			msgs += "<span class='notice'>It appears to be in excellent health.</span>"
 		else if(health > (maxHealth*0.75))
-			msgs += span_notice("It has a few injuries.")
+			msgs += "<span class='notice'>It has a few injuries.</span>"
 		else if(health > (maxHealth*0.55))
-			msgs += span_warning("It has many injuries.")
+			msgs += "<span class='warning'>It has many injuries.</span>"
 		else if(health > (maxHealth*0.25))
-			msgs += span_warning("It is covered in wounds!")
+			msgs += "<span class='warning'>It is covered in wounds!</span>"
 		if(resting)
 			if(getBruteLoss() || getFireLoss())
-				msgs += span_warning("It is currently licking its wounds, regenerating the damage to its body!")
+				msgs += "<span class='warning'>It is currently licking its wounds, regenerating the damage to its body!</span>"
 			else
-				msgs += span_notice("It is currently resting.")
+				msgs += "<span class='notice'>It is currently resting.</span>"
 		. += msgs.Join("<br>")
 
 /mob/living/simple_animal/hostile/hellhound/Life(seconds, times_fired)
@@ -95,7 +86,7 @@
 	if(stat != DEAD && resting && (getBruteLoss() || getFireLoss()))
 		if(life_regen_cycles >= life_regen_cycle_trigger)
 			life_regen_cycles = 0
-			to_chat(src, span_notice("You lick your wounds, helping them close."))
+			to_chat(src, "<span class='notice'>You lick your wounds, helping them close.</span>")
 			heal_overall_damage(life_regen_amount, life_regen_amount)
 		else
 			life_regen_cycles++
@@ -120,7 +111,7 @@
 
 /mob/living/simple_animal/hostile/hellhound/greater
 	name = "greater hellhound"
-	desc = "Чёрное существо с демоническим обликом, горящими красными глазами и острыми клыками, словно вышедшее из преисподней. Высшие гончие намного сильнее своих низших сородичей, и обычно их призывают могущественные существа из блюспейс пространства."
+	desc = "A demonic-looking black canine monster with glowing red eyes and sharp teeth. Greater hounds are far stronger than their lesser kin, and typically employed by powerful bluespace entities."
 	icon_state = "hellhoundgreater"
 	icon_living = "hellhoundgreater"
 	icon_resting = "hellhoundgreater_sit"
@@ -172,20 +163,3 @@
 	var/datum/effect_system/fluid_spread/smoke/sleeping/smoke = new
 	smoke.set_up(amount = 10, location = loc)
 	smoke.start()
-
-/mob/living/simple_animal/hostile/hellhound/tear
-	name = "frenzied hellhound"
-	desc = "Чёрное существо с демоническим обликом, горящими красными глазами и острыми клыками, словно вышедшее из преисподней. С его тела стекает лава. Он далеко не обычный низший пёс."
-	ru_names = list(
-		NOMINATIVE = "бешеный адский пёс",
-		GENITIVE = "бешеного адского пса",
-		DATIVE = "бешеному адскому псу",
-		ACCUSATIVE = "бешеного адского пса",
-		INSTRUMENTAL = "бешеным адским псом",
-		PREPOSITIONAL = "бешеном адском псе"
-	)
-	maxHealth = 300
-	health = 300
-	melee_damage_lower = 30
-	melee_damage_upper = 50
-	faction = list("rift")

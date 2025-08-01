@@ -61,7 +61,6 @@
 	)
 	icon = 'icons/obj/library.dmi'
 	icon_state = "mimemanual"
-	item_state = "mimemanual"
 	var/used = FALSE
 
 /obj/item/mimejutsu_scroll/attack_self(mob/user as mob)

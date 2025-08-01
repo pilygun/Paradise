@@ -1,15 +1,12 @@
-/// Temporary visual effects.
+//temporary visual effects
 /obj/effect/temp_visual
 	icon_state = "nothing"
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	/// How long before the temp_visual gets deleted.
-	var/duration = 1 SECONDS
-	/// Timer that our duration is stored in.
-	var/timerid
-	/// Gives our effect a random direction on init.
+	var/duration = 10 //in deciseconds
 	var/randomdir = TRUE
+	var/timerid
 
 /obj/effect/temp_visual/Initialize(mapload)
 	. = ..()

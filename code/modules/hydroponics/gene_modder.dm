@@ -274,7 +274,7 @@
 
 	var/mob/user = ui.user
 
-	target = locateUID(params["id"])
+	target = seed?.get_gene(params["id"])
 
 	switch(action)
 		if("eject_seed")

@@ -9,8 +9,6 @@
 	move_resist = INFINITY
 	anchored = TRUE
 
-/obj/effect/add_debris_element() // They're not hittable, and prevents recursions.
-	return
 
 /obj/effect/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	return
@@ -111,10 +109,8 @@
 /obj/effect/decal
 	plane = FLOOR_PLANE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	/// If it has this, don't let it be scooped up.
-	var/no_scoop = FALSE
-	/// If it has this, don't delete it when its' scooped up.
-	var/no_clear = FALSE
+	var/no_scoop = FALSE   //if it has this, don't let it be scooped up
+	var/no_clear = FALSE    //if it has this, don't delete it when its' scooped up
 	var/list/scoop_reagents = null
 
 /obj/effect/decal/Initialize(mapload)
@@ -135,14 +131,14 @@
 /obj/effect/decal/proc/scoop(obj/item/I, mob/user)
 	if(reagents && I.reagents && !no_scoop)
 		if(!reagents.total_volume)
-			to_chat(user, span_notice("There isn't enough [src] to scoop up!"))
+			to_chat(user, "<span class='notice'>There isn't enough [src] to scoop up!</span>")
 			return
 		if(I.reagents.total_volume >= I.reagents.maximum_volume)
-			to_chat(user, span_notice("[I] is full!"))
+			to_chat(user, "<span class='notice'>[I] is full!</span>")
 			return
-		to_chat(user, span_notice("You scoop [src] into [I]!"))
+		to_chat(user, "<span class='notice'>You scoop [src] into [I]!</span>")
 		reagents.trans_to(I, reagents.total_volume)
-		if(!reagents.total_volume && !no_clear) // Scooped up all of it.
+		if(!reagents.total_volume && !no_clear) //scooped up all of it
 			qdel(src)
 
 /obj/effect/decal/ex_act()
@@ -154,7 +150,7 @@
 /obj/effect/decal/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume, global_overlay = TRUE)
 	if(reagents)
 		reagents.temperature_reagents(exposed_temperature)
-	if(!(resistance_flags & FIRE_PROOF)) // Non fire proof decal or being burned by lava.
+	if(!(resistance_flags & FIRE_PROOF)) //non fire proof decal or being burned by lava
 		qdel(src)
 
 /obj/effect/decal/blob_act(obj/structure/blob/B)

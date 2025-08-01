@@ -194,14 +194,20 @@
 
 	return spawned
 
+/*
+//
+//	UPLINK ITEMS
+//
+*/
+//Work in Progress, job specific antag tools
+
 //Discounts (dynamically filled above)
 
 /datum/uplink_item/discounts
 	category = "Снаряжение со скидкой"
 
-/**
- * MARK: Job Specific Gear
- */
+//Job specific gear
+
 /datum/uplink_item/jobspecific
 	category = "Профессиональные предметы"
 	can_discount = FALSE
@@ -590,8 +596,8 @@
 	hijack_only = TRUE
 
 /datum/uplink_item/jobspecific/random_spell_book
-	name = "Случайный гримуар"
-	desc = "Случайный гримуар, который мы позаимствовали у Федерации Космических Волшебников."
+	name = "Случайная книга заклинаний"
+	desc = "Случайная книга заклинаний, которую мы позаимствовали у Федерации Космических Волшебников."
 	item = /obj/item/spellbook/oneuse/random
 	cost = 25
 	job = list(JOB_TITLE_LIBRARIAN)
@@ -764,9 +770,8 @@
 	cost = 12
 	race = list(SPECIES_GREY)
 
-/**
- * MARK: Dangerous Weapons
- */
+// DANGEROUS WEAPONS
+
 /datum/uplink_item/dangerous
 	category = "Очень заметное и опасное оружие"
 
@@ -951,9 +956,8 @@
 	refundable = TRUE
 	can_discount = TRUE
 
-/**
- * MARK: Support & Mechas
- */
+// SUPPORT AND MECHAS
+
 /datum/uplink_item/support
 	category = "Поддержка и механизированные экзоскелеты"
 	surplus = 0
@@ -1018,9 +1022,8 @@
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	refund_path = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 
-/**
- * MARK: Ammunition
- */
+// Ammunition
+
 /datum/uplink_item/ammo
 	category = "Боеприпасы"
 	surplus = 40
@@ -1280,9 +1283,8 @@
 	cost = 4
 	excludefrom = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 
-/**
- * MARK: Stealthy Weapons
- */
+// STEALTHY WEAPONS
+
 /datum/uplink_item/stealthy_weapons
 	category = "Незаметное и тихое оружие"
 
@@ -1423,9 +1425,8 @@
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 7
 
-/**
- * MARK: Grenades & Explosives
- */
+// GRENADES AND EXPLOSIVES
+
 /datum/uplink_item/explosives
 	category = "Гранаты и взрывчатка"
 
@@ -1610,9 +1611,8 @@
 	item = /obj/item/storage/box/syndie_kit/emp
 	cost = 10
 
-/**
- * MARK: Stealthy Tools
- */
+// STEALTHY TOOLS
+
 /datum/uplink_item/stealthy_tools
 	category = "Предметы для маскировки и незаметной работы"
 
@@ -1754,9 +1754,8 @@
 	item = /obj/item/storage/box/syndie_kit/chameleon_counter
 	cost = 6
 
-/**
- * MARK: Devices & Tools
- */
+// Devices and Tools
+
 /datum/uplink_item/device_tools
 	category = "Девайсы и инструменты"
 
@@ -2061,9 +2060,8 @@
 	cost = 28
 	excludefrom = list(UPLINK_TYPE_NUCLEAR)
 
-/**
- * MARK: Space Suits & Hardsuits
- */
+//Space Suits and Hardsuits
+
 /datum/uplink_item/suits
 	category = "Скафандры и ИКСы"
 	surplus = 40
@@ -2117,9 +2115,8 @@
 	excludefrom = list()
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 
-/**
- * MARK: Implants
- */
+// IMPLANTS
+
 /datum/uplink_item/implants
 	category = "Импланты"
 
@@ -2204,9 +2201,8 @@
 	cost = 100
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 
-/**
- * MARK: Cybernetic Implants
- */
+// Cybernetic Implants
+
 /datum/uplink_item/cyber_implants
 	category = "Кибернетические импланты"
 	surplus = 0
@@ -2270,9 +2266,8 @@
 	surplus = 0
 	uplinktypes = list(UPLINK_TYPE_TRAITOR)
 
-/**
- * MARK: Pointless Badassery
- */
+// POINTLESS BADASSERY
+
 /datum/uplink_item/badass
 	category = "Безделушки"
 	surplus = 0
@@ -2324,9 +2319,8 @@
 	item = /obj/item/syndicate_reverse_card
 	cost = 10
 
-/**
- * MARK: Bundles & TC
- */
+// Bundles and Telecrystals
+
 /datum/uplink_item/bundles_TC
 	category = "Наборы и телекристаллы"
 	surplus = 0
@@ -2451,9 +2445,8 @@
 	cost = 250
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 
-/**
- * MARK: Contractor
- */
+// Contractor
+
 /datum/uplink_item/contractor
 	category = "Контрактник"
 	uplinktypes = list(UPLINK_TYPE_ADMIN)

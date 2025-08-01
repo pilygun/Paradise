@@ -223,16 +223,17 @@
 	layer = ABOVE_MOB_LAYER
 	duration = 4
 
-/obj/effect/temp_visual/pka_explosion
+/obj/effect/temp_visual/explosion
 	name = "explosion"
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "explosionfast"
+	icon_state = "explosion"
 	pixel_x = -32
 	pixel_y = -32
-	duration = 4
+	duration = 8
 
-/obj/effect/temp_visual/pka_explosion/florawave
-	icon_state = "florawave"
+/obj/effect/temp_visual/explosion/fast
+	icon_state = "explosionfast"
+	duration = 4
 
 /obj/effect/temp_visual/blob
 	name = "blob"
@@ -240,6 +241,10 @@
 	alpha = 140
 	randomdir = 0
 	duration = 6
+
+/obj/effect/temp_visual/explosion/florawave
+	icon_state = "florawave"
+	duration = 4
 
 /obj/effect/temp_visual/removing_flora
 	icon = 'icons/effects/effects.dmi'

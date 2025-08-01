@@ -324,7 +324,6 @@
 						shoot_live_shot(user, target, TRUE, message)
 					else
 						shoot_live_shot(user, target, FALSE, message)
-				chambered.after_fire()
 			else
 				shoot_with_empty_chamber(user)
 				break
@@ -347,7 +346,6 @@
 					shoot_live_shot(user, target, TRUE, message)
 				else
 					shoot_live_shot(user, target, FALSE, message)
-			chambered.after_fire()
 		else
 			shoot_with_empty_chamber(user)
 			return

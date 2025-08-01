@@ -2461,13 +2461,6 @@
 	icon_state = "dark"
 	},
 /area/coldcolony/malta/bridge/tcomm)
-"aSv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/join_late_prisoner,
-/turf/simulated/floor/plasteel{
-	icon_state = "darkred"
-	},
-/area/coldcolony/malta/security/permabrig)
 "aSC" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -2887,13 +2880,6 @@
 	icon_state = "purple"
 	},
 /area/coldcolony/malta/research/chargebay)
-"baF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/prisoner,
-/turf/simulated/floor/plasteel{
-	icon_state = "darkred"
-	},
-/area/coldcolony/malta/security/permabrig)
 "baI" = (
 /turf/simulated/wall/r_wall,
 /area/coldcolony/malta/security/securehallway)
@@ -6053,7 +6039,6 @@
 /area/coldcolony/malta/engineering/atmos)
 "cir" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "darkred"
@@ -6847,8 +6832,7 @@
 /area/ruin/unpowered)
 "cxT" = (
 /obj/machinery/photocopier/faxmachine/longrange{
-	department = "Head of Personnel's Office";
-	pixel_y = 2
+	department = "Head of Personnel's Office"
 	},
 /obj/structure/table/wood,
 /turf/simulated/floor/carpet/orange,
@@ -7486,8 +7470,7 @@
 "cHA" = (
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier/faxmachine/longrange{
-	department = "Research Director's Office";
-	pixel_y = 2
+	department = "Research Director's Office"
 	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
@@ -7531,8 +7514,7 @@
 "cIz" = (
 /obj/structure/table/wood,
 /obj/machinery/photocopier/faxmachine/longrange{
-	department = "Head of Security's Office";
-	pixel_y = 2
+	department = "Head of Security's Office"
 	},
 /obj/machinery/power/apc{
 	dir = 1;
@@ -8024,7 +8006,6 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel{
 	icon_state = "darkredcorners"
 	},
@@ -16509,8 +16490,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier/faxmachine/longrange{
-	department = "Quartermaster's Office";
-	pixel_y = 2
+	department = "Quartermaster's Office"
 	},
 /turf/simulated/floor/plasteel,
 /area/coldcolony/malta/quartermaster/qm)
@@ -19066,10 +19046,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/computer/library/checkout{
-	pixel_y = 5;
-	dir = 4
-	},
+/obj/machinery/computer/library/checkout,
 /turf/simulated/floor/plasteel{
 	icon_state = "grimy"
 	},
@@ -28493,8 +28470,7 @@
 /obj/effect/decal/warning_stripes/north,
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier/faxmachine/longrange{
-	department = "Chief Engineer's Office";
-	pixel_y = 2
+	department = "Chief Engineer's Office"
 	},
 /obj/machinery/keycard_auth{
 	pixel_x = 8;
@@ -29379,16 +29355,6 @@
 	icon_state = "dark"
 	},
 /area/coldcolony/malta/bridge/tcomm)
-"kKc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/prisoner,
-/turf/simulated/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/coldcolony/malta/security/permabrig)
 "kKm" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -29864,21 +29830,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/coldcolony/malta/engineering/atmos)
-"kTw" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/landmark/start/prisoner,
-/turf/simulated/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/coldcolony/malta/security/permabrig)
 "kUj" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -43701,8 +43652,7 @@
 "pZT" = (
 /obj/structure/table/wood,
 /obj/machinery/photocopier/faxmachine/longrange{
-	department = "Magistrate's Office";
-	pixel_y = 2
+	department = "Magistrate's Office"
 	},
 /turf/simulated/floor/wood/fancy/light{
 	color = "orange"
@@ -47057,8 +47007,7 @@
 "rgH" = (
 /obj/structure/table/wood,
 /obj/machinery/photocopier/faxmachine/longrange{
-	department = "Chief Medical Officer's Office";
-	pixel_y = 2
+	department = "Chief Medical Officer's Office"
 	},
 /turf/simulated/floor/plasteel/white,
 /area/coldcolony/malta/medical/cmo)
@@ -49170,8 +49119,7 @@
 /area/coldcolony/malta/quartermaster/miningbar)
 "rUz" = (
 /obj/machinery/photocopier/faxmachine/longrange{
-	department = "Captain's Office";
-	pixel_y = 2
+	department = "Captain's Office"
 	},
 /obj/structure/table/wood,
 /obj/machinery/requests_console{
@@ -59978,7 +59926,6 @@
 	},
 /obj/structure/curtain/open/shower,
 /obj/effect/decal/warning_stripes/blue/hollow,
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
@@ -61345,8 +61292,7 @@
 "wsH" = (
 /obj/structure/table/wood,
 /obj/machinery/photocopier/faxmachine/longrange{
-	department = "NT Representative's Office";
-	pixel_y = 2
+	department = "NT Representative's Office"
 	},
 /turf/simulated/floor/carpet/royalblue,
 /area/coldcolony/malta/bridge/ntrep)
@@ -61454,7 +61400,6 @@
 /turf/simulated/floor/plating,
 /area/coldcolony/malta/maintenance/garden)
 "wuS" = (
-/obj/effect/landmark/join_late_prisoner,
 /turf/simulated/floor/plasteel{
 	dir = 6;
 	icon_state = "darkred"
@@ -66112,7 +66057,6 @@
 "ygL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/soap/syndie,
-/obj/effect/landmark/start/prisoner,
 /turf/simulated/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
@@ -108002,11 +107946,11 @@ fTE
 fTE
 wYq
 myV
-kKc
+hHg
 kSd
 lLL
 pTF
-kTw
+eXF
 pxI
 baI
 jLK
@@ -109805,7 +109749,7 @@ ecV
 uTu
 nMW
 fKo
-baF
+gmy
 vnF
 kzc
 vWa
@@ -110833,7 +110777,7 @@ oao
 rNa
 loV
 rbF
-aSv
+gmy
 nWp
 kzc
 kzc

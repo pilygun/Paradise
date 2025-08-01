@@ -2,21 +2,12 @@
  * Library Computer
  */
 /obj/machinery/computer/library/checkout
-	name = "Library Computer"
-	desc = "Старый библиотечный компьютер, хранящий в своей памяти сотни, если не тысячи, книг."
-	ru_names = list(
-		NOMINATIVE = "библиотечный компьютер",
-		GENITIVE = "библиотечного компьютера",
-		DATIVE = "библиотечному компьютеру",
-		ACCUSATIVE = "библиотечный компьютер",
-		INSTRUMENTAL = "библиотечным компьютером",
-		PREPOSITIONAL = "библиотечном компьютере"
-	)
+	name = "Check-In/Out Computer"
 	var/arcanecheckout = 0
 	//var/screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
 	var/buffer_book
 	var/buffer_mob
-	var/upload_category = "Художественная"
+	var/upload_category = "Fiction"
 	var/list/checkouts = list()
 	var/list/inventory = list()
 	var/checkoutperiod = 5 // In minutes
@@ -204,8 +195,7 @@
 	if(density && !emagged)
 		emagged = 1
 		if(user)
-			to_chat(user, span_notice("Вы обходите ограничения печати компьютера."))
-			balloon_alert(user, "взломано")
+			to_chat(user, "<span class='notice'>You override the library computer's printing restrictions.</span>")
 
 
 /obj/machinery/computer/library/checkout/attackby(obj/item/I, mob/user, params)
@@ -216,8 +206,8 @@
 		add_fingerprint(user)
 		var/obj/item/barcodescanner/scanner = I
 		scanner.computer = src
-		atom_say("Сканер был успешно привязан.", FALSE)
-		playsound(src, 'sound/machines/ping.ogg', 20)
+		to_chat(user, span_notice("The [scanner.name]'s associated machine has been set to [src]."))
+		audible_message("The [name] lets out a low, short blip.", hearing_distance = 2)
 		return ATTACK_CHAIN_PROCEED_SUCCESS
 
 	return ..()

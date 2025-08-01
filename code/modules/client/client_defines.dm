@@ -1,21 +1,19 @@
 /client
-	/// Client is casted to /datum so that we're able to use datum variables, search for clients through datums, and not need to duplicate code for GCing
+		//////////////////////
+		//BLACK MAGIC THINGS//
+		//////////////////////
 	parent_type = /datum
 		////////////////
 		//ADMIN THINGS//
 		////////////////
-
-	/// Hides the byond verb panel as we use our own custom version.
+	/// hides the byond verb panel as we use our own custom version
 	show_verb_panel = FALSE
 	var/datum/admins/holder = null
 
-	/// Contains the last message sent by this client - used to protect against copy-paste spamming.
-	var/last_message = ""
-	/// Contains a number of how many times a message identical to last_message was sent.
-	var/last_message_count = 0
-	/// Holds the last time (based on world.time) a message was sent.
-	var/last_message_time = 0
-	var/datum/pm_tracker/pm_tracker
+	var/last_message	= "" //contains the last message sent by this client - used to protect against copy-paste spamming.
+	var/last_message_count = 0 //contains a number of how many times a message identical to last_message was sent.
+	var/last_message_time = 0 //holds the last time (based on world.time) a message was sent
+	var/datum/pm_tracker/pm_tracker = new()
 
 		/////////
 		//OTHER//

@@ -1816,9 +1816,7 @@
 	},
 /obj/structure/table,
 /obj/item/storage/belt/utility,
-/obj/item/crowbar/red{
-	force = 30
-	},
+/obj/item/crowbar/red,
 /turf/simulated/floor/plating,
 /area/ruin/space/pirate_base/lab_maint)
 "eX" = (
@@ -3535,13 +3533,6 @@
 	icon_state = "brown"
 	},
 /area/ruin/space/pirate_base/mining)
-"jK" = (
-/obj/structure/dispenser/oxygen,
-/turf/simulated/floor/plasteel{
-	dir = 1;
-	icon_state = "dark"
-	},
-/area/ruin/space/pirate_base/lab_hall)
 "jM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -5575,7 +5566,9 @@
 /turf/simulated/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 "pq" = (
-/obj/structure/safe/floor,
+/obj/structure/safe/floor{
+	known_by = list("m1911")
+	},
 /obj/item/gun/projectile/automatic/pistol/m1911,
 /obj/item/ammo_box/magazine/m45,
 /obj/item/ammo_box/magazine/m45,
@@ -5595,10 +5588,10 @@
 /turf/simulated/floor/plating,
 /area/ruin/space/pirate_base/prison_solar)
 "pv" = (
+/obj/machinery/computer/slot_machine,
 /obj/structure/sign/poster/contraband/have_a_puff{
 	pixel_x = -32
 	},
-/obj/machinery/computer/slot_machine,
 /turf/simulated/floor/plasteel,
 /area/ruin/space/pirate_base/entertainment)
 "pw" = (
@@ -13948,7 +13941,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
-/obj/machinery/pipedispenser/disposal,
 /turf/simulated/floor/plating,
 /area/ruin/space/pirate_base/lab_maint)
 "OE" = (
@@ -14328,9 +14320,6 @@
 "Pz" = (
 /obj/machinery/light,
 /obj/structure/chair/office/dark,
-/obj/structure/reagent_dispensers/fueltank/chem{
-	pixel_y = -32
-	},
 /turf/simulated/floor/engine,
 /area/ruin/space/pirate_base/virology)
 "PA" = (
@@ -15671,7 +15660,12 @@
 	icon_state = "syndicate"
 	},
 /obj/item/storage/backpack,
-/obj/item/radio/headset,
+/obj/item/card/id/syndicate/anyone{
+	initial_access = list(160,161,162,26)
+	},
+/obj/item/radio/headset/syndicate/alt/syndteam{
+	name = "headset"
+	},
 /turf/simulated/floor/wood,
 /area/ruin/space/pirate_base/security_atrium)
 "TI" = (
@@ -16535,18 +16529,6 @@
 /obj/item/stock_parts/scanning_module,
 /turf/simulated/floor/plating,
 /area/ruin/space/pirate_base/prison_maint)
-"Wq" = (
-/obj/structure/safe/floor{
-	known_by = list("m1911")
-	},
-/obj/item/gun/projectile/automatic/pistol/m1911,
-/obj/item/ammo_box/magazine/m45,
-/obj/item/ammo_box/magazine/m45,
-/turf/simulated/floor/plasteel{
-	dir = 1;
-	icon_state = "dark"
-	},
-/area/ruin/space/pirate_base/lab_hall)
 "Wr" = (
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/structure/cable/yellow{
@@ -17187,6 +17169,30 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-8"
+	},
+/turf/simulated/floor/wood,
+/area/ruin/space/pirate_base/security_atrium)
+"Yu" = (
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/under/pirate,
+/obj/item/clothing/under/pirate_rags,
+/obj/item/clothing/glasses/eyepatch,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/gloves/combat,
+/obj/item/clothing/head/bandana,
+/obj/item/clothing/suit/pirate_black,
+/obj/structure/closet{
+	icon_state = "syndicate"
+	},
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/obj/item/storage/backpack,
+/obj/item/card/id/syndicate/anyone{
+	initial_access = list(160,161,162,26)
+	},
+/obj/item/radio/headset/syndicate/alt/syndteam{
+	name = "headset"
 	},
 /turf/simulated/floor/wood,
 /area/ruin/space/pirate_base/security_atrium)
@@ -23422,7 +23428,7 @@ pQ
 pQ
 iK
 iK
-jK
+iK
 oy
 oE
 ju
@@ -24342,7 +24348,7 @@ NE
 MF
 cS
 cS
-Wq
+iK
 GU
 BW
 Ma
@@ -25644,7 +25650,7 @@ gq
 NY
 BM
 SA
-TE
+Yu
 BM
 BM
 yn
@@ -25851,7 +25857,7 @@ SL
 Vl
 BM
 SA
-TE
+Yu
 Yi
 bb
 HG

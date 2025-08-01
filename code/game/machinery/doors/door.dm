@@ -15,7 +15,7 @@
 	pass_flags_self = PASSDOOR
 	var/closingLayer = CLOSED_DOOR_LAYER
 	var/visible = 1
-	/// Is it currently in the process of opening, closing or being tampered
+	/// Is it currently in the process of opening or closing.
 	var/operating = NONE
 	var/autoclose = 0
 	/// Whether the door detects things and mobs in its way and reopen or crushes them.
