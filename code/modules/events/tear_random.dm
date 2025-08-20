@@ -21,7 +21,17 @@
 
 /obj/effect/tear/random
 	name = "randomensional tear"
+<<<<<<< HEAD
 	ru_names = list(
+=======
+	desc = "Мощный пространственно-временной разрыв."
+	leader = null
+	possible_mobs = list()
+	var/static/list/hostile_mobs
+
+/obj/effect/tear/random/get_ru_names()
+	return list(
+>>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404
 		NOMINATIVE = "рандомысленный разрыв",
 		GENITIVE = "рандомысленного разрыва",
 		DATIVE = "рандомысленному разрыву",
@@ -29,10 +39,13 @@
 		INSTRUMENTAL = "рандомысленным разрывом",
 		PREPOSITIONAL = "рандомысленном разрыве"
 	)
+<<<<<<< HEAD
 	desc = "Мощный пространственно-временной разрыв."
 	leader = null
 	possible_mobs = list()
 	var/static/list/hostile_mobs
+=======
+>>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404
 
 /obj/effect/tear/random/Initialize(mapload)
 	if(!hostile_mobs)

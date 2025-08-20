@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * In this file you can find the particle component for bullet hits
+=======
+ * In this file you can find the particle element for bullet hits.
+>>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404
  * Originally from TGMC.
  */
 
@@ -7,6 +11,7 @@
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
+<<<<<<< HEAD
 	/// Icon state of debris when impacted by a projectile
 	var/debris = null
 	/// Velocity of debris particles
@@ -14,6 +19,15 @@
 	/// Amount of debris particles
 	var/debris_amount = 8
 	/// Scale of particle debris
+=======
+	/// Icon state of debris when impacted by a projectile.
+	var/debris = null
+	/// Velocity of debris particles.
+	var/debris_velocity = -40
+	/// Amount of debris particles.
+	var/debris_amount = 8
+	/// Scale of particle debris.
+>>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404
 	var/debris_scale = 1
 
 /datum/element/debris/Attach(datum/target, _debris_icon_state, _debris_velocity = -40, _debris_amount = 8, _debris_scale = 1)
@@ -22,7 +36,11 @@
 	debris_velocity = _debris_velocity
 	debris_amount = _debris_amount
 	debris_scale = _debris_scale
+<<<<<<< HEAD
 	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(register_for_impact), TRUE) // Override because the element gets overriden.
+=======
+	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(register_for_impact), override = TRUE) // Override because the element gets overriden.
+>>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404
 
 /datum/element/debris/Detach(datum/source, force)
 	. = ..()
@@ -32,8 +50,13 @@
 	SIGNAL_HANDLER // COMSIG_ATOM_BULLET_ACT
 	INVOKE_ASYNC(src, PROC_REF(on_impact), source, proj)
 
+<<<<<<< HEAD
 /datum/element/debris/proc/on_impact(datum/source, obj/projectile/P)
 	var/angle = !isnull(P.Angle) ? P.Angle : round(get_angle(P.starting, source), 1)
+=======
+/datum/element/debris/proc/on_impact(datum/source, obj/projectile/proj)
+	var/angle = !isnull(proj.Angle) ? proj.Angle : round(get_angle(proj.starting, source), 1)
+>>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404
 	var/x_component = sin(angle) * debris_velocity
 	var/y_component = cos(angle) * debris_velocity
 	var/x_component_smoke = sin(angle) * -37
@@ -43,11 +66,22 @@
 	var/obj/effect/abstract/particle_holder_tgmc/smoke_visuals
 	var/position_offset = rand(-6, 6)
 
+<<<<<<< HEAD
+=======
+	// Removing the effect of disabler or taser hits.
+	if(proj.nodamage || proj.damage_type == STAMINA)
+		return
+
+>>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404
 	smoke_visuals = new(source, /particles/impact_smoke)
 	smoke_visuals.particles.position = list(position_offset, position_offset)
 	smoke_visuals.particles.velocity = list(x_component_smoke, y_component_smoke)
 
+<<<<<<< HEAD
 	if(debris && P.damage_type == BRUTE)
+=======
+	if(debris && proj.damage_type == BRUTE)
+>>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404
 		debris_visuals = new(source, /particles/debris)
 		debris_visuals.particles.position = generator(GEN_CIRCLE, position_offset, position_offset)
 		debris_visuals.particles.velocity = list(x_component, y_component)

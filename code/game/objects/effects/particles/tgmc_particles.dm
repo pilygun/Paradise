@@ -1,7 +1,11 @@
 /**
  * MARK: TGMC
  * Particles ported from TGMC.
+<<<<<<< HEAD
  * They are used in case of explosions and hits on objects from firearms (brute damage).
+=======
+ * They are used in case of explosions and hits on objects from firearms (except for disabler and taser).
+>>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404
  */
 
 /**
@@ -117,7 +121,10 @@
 
 /**
  * MARK: Bloodsplatter
+<<<<<<< HEAD
  * For the future.
+=======
+>>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404
  */
 /particles/splatter
 	icon = 'icons/effects/96x96.dmi'
@@ -134,3 +141,7 @@
 	velocity = list(50, 0)
 	friction = generator(GEN_NUM, 0.3, 0.6)
 	position = generator(GEN_CIRCLE, 4, 4)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404

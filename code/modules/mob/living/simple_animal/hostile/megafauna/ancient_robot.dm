@@ -79,7 +79,6 @@ Difficulty: Very Hard
 	del_on_death = TRUE
 	loot = list(/obj/structure/closet/crate/necropolis/ancient)
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/ancient/crusher)
-	internal_type = /obj/item/gps/internal/ancient
 	medal_type = BOSS_MEDAL_ROBOT
 	score_type = ROBOT_SCORE
 	deathmessage = "взрывается дождём из сплавов"
@@ -132,12 +131,6 @@ Difficulty: Very Hard
 	QDEL_NULL(BL)
 	QDEL_NULL(beam)
 	return ..()
-
-/obj/item/gps/internal/ancient
-	icon_state = null
-	gpstag = "Mysterious Signal"
-	desc = "ERROR_NULL_ENTRY"
-	invisibility = 100
 
 /mob/living/simple_animal/hostile/megafauna/ancient_robot/death(gibbed, allowed = FALSE)
 	if(allowed)
@@ -308,7 +301,7 @@ Difficulty: Very Hard
 	bumped_living.visible_message(span_danger("[declent_ru(NOMINATIVE)] врезается в [bumped_living.declent_ru(ACCUSATIVE)]!"), span_userdanger("[declent_ru(NOMINATIVE)] втаптывает вас в землю!"))
 	forceMove(living_turf)
 	var/limb_to_hit = bumped_living.get_organ(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-	bumped_living.apply_damage(25, BRUTE, limb_to_hit, bumped_living.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
+	bumped_living.apply_damage(25, BRUTE, limb_to_hit, bumped_living.run_armor_check(limb_to_hit, MELEE, null, null, armour_penetration))
 	playsound(living_turf, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	shake_camera(bumped_living, 4, 3)
 	shake_camera(src, 2, 3)
@@ -752,7 +745,7 @@ Difficulty: Very Hard
 	)
 	forceMove(living_turf)
 	var/limb_to_hit = bumped_living.get_organ(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-	bumped_living.apply_damage(12.5, BRUTE, limb_to_hit, bumped_living.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
+	bumped_living.apply_damage(12.5, BRUTE, limb_to_hit, bumped_living.run_armor_check(limb_to_hit, MELEE, null, null, armour_penetration))
 	playsound(living_turf, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	shake_camera(bumped_living, 4, 3)
 	shake_camera(src, 2, 3)

@@ -1,3 +1,6 @@
+/// Helper to format the text that gets thrown onto the chem hud element.
+#define FORMAT_BLOODUSABLE_TEXT(bloodusable) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font face='Small Fonts' color='#ce0202'>[bloodusable]</font></div>")
+
 /datum/antagonist/vampire
 	name = "Vampire"
 	antag_hud_type = ANTAG_HUD_VAMPIRE
@@ -113,6 +116,7 @@
 			//slaved.serv -= mob_override.mind
 			//slaved.leave_serv_hud(mob_override.mind)
 			//.mind.som = null
+	ADD_TRAIT(owner, TRAIT_BAD_SOUL, INNATE_TRAIT)
 
 	user.AddElement( \
 		/datum/element/pref_viewer, \
@@ -131,6 +135,8 @@
 
 	if(!mob_override)	// mob override means body transfer
 		remove_all_powers()
+
+	REMOVE_TRAIT(owner, TRAIT_BAD_SOUL, INNATE_TRAIT)
 
 	if(!transformation)
 		user.faction -= ROLE_VAMPIRE
@@ -508,8 +514,8 @@
 	var/ay = owner.current.y
 
 	for(var/i = 1 to 20)
-		ax += SSsun.get_dy()
-		ay += SSsun.get_dx()
+		ax += SSsun.dy
+		ay += SSsun.dx
 
 		var/turf/T = locate(round(ax, 0.5), round(ay, 0.5), owner.current.z)
 
@@ -597,7 +603,7 @@
 		hud.vampire_blood_display.screen_loc = "WEST:6,CENTER-1:15"
 		hud.static_inventory += hud.vampire_blood_display
 		hud.show_hud(hud.hud_version)
-	hud.vampire_blood_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font face='Small Fonts' color='#ce0202'>[bloodusable]</font></div>"
+	hud.vampire_blood_display.maptext = FORMAT_BLOODUSABLE_TEXT(bloodusable)
 
 
 /datum/antagonist/vampire/proc/handle_vampire_cloak()
@@ -729,3 +735,6 @@
 	var/mob/living/user = ..()
 	user.faction -= ROLE_VAMPIRE
 	return user
+
+
+#undef FORMAT_BLOODUSABLE_TEXT

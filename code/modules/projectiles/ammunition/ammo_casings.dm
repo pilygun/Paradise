@@ -45,7 +45,7 @@
 	desc = "A .50AE bullet casing."
 	materials = list(MAT_METAL = 4000)
 	caliber = ".50ae" //change to diffrent caliber because players got deagle in uplink
-	projectile_type = /obj/projectile/bullet
+	projectile_type = /obj/projectile/bullet/desert_eagle
 	muzzle_flash_strength = MUZZLE_FLASH_STRENGTH_NORMAL
 	muzzle_flash_range = MUZZLE_FLASH_RANGE_STRONG
 
@@ -490,11 +490,8 @@
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
 
-/obj/item/ammo_casing/caseless/fire(atom/target, mob/living/user, params, distro, quiet, zone_override = "", spread, atom/firer_source_atom)
-	if(..())
-		qdel(src)
-		return TRUE
-	return FALSE
+/obj/item/ammo_casing/caseless/after_fire()
+	qdel(src)
 
 /obj/item/ammo_casing/caseless/a75
 	desc = "A .75 bullet casing."

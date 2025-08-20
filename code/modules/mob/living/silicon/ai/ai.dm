@@ -712,7 +712,7 @@ GLOBAL_LIST_INIT(ai_verbs_default, list(
 		unset_machine()
 		close_window(src, href_list["mach_close"])
 	if(href_list["switchcamera"])
-		switchCamera(locate(href_list["switchcamera"]) in GLOB.cameranet.cameras)
+		switchCamera(locateUID(href_list["switchcamera"]))
 	if(href_list["showalerts"])
 		ai_alerts()
 	if(href_list["show_paper"])
@@ -723,7 +723,7 @@ GLOBAL_LIST_INIT(ai_verbs_default, list(
 			popup.open(FALSE)
 	//Carn: holopad requests
 	if(href_list["jumptoholopad"])
-		var/obj/machinery/hologram/holopad/H = locate(href_list["jumptoholopad"])
+		var/obj/machinery/hologram/holopad/H = locateUID(href_list["jumptoholopad"])
 		if(stat == CONSCIOUS)
 			if(H)
 				H.attack_ai(src) //may as well recycle
@@ -1343,7 +1343,7 @@ GLOBAL_LIST_INIT(ai_verbs_default, list(
 		update_blind_effects()
 		update_sight()
 		control_disabled = TRUE//Can't control things remotely if you're stuck in a card!
-		aiRadio.disabledAi = TRUE 	//No talking on the built-in radio for you either!
+		aiRadio.disabledAi = TRUE	//No talking on the built-in radio for you either!
 		forceMove(card) //Throw AI into the card.
 		to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
