@@ -363,7 +363,7 @@
 
 /datum/plant_gene/trait/glow/red
 	name = "Red Electrical Glow"
-	glow_color = COLOR_RED_LIGHT
+	glow_color = LIGHT_COLOR_RED
 
 /datum/plant_gene/trait/glow/berry
 	name = "Strong Bioluminescence"

@@ -5,7 +5,7 @@
 	belt_icon = "flashbang"
 	origin_tech = "materials=2;combat=3"
 	light_power = 10
-	light_color = COLOR_WHITE
+	light_color = LIGHT_COLOR_WHITE
 
 	var/light_time = 0.2 SECONDS // The duration the area is illuminated
 	var/range = 7 // The range in tiles of the flashbang
@@ -38,7 +38,8 @@
   * * flash - Whether to flash (blind)
   * * bang - Whether to bang (deafen)
   */
-/proc/bang(turf/T, atom/A, range = 7, flash = TRUE, bang = TRUE, direct_bang = TRUE)
+/proc/bang(turf/T, atom/A, range = 7, flash = TRUE, bang = TRUE)
+
 	// Flashing mechanic
 	var/source_turf = get_turf(A)
 	for(var/mob/living/M in hearers(range, T))
@@ -66,7 +67,7 @@
 		// Bang
 		var/ear_safety = M.check_ear_prot()
 		if(bang)
-			if(direct_bang && source_turf == mobturf) // Holding on person or being exactly where lies is significantly more dangerous and voids protection
+			if(source_turf == mobturf) // Holding on person or being exactly where lies is significantly more dangerous and voids protection
 				M.Weaken(10 SECONDS)
 			if(!ear_safety)
 				M.apply_damage(15, STAMINA)

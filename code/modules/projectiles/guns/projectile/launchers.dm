@@ -43,7 +43,7 @@
 	burst_size = 1
 	fire_delay = 0
 	actions_types = null
-	accuracy = GUN_ACCURACY_MINIMAL
+	accuracy = GUN_ACCURACY_PISTOL
 	attachable_allowed = GUN_MODULE_CLASS_NONE
 
 

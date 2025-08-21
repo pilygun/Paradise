@@ -24,7 +24,7 @@
 	// 1: The "Best" scan available
 	var/scan_mode = 1
 
-	light_color = LIGHT_COLOR_DARK_BLUE
+	light_color = LIGHT_COLOR_DARKBLUE
 
 /obj/machinery/computer/cloning/get_ru_names()
 	return list(

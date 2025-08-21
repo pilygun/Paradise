@@ -337,7 +337,7 @@
 
 /obj/item/flashlight/flare/glowstick/red
 	name = "red glowstick"
-	color = COLOR_SOFT_RED
+	color = LIGHT_COLOR_RED
 	chemglow_sprite_type = "red"
 
 /obj/item/flashlight/flare/glowstick/green
@@ -355,7 +355,7 @@
 
 /obj/item/flashlight/flare/glowstick/yellow
 	name = "yellow glowstick"
-	color = LIGHT_COLOR_DIM_YELLOW
+	color = LIGHT_COLOR_YELLOW
 	chemglow_sprite_type = "yellow"
 
 /obj/item/flashlight/flare/glowstick/pink

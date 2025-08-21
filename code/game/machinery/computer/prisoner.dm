@@ -7,7 +7,7 @@
 	icon_screen = "explosive"
 	req_access = list(ACCESS_ARMORY)
 	circuit = /obj/item/circuitboard/prisoner
-	light_color = COLOR_SOFT_RED
+	light_color = LIGHT_COLOR_DARKRED
 	/// FALSE - No Access Denied, TRUE - Access allowed
 	var/authenticated = FALSE
 	var/inserted_id_uid

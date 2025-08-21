@@ -176,7 +176,6 @@
 	mymob.healthdoll = null
 	mymob.pullin = null
 	mymob.stamina_bar = null
-	mymob.nutrition_bar = null
 
 	//clear the rest of our reload_fullscreen
 	lingchemdisplay = null

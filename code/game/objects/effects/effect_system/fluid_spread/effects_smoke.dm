@@ -270,7 +270,7 @@
 
 /obj/effect/particle_effect/fluid/smoke/bad/hell
 	name = "red smoke"
-	color = BLOOD_COLOR_RED
+	color = COLOR_BLOOD
 
 /obj/effect/particle_effect/fluid/smoke/bad/blue
 	name = "blue smoke"

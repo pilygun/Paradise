@@ -593,7 +593,7 @@
 	emergency_chems = list("epinephrine")
 	controls_inside = TRUE
 
-	light_color = COLOR_SOFT_RED
+	light_color = LIGHT_COLOR_DARKRED
 
 /obj/machinery/sleeper/syndie/New()
 	..()

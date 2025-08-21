@@ -5,7 +5,6 @@
 /datum/reagent
 	var/name = "Реагент"
 	var/id = "reagent"
-	var/tags = 0
 	var/description = ""
 	var/datum/reagents/holder = null
 	var/reagent_state = SOLID
@@ -155,9 +154,6 @@
 	if(shock_reduction && ishuman(user))
 		user.update_movespeed_damage_modifiers()
 
-	if(tags & REAGENT_TAG_ANTI_STUN)
-		ADD_TRAIT(user, TRAIT_ANTI_STUN_REAGENT, id)
-
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/carbon/human/user)
@@ -165,9 +161,6 @@
 
 	if(shock_reduction)
 		user.update_movespeed_damage_modifiers()
-
-	if(tags & REAGENT_TAG_ANTI_STUN)
-		REMOVE_TRAIT(user, TRAIT_ANTI_STUN_REAGENT, id)
 
 
 /datum/reagent/proc/on_move(mob/M)

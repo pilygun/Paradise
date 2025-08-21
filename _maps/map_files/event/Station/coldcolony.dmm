@@ -510,11 +510,6 @@
 /obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
-/obj/item/storage/box/flashbangs{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/box/flashbangs,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -39676,8 +39671,16 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/rack{
+	dir = 8;
+	layer = 2.9
+	},
 /obj/effect/decal/warning_stripes/red/hollow,
-/obj/structure/closet/secure_closet/security_grenade_launcher,
+/obj/item/storage/box/flashbangs,
+/obj/item/storage/box/flashbangs{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},

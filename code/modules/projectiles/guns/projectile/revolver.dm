@@ -116,7 +116,6 @@
 	unique_rename = TRUE
 	unique_reskin = TRUE
 	accuracy = GUN_ACCURACY_PISTOL
-	recoil = GUN_RECOIL_MEDIUM
 
 
 /obj/item/gun/projectile/revolver/detective/update_gun_skins()
@@ -198,8 +197,7 @@
 	name = "Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
-	accuracy = GUN_ACCURACY_PISTOL
-	recoil = GUN_RECOIL_HIGH
+	accuracy = GUN_ACCURACY_RIFLE
 
 /obj/item/gun/projectile/revolver/ga12
 	name = "Tkach Ya-Sui GA 12 revolver"
@@ -209,7 +207,6 @@
 	fire_sound = 'sound/weapons/gunshots/1rev12.ogg'
 	fire_delay = 5
 	accuracy = new /datum/gun_accuracy/pistol/extends_spread()
-	accuracy = GUN_ACCURACY_PISTOL
 	recoil = GUN_RECOIL_HIGH
 
 /obj/item/gun/projectile/revolver/golden
@@ -218,7 +215,6 @@
 	icon_state = "goldrevolver"
 	fire_sound = 'sound/weapons/resonator_blast.ogg'
 	accuracy = new /datum/gun_accuracy/pistol/extends_spread()
-	accuracy = GUN_ACCURACY_PISTOL_UPLINK
 	recoil = GUN_RECOIL_MEGA
 
 /obj/item/gun/projectile/revolver/nagant
@@ -227,8 +223,7 @@
 	icon_state = "nagant"
 	origin_tech = "combat=3"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
-	accuracy = GUN_ACCURACY_PISTOL_UPLINK
-	recoil = GUN_RECOIL_MEDIUM
+	accuracy = GUN_ACCURACY_PISTOL
 
 /obj/item/gun/projectile/revolver/c36
 	name = ".36 revolver"
@@ -237,7 +232,6 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev36
 	fire_sound = 'sound/weapons/gunshots/1rev38.ogg'
 	accuracy = GUN_ACCURACY_PISTOL
-	recoil = GUN_RECOIL_MEDIUM
 
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.
@@ -249,7 +243,6 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/rus357
 	var/spun = FALSE
 	accuracy = GUN_ACCURACY_PISTOL
-	recoil = GUN_RECOIL_MEDIUM
 
 
 /obj/item/gun/projectile/revolver/russian/Initialize(mapload)
@@ -371,7 +364,6 @@
 	origin_tech = null
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/cap
 	accuracy = GUN_ACCURACY_PISTOL
-	recoil = GUN_RECOIL_MEDIUM
 
 /obj/item/gun/projectile/revolver/improvised
 	name = "improvised revolver"
@@ -383,7 +375,6 @@
 	var/unscrewed = TRUE
 	var/obj/item/weaponcrafting/revolverbarrel/barrel
 	accuracy = GUN_ACCURACY_MINIMAL
-	recoil = GUN_RECOIL_MEGA
 
 /obj/item/gun/projectile/revolver/improvised/Initialize(mapload)
 	. = ..()
@@ -519,7 +510,6 @@
 	unique_reskin = TRUE
 	pb_knockback = 3
 	accuracy = GUN_ACCURACY_SHOTGUN
-	recoil = GUN_RECOIL_HIGH
 	attachable_allowed = GUN_MODULE_CLASS_NONE
 
 
@@ -597,7 +587,6 @@
 	pb_knockback = 0
 	var/slung = FALSE
 	accuracy = GUN_ACCURACY_MINIMAL
-	recoil = GUN_RECOIL_MEGA
 
 
 /obj/item/gun/projectile/revolver/doublebarrel/improvised/attackby(obj/item/I, mob/user, params)
@@ -662,7 +651,6 @@
 	suppressed = TRUE
 	needs_permit = FALSE //its just a cane beepsky.....
 	accuracy = GUN_ACCURACY_SHOTGUN
-	recoil = GUN_RECOIL_MEDIUM
 
 
 /obj/item/gun/projectile/revolver/doublebarrel/improvised/cane/is_crutch()

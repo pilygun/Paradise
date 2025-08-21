@@ -1,5 +1,3 @@
-/// Minimal recoil
-#define GUN_RECOIL_MIN new /datum/gun_recoil/minimal()
 /// Low recoil
 #define GUN_RECOIL_LOW new /datum/gun_recoil/low()
 /// Medium recoil
@@ -19,11 +17,6 @@
 	var/back_duration
 	/// Recoil angle randomization value
 	var/angle = 45
-
-/datum/gun_recoil/minimal
-	strength = 0.1
-	in_duration = 0.5
-	back_duration = 0.8
 
 /datum/gun_recoil/low
 	strength = 0.25

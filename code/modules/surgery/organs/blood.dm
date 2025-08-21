@@ -231,14 +231,14 @@
 
 /// Returns the color of the mob's blood.
 /mob/living/proc/get_blood_color()
-	var/bloodcolor = BLOOD_COLOR_RED
+	var/bloodcolor = "#A10808"
 	var/list/b_data = get_blood_data(get_blood_id())
 	if(b_data)
-		bloodcolor = b_data["blood_color"] || BLOOD_COLOR_RED
+		bloodcolor = b_data["blood_color"] || "#A10808"
 	return bloodcolor
 
 /mob/living/carbon/alien/get_blood_color()
-	return BLOOD_COLOR_XENO
+	return "#dffc00"
 
 /mob/living/proc/get_blood_data(blood_id)
 	return
