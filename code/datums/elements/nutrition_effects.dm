@@ -32,11 +32,14 @@
 	if(isnull(human) || QDELETED(human))
 		return
 
-	if(human.current_nutrition_level != /datum/nutrition_level/full)
+	if(!istype(human.current_nutrition_level, /datum/nutrition_level/full))
 		return
 
-	human.adjustStaminaLoss(human.current_nutrition_level.stamina_regen)
-	human.AdjustBlood(human.current_nutrition_level.blood_regen)
+	if(human.getStaminaLoss() > 0)
+		human.adjustStaminaLoss(human.current_nutrition_level.stamina_regen)
+
+	if(human.blood_volume < BLOOD_VOLUME_NORMAL)
+		human.AdjustBlood(human.current_nutrition_level.blood_regen)
 
 
 /// Applies nutrition level effects (including speed mods) to the human
@@ -87,7 +90,7 @@
 	// if the element allowed for new species, they should keep it if already have one, if not - they will get it in set_species()
 	if(!HAS_TRAIT(human, TRAIT_NO_HUNGER) && !HAS_TRAIT(human, TRAIT_NO_NUTRITION_EFFECTS))
 		on_nutrition_level_update(human)
-		return
+		return COMPONENT_HAS_ELEMENT
 
 	// we don't change level for TRAIT_NO_HUNGER because it's already handled on trait added
 	if(HAS_TRAIT(human, TRAIT_NO_NUTRITION_EFFECTS))
