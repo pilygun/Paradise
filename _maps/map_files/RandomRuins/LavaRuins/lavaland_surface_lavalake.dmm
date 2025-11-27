@@ -76,7 +76,7 @@
 /area/ruin/unpowered/safe_cave)
 "kx" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/simulated/wall/mineral/wood,
+/turf/simulated/wall/mineral/wood/nonmetal,
 /area/lavaland/surface/outdoors)
 "lN" = (
 /obj/structure/stone_tile/cracked,
@@ -241,14 +241,14 @@
 /turf/simulated/floor/lava/lava_land_surface/lava_only,
 /area/lavaland/surface/outdoors)
 "yY" = (
-/turf/simulated/wall/mineral/wood,
+/turf/simulated/wall/mineral/wood/nonmetal,
 /area/lavaland/surface/outdoors)
 "zO" = (
 /turf/simulated/wall/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "BU" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/simulated/wall/mineral/wood,
+/turf/simulated/wall/mineral/wood/nonmetal,
 /area/ruin/unpowered/safe_cave)
 "EO" = (
 /obj/structure/stone_tile/surrounding_tile{

@@ -164,7 +164,7 @@
 	},
 /area/ruin/unpowered/misc_lavaruin)
 "Q" = (
-/turf/simulated/wall/mineral/wood,
+/turf/simulated/wall/mineral/wood/nonmetal,
 /area/ruin/unpowered/misc_lavaruin)
 "R" = (
 /obj/item/kitchen/knife/envy,
