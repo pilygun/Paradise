@@ -9,7 +9,6 @@
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	origin_tech = "engineering=2;programming=1"
 	req_access = list(ACCESS_ENGINE)
-	toolspeed = 1
 	usesound = 'sound/items/deconstruct.ogg'
 
 	/// List of accesses currently set
@@ -19,7 +18,6 @@
 	/// An associative list containing all station accesses. Includes their name and access number.
 	var/static/list/door_accesses_list = list()
 	var/list/current_door_accesses_list = list()
-
 
 	/// Which direction has unrestricted access to the airlock (e.g. medbay doors from the inside)
 	var/unres_access_from = null

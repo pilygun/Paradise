@@ -4,24 +4,20 @@
 	desc = "Образец плазменного магмита, кристаллизовавшийся в глубинах планеты. Кажется, он теряет силу по мере удаления от поверхности планеты!"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Magmite ore"
-	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/magmite_parts
 	name = "plasma magmite upgrade parts"
 	desc = "Выкованные на легендарной Мировой Кузне, эти детали можно использовать для улучшения различных видов шахтёрского оборудования."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "upgrade_parts"
-	w_class = WEIGHT_CLASS_NORMAL
 	var/inert = FALSE
 
 /obj/item/magmite_parts/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(go_inert)), 50 SECONDS) //you know...
 
-
 /obj/item/magmite_parts/update_icon_state()
 	icon_state = "upgrade_parts[inert ? "_inert" : ""]"
-
 
 /obj/item/magmite_parts/update_name(updates = ALL)
 	. = ..()
@@ -29,11 +25,9 @@
 	if(inert)
 		name = "inert [name]"
 
-
 /obj/item/magmite_parts/update_desc(updates = ALL)
 	. = ..()
 	desc = inert ? "Похоже, он потерял своё магматическое свечение." : initial(desc)
-
 
 /obj/item/magmite_parts/proc/go_inert()
 	if(inert)
@@ -42,14 +36,12 @@
 	inert = TRUE
 	update_appearance(UPDATE_ICON_STATE|UPDATE_NAME|UPDATE_DESC)
 
-
 /obj/item/magmite_parts/proc/restore()
 	if(!inert)
 		return
 	inert = FALSE
 	update_appearance(UPDATE_ICON_STATE|UPDATE_NAME|UPDATE_DESC)
 	addtimer(CALLBACK(src, PROC_REF(go_inert)), 50 SECONDS)
-
 
 /obj/item/magmite_parts/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!proximity_flag)

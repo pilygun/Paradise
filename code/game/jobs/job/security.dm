@@ -9,14 +9,18 @@
 	department_head = list(JOB_TITLE_CAPTAIN)
 	selection_color = "#c25656"
 	req_admin_notify = 1
-	access = list(ACCESS_EVA, ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT,
-			            ACCESS_FORENSICS_LOCKERS, ACCESS_PILOT, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_ALL_PERSONAL_LOCKERS,
-			            ACCESS_RESEARCH, ACCESS_ENGINE, ACCESS_MINING, ACCESS_MEDICAL, ACCESS_CONSTRUCTION, ACCESS_MAILSORTING,
-			            ACCESS_HEADS, ACCESS_HOS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_WEAPONS)
-	minimal_access = list(ACCESS_EVA, ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT,
-			            ACCESS_FORENSICS_LOCKERS, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_ALL_PERSONAL_LOCKERS,
-			            ACCESS_RESEARCH, ACCESS_ENGINE, ACCESS_MINING, ACCESS_MEDICAL, ACCESS_CONSTRUCTION, ACCESS_MAILSORTING,
-			            ACCESS_HEADS, ACCESS_HOS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_PILOT, ACCESS_WEAPONS)
+	access = list(
+		ACCESS_EVA, ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT,
+		ACCESS_FORENSICS_LOCKERS, ACCESS_PILOT, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_ALL_PERSONAL_LOCKERS,
+		ACCESS_RESEARCH, ACCESS_ENGINE, ACCESS_MINING, ACCESS_MEDICAL, ACCESS_CONSTRUCTION, ACCESS_MAILSORTING,
+		ACCESS_HEADS, ACCESS_HOS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_WEAPONS
+	)
+	minimal_access = list(
+		ACCESS_EVA, ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT,
+		ACCESS_FORENSICS_LOCKERS, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_ALL_PERSONAL_LOCKERS,
+		ACCESS_RESEARCH, ACCESS_ENGINE, ACCESS_MINING, ACCESS_MEDICAL, ACCESS_CONSTRUCTION, ACCESS_MAILSORTING,
+		ACCESS_HEADS, ACCESS_HOS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_PILOT, ACCESS_WEAPONS
+	)
 	law_level = LAW_LEVEL_HOS
 	minimal_player_age = 21
 	min_age_type = JOB_MIN_AGE_COMMAND
@@ -51,7 +55,7 @@
 	backpack_contents = list(
 		/obj/item/restraints/handcuffs = 1,
 		/obj/item/melee/baton/telescopic = 1,
-		/obj/item/security_voucher = 1
+		/obj/item/security_voucher = 1,
 	)
 
 	implants = list(/obj/item/implant/mindshield/ert)
@@ -59,9 +63,7 @@
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel_sec
 	dufflebag = /obj/item/storage/backpack/duffel/security
-	box = /obj/item/storage/box/survival_security/hos
-
-
+	box = /obj/item/storage/box/survival/survival_security/hos
 
 /datum/job/warden
 	title = JOB_TITLE_WARDEN
@@ -86,9 +88,9 @@
 	outfit = /datum/outfit/job/warden
 	insurance_type = INSURANCE_TYPE_DELUXE
 
-	salary = 170
-	min_start_money = 200
-	max_start_money = 550
+	salary = 200
+	min_start_money = 300
+	max_start_money = 600
 
 /datum/outfit/job/warden
 	name = "Warden"
@@ -108,7 +110,7 @@
 	l_hand = /obj/item/storage/lockbox/sibyl_system_mod
 	backpack_contents = list(
 		/obj/item/restraints/handcuffs = 1,
-		/obj/item/security_voucher = 1
+		/obj/item/security_voucher = 1,
 	)
 
 	implants = list(/obj/item/implant/mindshield)
@@ -116,7 +118,7 @@
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel_sec
 	dufflebag = /obj/item/storage/backpack/duffel/security
-	box = /obj/item/storage/box/survival_security/warden
+	box = /obj/item/storage/box/survival/survival_security/warden
 
 /datum/job/detective
 	title = JOB_TITLE_DETECTIVE
@@ -141,7 +143,7 @@
 	outfit = /datum/outfit/job/detective
 	insurance_type = INSURANCE_TYPE_DELUXE
 
-	salary = 170
+	salary = 180
 	min_start_money = 200
 	max_start_money = 550
 
@@ -163,10 +165,10 @@
 	l_hand = /obj/item/storage/briefcase/crimekit
 	backpack_contents = list(
 		/obj/item/storage/box/evidence = 1,
-		/obj/item/melee/baton/telescopic = 1
+		/obj/item/melee/baton/telescopic = 1,
 	)
 	satchel = /obj/item/storage/backpack/satchel_detective
-	box = /obj/item/storage/box/survival_security/detective
+	box = /obj/item/storage/box/survival/survival_security/detective
 
 	implants = list(/obj/item/implant/mindshield)
 
@@ -184,7 +186,6 @@
 		return
 
 	H.force_gene_block(GLOB.soberblock, TRUE, TRUE)
-
 
 /datum/job/officer
 	title = JOB_TITLE_OFFICER
@@ -209,9 +210,9 @@
 	outfit = /datum/outfit/job/officer
 	insurance_type = INSURANCE_TYPE_DELUXE
 
-	salary = 170
+	salary = 150
 	min_start_money = 200
-	max_start_money = 550
+	max_start_money = 500
 
 /datum/outfit/job/officer
 	name = "Security Officer"
@@ -228,13 +229,13 @@
 	pda = /obj/item/pda/security
 	backpack_contents = list(
 		/obj/item/restraints/handcuffs = 1,
-		/obj/item/security_voucher = 1
+		/obj/item/security_voucher = 1,
 	)
 	implants = list(/obj/item/implant/mindshield)
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel_sec
 	dufflebag = /obj/item/storage/backpack/duffel/security
-	box = /obj/item/storage/box/survival_security
+	box = /obj/item/storage/box/survival/survival_security
 
 /datum/outfit/job/officer/cadet
 	name = "Security Cadet"
@@ -242,8 +243,7 @@
 	head = /obj/item/clothing/head/soft/sec
 	id = /obj/item/card/id/security/cadet
 	l_pocket = /obj/item/reagent_containers/spray/pepper
-	suit_store = /obj/item/gun/energy/gun/advtaser
-	box = /obj/item/storage/box/survival_security/cadet
+	box = /obj/item/storage/box/survival/survival_security/cadet
 
 /datum/outfit/job/officer/cadet/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	. = ..()
@@ -299,7 +299,6 @@
 	dufflebag = /obj/item/storage/backpack/duffel/medical
 	box = /obj/item/storage/box/survival/brigphys
 
-
 /datum/job/pilot
 	title = JOB_TITLE_PILOT
 	flag = JOB_FLAG_PILOT
@@ -322,9 +321,9 @@
 	outfit = /datum/outfit/job/pilot
 	insurance_type = INSURANCE_TYPE_DELUXE
 
-	salary = 170
-	min_start_money = 200
-	max_start_money = 550
+	salary = 180
+	min_start_money = 250
+	max_start_money = 600
 
 /datum/outfit/job/pilot
 	name = "Security Pod Pilot"
@@ -340,10 +339,10 @@
 	pda = /obj/item/pda/security
 	backpack_contents = list(
 		/obj/item/restraints/handcuffs = 1,
-		/obj/item/security_voucher = 1
+		/obj/item/security_voucher = 1,
 	)
 	implants = list(/obj/item/implant/mindshield)
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel_sec
 	dufflebag = /obj/item/storage/backpack/duffel/security
-	box = /obj/item/storage/box/survival_security/pilot
+	box = /obj/item/storage/box/survival/survival_security/pilot

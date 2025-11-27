@@ -11,7 +11,6 @@
 	pixel_y = -85
 	current_size = 9 // It moves/eats like a max-size singulo, aside from range. --NEO
 	dissipate = FALSE
-	move_self = TRUE
 	grav_pull = 5
 	consume_range = 6
 	gender = FEMALE
@@ -29,7 +28,6 @@
 	pixel_x = -236
 	pixel_y = -256
 	current_size = 12
-	move_self = TRUE //Do we move on our own?
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
@@ -50,8 +48,7 @@
 		notify_ghosts("[name] has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action = NOTIFY_ATTACK)
 
 	narsie_spawn_animation()
-	addtimer(CALLBACK(SSticker.mode, TYPE_PROC_REF(/datum/game_mode, apocalypse)), 10 SECONDS)
-
+	addtimer(CALLBACK(SSticker.mode, TYPE_PROC_REF(/datum/game_mode, apocalypse), name), 10 SECONDS)
 
 /obj/singularity/god/narsie/large/Destroy()
 	to_chat(world, "<font size='15' color='red'><b> [uppertext(name)] HAS FALLEN</b></font>")
@@ -60,9 +57,9 @@
 	if(gamemode)
 		gamemode.cult_objs.narsie_death()
 		for(var/datum/mind/cult_mind in SSticker.mode.cult)
-			if(cult_mind && cult_mind.current)
-				to_chat(cult_mind.current, "<span class='cultlarge'>RETRIBUTION!</span>")
-				to_chat(cult_mind.current, "<span class='cult'>Current goal: Slaughter the heretics!</span>")
+			if(cult_mind?.current)
+				to_chat(cult_mind.current, span_cultlarge("RETRIBUTION!"))
+				to_chat(cult_mind.current, span_cult("Current goal: Slaughter the heretics!"))
 	return ..()
 
 /obj/singularity/god/narsie/large/attack_ghost(mob/dead/observer/user)
@@ -76,23 +73,20 @@
 	if(prob(25))
 		mezzer()
 
-
 /obj/singularity/god/narsie/Bump(atom/bumped_atom, effect_applied = TRUE)//you dare stand before a god?!
 	. = ..()
 	if(.)
 		return .
 	godsmack(bumped_atom)
 
-
 /obj/singularity/god/narsie/Bumped(atom/movable/moving_atom, effect_applied = TRUE)
 	. = ..()
 	godsmack(moving_atom)
 
-
 /obj/singularity/god/narsie/proc/godsmack(atom/A)
 	if(istype(A,/obj/))
 		var/obj/O = A
-		O.ex_act(1)
+		O.ex_act(EXPLODE_DEVASTATE)
 		if(O) qdel(O)
 
 	else if(isturf(A))
@@ -103,9 +97,8 @@
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
-				to_chat(M, "<span class='warning'>You feel your sanity crumble away in an instant as you gaze upon [src.name]...</span>")
+				to_chat(M, span_warning("You feel your sanity crumble away in an instant as you gaze upon [src.name]..."))
 				M.Stun(6 SECONDS)
-
 
 /obj/singularity/god/narsie/consume(atom/A)
 	A.narsie_act(src)
@@ -149,13 +142,12 @@
 		acquire(pick(cultists))
 		return
 
-
 /obj/singularity/god/narsie/proc/acquire(mob/food)
 	if(food == target)
 		return
 	if(!target)
 		return
-	to_chat(target, "<span class='cultlarge'>[uppertext(SSticker.cultdat.entity_name)] HAS LOST INTEREST IN YOU</span>")
+	to_chat(target, span_cultlarge("[uppertext(SSticker.cultdat.entity_name)] HAS LOST INTEREST IN YOU"))
 	target = food
 	if(ishuman(target))
 		to_chat(target, "<span class ='cultlarge'>[uppertext(SSticker.cultdat.entity_name)] HUNGERS FOR YOUR SOUL</span>")
@@ -171,7 +163,6 @@
 		if(isturf(X) || istype(X, /atom/movable))
 			consume(X)
 	return
-
 
 /obj/singularity/god/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/obj/narsie_spawn_anim.dmi'

@@ -8,14 +8,11 @@
 	layer_offset = GAS_PUMP_OFFSET
 
 	var/obj/machinery/atmospherics/pipe/target = null
-	anchored = TRUE
 	max_integrity = 150
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 40, ACID = 0)
-	power_channel = ENVIRON
 	frequency = ATMOS_DISTRO_FREQ
 	var/id
 	var/id_tag
-	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 5
 
@@ -30,7 +27,6 @@
 	SSair.atmos_machinery -= src
 	target = null
 	return ..()
-
 
 /obj/machinery/atmospherics/meter/update_icon_state()
 	if(!target)
@@ -61,7 +57,6 @@
 	else
 		icon_state = "meter4"
 
-
 /obj/machinery/atmospherics/meter/process_atmos()
 	if(!target || (stat & (BROKEN|NOPOWER)))
 		update_icon(UPDATE_ICON_STATE)
@@ -91,7 +86,6 @@
 		"sigtype" = "status",
 	)
 	radio_connection.post_signal(src, signal)
-
 
 /obj/machinery/atmospherics/meter/proc/status()
 	var/t = ""
@@ -129,12 +123,10 @@
 
 	return ..()
 
-
 /obj/machinery/atmospherics/meter/deconstruct(disassembled = TRUE)
 	if(!(obj_flags & NODECONSTRUCT))
 		new /obj/item/pipe_meter(loc)
 	qdel(src)
-
 
 /obj/machinery/atmospherics/meter/singularity_pull(S, current_size)
 	..()

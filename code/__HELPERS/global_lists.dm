@@ -133,14 +133,13 @@
 
 		GLOB.gear_datums[gear.index_name] = gear
 
-
 	// Setup a list of robolimbs
 	GLOB.basic_robolimb = new()
 	for(var/limb_type in typesof(/datum/robolimb))
 		var/datum/robolimb/R = new limb_type()
 		GLOB.all_robolimbs[R.company] = R
 		if(!R.unavailable_at_chargen)
-			if(R != BODY_ZONE_HEAD && R != BODY_ZONE_CHEST && R != BODY_ZONE_PRECISE_GROIN ) //Part of the method that ensures only IPCs can access head, chest and groin prosthetics.
+			if(R != BODY_ZONE_HEAD && R != BODY_ZONE_CHEST && R != BODY_ZONE_PRECISE_GROIN) //Part of the method that ensures only IPCs can access head, chest and groin prosthetics.
 				if(R.has_subtypes) //Ensures solos get added to the list as well be incorporating has_subtypes == 1 and has_subtypes == 2.
 					GLOB.chargen_robolimbs[R.company] = R //List only main brands and solo parts.
 		if(R.selectable)
@@ -162,6 +161,8 @@
 	GLOB.mining_vendor_items = init_mining_vendor_items_list()
 
 	GLOB.slotmachine_prizes = init_slotmachine_prizes(GLOB.uplink_items)
+
+	GLOB.item_skins = init_item_skins()
 
 	init_keybindings()
 
@@ -217,6 +218,13 @@
 	// Init list of all nutrition levels
 	init_datum_subtypes(/datum/nutrition_level, GLOB.nutrition_levels, null, "type")
 
+	// Init list for slime actions
+	init_datum_subtypes(/datum/slime_action, GLOB.slime_actions, null, "name")
+
+	var/exoframe_type = /obj/item/organ/internal/cyberimp/chest/exoframe
+	for(var/obj/item/organ/internal/cyberimp/chest/exoframe/frame as anything in subtypesof(exoframe_type))
+		GLOB.exoframe_types[frame.id] = frame
+
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)
@@ -237,7 +245,6 @@
 				L["[assoc]"] = D //put in association
 	return L
 
-
 /proc/init_emote_list()
 	. = list()
 	for(var/path in subtypesof(/datum/emote))
@@ -255,7 +262,6 @@
 				.[E.key_third_person] = list(E)
 			else
 				.[E.key_third_person] |= E
-
 
 /proc/init_uplink_items_list()
 	. = list()
@@ -396,7 +402,6 @@
 
 #undef EQUIPMENT
 
-
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
 	var/list/mob_types = list()
 	var/list/entry_value = CONFIG_GET(keyed_list/multiplicative_movespeed)
@@ -409,7 +414,6 @@
 	GLOB.mob_config_movespeed_type_lookup = mob_types
 	if(update_mobs)
 		update_mob_config_movespeeds()
-
 
 /proc/update_mob_config_movespeeds()
 	for(var/mob/M as anything in GLOB.mob_list)
@@ -428,3 +432,16 @@
 			continue
 		prizes[item.id] = item
 	return prizes
+
+/proc/init_item_skins()
+	var/list/skins = list()
+	for(var/datum/item_skin_data/skin as anything in subtypesof(/datum/item_skin_data))
+		if(!initial(skin.name))
+			continue
+		add_item_skin(skins, new skin)
+	return skins
+
+/proc/add_item_skin(list/skins, datum/item_skin_data/skin)
+	if(!(skin.item_path in skins))
+		skins[skin.item_path] = list()
+	skins[skin.item_path] += skin

@@ -28,9 +28,6 @@
 	name = "carrot wedges"
 	desc = "Slices of neatly cut carrot."
 	icon_state = "carrot_wedges"
-	filling_color = "#FFA500"
-	bitesize_mod = 2
-
 
 /obj/item/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(is_sharp(I))
@@ -44,7 +41,6 @@
 		qdel(src)
 		return ATTACK_CHAIN_BLOCKED_ALL
 	return ..()
-
 
 // Parsnip
 /obj/item/seeds/carrot/parsnip
@@ -66,7 +62,6 @@
 	bitesize_mod = 2
 	tastes = list("parsnip" = 1)
 	wine_power = 0.35
-
 
 // White-Beet
 /obj/item/seeds/whitebeet

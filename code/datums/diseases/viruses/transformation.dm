@@ -1,8 +1,6 @@
 /datum/disease/virus/transformation
 	name = "Трансформация"
 	stage_prob = 10
-	max_stages = 5
-	spread_flags = NON_CONTAGIOUS
 	severity = DANGEROUS
 	can_immunity = FALSE
 	infectable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/alien)
@@ -74,7 +72,7 @@
 				if(is_new_mind)
 					new_mob.mind.wipe_memory()
 			else
-				new_mob.key = affected_mob.key
+				new_mob.possess_by_player(affected_mob.ckey)
 
 		qdel(affected_mob)
 		transformed = TRUE
@@ -158,7 +156,6 @@
 		if(4)
 			if(prob(20))
 				affected_mob.say(pick("Бип-буп!", "Биип-буп-бип-буп-бип!", "Уб-бе-ейте мен-н-н-я!", "Я хо-ч-чу ум-м-ме-р-р-ее-е-еть..."))
-
 
 /datum/disease/virus/transformation/xeno
 	name = "Ксенотрансформация"
@@ -277,3 +274,29 @@
 	Хоть Вы и трансформировались в отвратительную зелёную жижу, но это не повлияло на Ваше сознание \
 	и память. Вы не являетесь антагонистом."))
 	new_form = /mob/living/simple_animal/hostile/morph
+
+/datum/disease/virus/transformation/pig
+	name = "Свинофикация"
+	agent = "Мистическая грязь"
+	desc = "Эта болезнь превращает жертву в свинью."
+	cure_text = "Смерть"
+	cures = list("adminordrazine")
+	stage1 = list(span_notice("ХРЮ."))
+	stage2 = list(span_notice("Вам хочется валяться в грязи."))
+	stage3 = list(span_danger("Нужно... валяться... в грязи...."), span_danger("ХРЮ"))
+	stage4 = list(span_danger("Видения грязевых луж атакуют ваш разум!"))
+	transform_message = list(span_danger("ХРЮЮЮЮЮ!!!"))
+	new_form = /mob/living/simple_animal/pig
+	is_new_mind = TRUE
+
+/datum/disease/virus/transformation/pig/stage_act()
+	if(!..() || !affected_mob)
+		return FALSE
+
+	switch(stage)
+		if(3)
+			if(prob(8))
+				affected_mob.say(pick("Хррр", "Хрю!"))
+		if(4)
+			if(prob(20))
+				affected_mob.say(pick("Уииии!", "ХРЮЮЮ!"))

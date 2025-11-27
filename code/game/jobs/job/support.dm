@@ -18,7 +18,7 @@
 	outfit = /datum/outfit/job/qm
 	insurance_type = INSURANCE_TYPE_DELUXE // Always has been.
 
-	//QM IS NOT THE HEAD!!
+	//QM IS THE HEAD!!
 	salary = 300
 	min_start_money = 400
 	max_start_money = 700
@@ -37,10 +37,9 @@
 	pda = /obj/item/pda/quartermaster
 	backpack = /obj/item/storage/backpack/cargo
 	backpack_contents = list(
-	/obj/item/melee/baton/telescopic = 1
+		/obj/item/melee/baton/telescopic = 1,
 	)
 	head = /obj/item/clothing/head/cowboyhat/tan
-
 
 /datum/job/cargo_tech
 	title = JOB_TITLE_CARGOTECH
@@ -57,21 +56,19 @@
 	alt_titles = list("Supply Manager","Loader")
 	outfit = /datum/outfit/job/cargo_tech
 
-	salary = 100
-	min_start_money = 100
-	max_start_money = 300
+	salary = 130
+	min_start_money = 200
+	max_start_money = 400
 
 /datum/outfit/job/cargo_tech
 	name = "Cargo Technician"
 	jobtype = /datum/job/cargo_tech
 
 	uniform = /obj/item/clothing/under/rank/cargotech
-	shoes = /obj/item/clothing/shoes/black
 	l_ear = /obj/item/radio/headset/headset_cargo
 	id = /obj/item/card/id/supply
 	pda = /obj/item/pda/cargo
 	backpack = /obj/item/storage/backpack/cargo
-
 
 /datum/job/mining
 	title = JOB_TITLE_MINER
@@ -112,15 +109,14 @@
 		/obj/item/mining_voucher = 1,
 		/obj/item/stack/marker_beacon/ten = 1,
 		/obj/item/wormhole_jaunter = 1,
-		/obj/item/survivalcapsule = 1
+		/obj/item/survivalcapsule = 1,
 	)
 
 	backpack = /obj/item/storage/backpack/explorer
 	satchel = /obj/item/storage/backpack/satchel_explorer
-	box = /obj/item/storage/box/survival_mining
+	box = /obj/item/storage/box/survival/survival_mining
 
 /datum/outfit/job/mining/equipped
-	name = "Shaft Miner"
 	toggle_helmet = TRUE
 	suit = /obj/item/clothing/suit/hooded/explorer
 	mask = /obj/item/clothing/mask/gas/explorer
@@ -133,7 +129,7 @@
 		/obj/item/mining_voucher = 1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 		/obj/item/gun/energy/kinetic_accelerator = 1,
-		/obj/item/stack/marker_beacon/ten = 1
+		/obj/item/stack/marker_beacon/ten = 1,
 	)
 
 /datum/outfit/job/miner/equipped/hardsuit
@@ -161,7 +157,7 @@
 	exp_requirements = 600 //10 hours
 	exp_type = EXP_TYPE_MEDICAL
 
-	salary = 150
+	salary = 170
 	min_start_money = 250
 	max_start_money = 500
 
@@ -212,12 +208,11 @@
 	uniform = /obj/item/clothing/under/rank/bartender
 	suit = /obj/item/clothing/suit/armor/vest
 	belt = /obj/item/storage/belt/bandolier/full
-	shoes = /obj/item/clothing/shoes/black
 	l_ear = /obj/item/radio/headset/headset_service
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	pda = /obj/item/pda/bar
 	backpack_contents = list(
-		/obj/item/toy/russian_revolver = 1
+		/obj/item/toy/russian_revolver = 1,
 	)
 
 /datum/outfit/job/bartender/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -226,7 +221,6 @@
 		return
 
 	H.force_gene_block(GLOB.soberblock, TRUE, TRUE)
-
 
 /datum/job/chef
 	title = JOB_TITLE_CHEF
@@ -254,7 +248,6 @@
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/chef
 	belt = /obj/item/storage/belt/chef
-	shoes = /obj/item/clothing/shoes/black
 	head = /obj/item/clothing/head/chefhat
 	l_ear = /obj/item/radio/headset/headset_service
 	pda = /obj/item/pda/chef
@@ -278,7 +271,6 @@
 				belt = /obj/item/storage/belt/chef/artistred
 				head = /obj/item/clothing/head/chefcap
 				suit = /obj/item/clothing/suit/storage/chefbluza
-
 
 /datum/job/hydro
 	title = JOB_TITLE_BOTANIST
@@ -308,7 +300,6 @@
 	uniform = /obj/item/clothing/under/rank/hydroponics
 	suit = /obj/item/clothing/suit/apron
 	gloves = /obj/item/clothing/gloves/botanic_leather
-	shoes = /obj/item/clothing/shoes/black
 	l_ear = /obj/item/radio/headset/headset_service
 	suit_store = /obj/item/plant_analyzer
 	pda = /obj/item/pda/botanist
@@ -358,7 +349,7 @@
 		/obj/item/reagent_containers/spray/waterflower = 1,
 		/obj/item/reagent_containers/food/drinks/bottle/bottleofbanana = 1,
 		/obj/item/instrument/bikehorn = 1,
-		/obj/item/clown_recorder = 1
+		/obj/item/clown_recorder = 1,
 	)
 
 	implants = list(/obj/item/implant/sad_trombone)
@@ -409,7 +400,7 @@
 	for(var/level in 0 to donor_level)
 		available_voices += SStts.tts_seeds_names_by_donator_levels["[level]"]
 
-/datum/action/innate/mimicking/Trigger(left_click)
+/datum/action/innate/mimicking/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return FALSE
 	ui_interact(owner)
@@ -499,7 +490,7 @@
 /datum/mimicking_voice/proc/voice_data()
 	return list("name" = name, "voice" = voice, "selected" = selected, "id" = UID())
 
-/mob/living/carbon/human/proc/mimicking(var/mob/living/carbon/human/H)
+/mob/living/carbon/human/proc/mimicking(mob/living/carbon/human/H)
 	set name = "Имитировать голос"
 	set category = STATPANEL_IC
 	if(!H)
@@ -563,7 +554,6 @@
 	uniform = /obj/item/clothing/under/mime
 	suit = /obj/item/clothing/suit/suspenders
 	gloves = /obj/item/clothing/gloves/color/white
-	shoes = /obj/item/clothing/shoes/black
 	head = /obj/item/clothing/head/beret
 	mask = /obj/item/clothing/mask/gas/mime
 	l_ear = /obj/item/radio/headset/headset_service
@@ -572,7 +562,7 @@
 	backpack_contents = list(
 		/obj/item/toy/crayon/mime = 1,
 		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 1,
-		/obj/item/cane = 1
+		/obj/item/cane = 1,
 	)
 	backpack = /obj/item/storage/backpack/mime
 	satchel = /obj/item/storage/backpack/satchel_mime
@@ -592,8 +582,6 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe/conjure/build/mime_wall(null))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/mime/speak(null))
 		H.mind.miming = TRUE
-
-
 
 /datum/job/janitor
 	title = JOB_TITLE_JANITOR
@@ -619,10 +607,8 @@
 	jobtype = /datum/job/janitor
 
 	uniform = /obj/item/clothing/under/rank/janitor
-	shoes = /obj/item/clothing/shoes/black
 	l_ear = /obj/item/radio/headset/headset_service
 	pda = /obj/item/pda/janitor
-
 
 //More or less assistants
 /datum/job/librarian
@@ -649,21 +635,19 @@
 	jobtype = /datum/job/librarian
 
 	uniform = /obj/item/clothing/under/suit_jacket/red
-	shoes = /obj/item/clothing/shoes/black
 	l_ear = /obj/item/radio/headset/headset_service
 	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/barcodescanner
 	l_hand = /obj/item/storage/bag/books
 	pda = /obj/item/pda/librarian
 	backpack_contents = list(
-		/obj/item/videocam = 1)
+		/obj/item/videocam = 1,
+	)
 
 /datum/job/explorer
 	title = JOB_TITLE_EXPLORER
 	flag = JOB_FLAG_EXPLORER
 	department_flag = JOBCAT_SUPPORT
-	total_positions = 0
-	spawn_positions = 0
 	supervisors = "the head of personnel"
 	department_head = list(JOB_TITLE_HOP)
 	selection_color = "#d1e8d3"
@@ -682,4 +666,3 @@
 	name = "Explorer"
 	jobtype = /datum/job/explorer
 	uniform = /obj/item/clothing/under/color/random
-	shoes = /obj/item/clothing/shoes/black

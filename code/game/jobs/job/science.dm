@@ -23,7 +23,7 @@
 	disabilities_allowed = 0
 	// All science-y guys get bonuses for maxing out their tech.
 	required_objectives = list(
-		/datum/job_objective/further_research
+		/datum/job_objective/further_research,
 	)
 	outfit = /datum/outfit/job/rd
 	insurance_type = INSURANCE_TYPE_DELUXE
@@ -31,7 +31,6 @@
 	salary = 300
 	min_start_money = 400
 	max_start_money = 700
-
 
 /datum/outfit/job/rd
 	name = "Research Director"
@@ -46,13 +45,12 @@
 	l_hand = /obj/item/clipboard
 	pda = /obj/item/pda/heads/rd
 	backpack_contents = list(
-		/obj/item/melee/baton/telescopic = 1
+		/obj/item/melee/baton/telescopic = 1,
 	)
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel_tox
 	dufflebag = /obj/item/storage/backpack/duffel/science
-
 
 /datum/job/scientist
 	title = JOB_TITLE_SCIENTIST
@@ -72,7 +70,7 @@
 	exp_type = EXP_TYPE_SCIENCE
 	// All science-y guys get bonuses for maxing out their tech.
 	required_objectives = list(
-		/datum/job_objective/further_research
+		/datum/job_objective/further_research,
 	)
 	outfit = /datum/outfit/job/scientist
 
@@ -95,14 +93,12 @@
 	satchel = /obj/item/storage/backpack/satchel_tox
 	dufflebag = /obj/item/storage/backpack/duffel/science
 
-
 /datum/job/scientist/student
 	title = JOB_TITLE_SCIENTIST_STUDENT
 	flag = JOB_FLAG_SCIENTIST_STUDENT
 	total_positions = 5
 	spawn_positions = 3
 	department_head = list(JOB_TITLE_RD, JOB_TITLE_SCIENTIST)
-	selection_color = "#e6d1f0"
 	alt_titles = list("Scientist Assistant", "Scientist Pregraduate", "Scientist Graduate", "Scientist Postgraduate", "Student Robotist")
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
@@ -111,9 +107,7 @@
 	is_novice = TRUE
 	outfit = /datum/outfit/job/scientist/student
 
-	salary = 200
-	min_start_money = 250
-	max_start_money = 500
+	salary = 150
 
 /datum/outfit/job/scientist/student
 	name = "Student Scientist"
@@ -167,7 +161,6 @@
 	uniform = /obj/item/clothing/under/rank/roboticist
 	suit = /obj/item/clothing/suit/storage/labcoat
 	belt = /obj/item/storage/belt/utility/full
-	shoes = /obj/item/clothing/shoes/black
 	l_ear = /obj/item/radio/headset/headset_sci
 	id = /obj/item/card/id/research
 	pda = /obj/item/pda/roboticist

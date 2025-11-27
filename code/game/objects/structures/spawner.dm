@@ -47,14 +47,12 @@
 		return
 	..()
 
-
 /obj/structure/spawner/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	if(ATTACK_CHAIN_CANCEL_CHECK(.) || !scanner_taggable || !is_type_in_list(I, scanner_types))
 		return .
 	. |= ATTACK_CHAIN_SUCCESS
 	gps_tag(user)
-
 
 /// Tag the spawner, prefixing its GPS entry with an identifier - or giving it one, if nonexistent.
 /obj/structure/spawner/proc/gps_tag(mob/user)
@@ -68,7 +66,6 @@
 	var/obj/item/gps/internal = new /obj/item/gps/internal/tendril(src)
 	if(internal)
 		internal.gpstag = assigned_tag
-
 
 /obj/item/gps/internal/tendril
 	icon_state = null
@@ -89,7 +86,6 @@
 /obj/structure/spawner/skeleton
 	name = "bone pit"
 	desc = "A pit full of bones, and some still seem to be moving..."
-	icon_state = "hole"
 	icon = 'icons/mob/nest.dmi'
 	max_integrity = 150
 	max_mobs = 15
@@ -111,13 +107,11 @@
 	mob_types = list(/mob/living/simple_animal/hostile/retaliate/clown)
 	spawn_text = "climbs out of"
 	faction = list("clown")
-	mob_gps_id = "???" // clowns
 	spawner_gps_id = "Clown Planet Distortion"
 
 /obj/structure/spawner/mining
 	name = "monster den"
 	desc = "A hole dug into the ground, harboring all kinds of monsters found within most caves or mining asteroids."
-	icon_state = "hole"
 	max_integrity = 200
 	max_mobs = 3
 	icon = 'icons/mob/nest.dmi'

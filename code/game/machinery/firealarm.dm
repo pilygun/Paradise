@@ -4,9 +4,9 @@ FIRE ALARM
 
 GLOBAL_LIST_EMPTY(firealarms)
 
-#define FIRE_ALARM_FRAME	0
-#define FIRE_ALARM_UNWIRED	1
-#define FIRE_ALARM_READY	2
+#define FIRE_ALARM_FRAME 0
+#define FIRE_ALARM_UNWIRED 1
+#define FIRE_ALARM_READY 2
 
 /obj/machinery/firealarm
 	name = "fire alarm"
@@ -17,7 +17,6 @@ GLOBAL_LIST_EMPTY(firealarms)
 	max_integrity = 250
 	integrity_failure = 100
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
-	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
@@ -55,12 +54,10 @@ GLOBAL_LIST_EMPTY(firealarms)
 	update_fire_light()
 	update_icon()
 
-
 /obj/machinery/firealarm/Destroy()
 	LAZYREMOVE(GLOB.station_fire_alarms["[z]"], src)
 	LAZYREMOVE(myArea.firealarms, src)
 	return ..()
-
 
 /obj/machinery/firealarm/no_alarm
 	report_fire_alarms = FALSE
@@ -71,8 +68,6 @@ GLOBAL_LIST_EMPTY(firealarms)
 
 /obj/machinery/firealarm/syndicate/taipan
 	report_fire_alarms = TRUE
-	show_alert_level = FALSE
-
 
 /obj/machinery/firealarm/update_icon_state()
 	if(wiresexposed)
@@ -95,7 +90,6 @@ GLOBAL_LIST_EMPTY(firealarms)
 	else
 		icon_state = "firealarm_on"
 
-
 /obj/machinery/firealarm/update_overlays()
 	. = ..()
 	underlays.Cut()
@@ -110,7 +104,6 @@ GLOBAL_LIST_EMPTY(firealarms)
 
 	if(!wiresexposed)
 		underlays += emissive_appearance(icon, "firealarm_lightmask", src)
-
 
 /obj/machinery/firealarm/emag_act(mob/user)
 	if(!emagged)
@@ -136,7 +129,6 @@ GLOBAL_LIST_EMPTY(firealarms)
 	if(prob(50/severity))
 		alarm(rand(30/severity, 60/severity))
 	..()
-
 
 /obj/machinery/firealarm/attackby(obj/item/I, mob/user, params)
 	if(!wiresexposed || user.a_intent == INTENT_HARM)
@@ -168,7 +160,6 @@ GLOBAL_LIST_EMPTY(firealarms)
 				return ATTACK_CHAIN_BLOCKED_ALL
 
 	return ..()
-
 
 /obj/machinery/firealarm/crowbar_act(mob/user, obj/item/I)
 	if(buildstage != FIRE_ALARM_UNWIRED)
@@ -227,7 +218,6 @@ GLOBAL_LIST_EMPTY(firealarms)
 	buildstage = FIRE_ALARM_UNWIRED
 	update_icon()
 
-
 /obj/machinery/firealarm/wrench_act(mob/user, obj/item/I)
 	if(buildstage != FIRE_ALARM_FRAME)
 		return
@@ -246,7 +236,7 @@ GLOBAL_LIST_EMPTY(firealarms)
 				alarm()
 
 /obj/machinery/firealarm/singularity_pull(S, current_size)
-	if (current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects, the fire alarm experiences integrity failure
+	if(current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects, the fire alarm experiences integrity failure
 		deconstruct()
 	..()
 
@@ -265,7 +255,6 @@ GLOBAL_LIST_EMPTY(firealarms)
 				I.update_integrity(I.max_integrity * 0.5)
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
-
 
 /obj/machinery/firealarm/proc/update_fire_light()
 	if(stat & NOPOWER)
@@ -293,7 +282,6 @@ GLOBAL_LIST_EMPTY(firealarms)
 		update_fire_light()
 		update_icon()
 
-
 /obj/machinery/firealarm/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN) || buildstage != 2)
 		return TRUE
@@ -309,7 +297,6 @@ GLOBAL_LIST_EMPTY(firealarms)
 
 	toggle_alarm(user)
 
-
 /obj/machinery/firealarm/proc/toggle_alarm(mob/user)
 	var/area/A = get_area(src)
 	if(istype(A))
@@ -319,7 +306,6 @@ GLOBAL_LIST_EMPTY(firealarms)
 			reset()
 		else
 			alarm()
-
 
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
@@ -335,18 +321,15 @@ GLOBAL_LIST_EMPTY(firealarms)
 
 	. += "It shows the alert level as: <b><u>[capitalize(SSsecurity_level.get_current_level_as_text())]</u></b>."
 
-
 /obj/machinery/firealarm/proc/reset()
 	if(!working || !report_fire_alarms)
 		return
 	myArea?.firereset(src)
 
-
 /obj/machinery/firealarm/proc/alarm()
 	if(!working || !report_fire_alarms)
 		return
 	myArea?.firealert(src)
-
 
 /*
 FIRE ALARM CIRCUIT
@@ -360,9 +343,7 @@ Just a object used in constructing fire alarms
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
 	origin_tech = "engineering=2;programming=1"
-	toolspeed = 1
 	usesound = 'sound/items/deconstruct.ogg'
-
 
 #undef FIRE_ALARM_FRAME
 #undef FIRE_ALARM_UNWIRED

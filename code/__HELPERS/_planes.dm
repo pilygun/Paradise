@@ -34,7 +34,6 @@
 /// Often an optimization, sometimes a necessity
 #define SET_PLANE_W_SCALAR(thing, new_value, multiplier) (thing.plane = GET_NEW_PLANE(new_value, multiplier))
 
-
 /// Implicit plane set. We take the turf from the object we're changing the plane of, and use ITS z as a spokesperson for our plane value
 #define SET_PLANE_IMPLICIT(thing, new_value) SET_PLANE_EXPLICIT(thing, new_value, thing)
 
@@ -60,7 +59,7 @@
 			thing.plane = new_value;\
 		}\
 	}\
-	while (FALSE)
+	while(FALSE)
 
 // Now for macros that exist to get info from SSmapping
 // Mostly about details of planes, or z levels

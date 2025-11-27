@@ -22,7 +22,6 @@ Thus, the two variables affect pump operation are set in New():
 	can_unwrench = TRUE
 	interaction_flags_click = NEED_HANDS | ALLOW_RESTING | ALLOW_SILICON_REACH
 
-	on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
 
 	var/id = null
@@ -37,21 +36,17 @@ Thus, the two variables affect pump operation are set in New():
 		return
 	toggle()
 
-
 /obj/machinery/atmospherics/binary/pump/AICtrlClick()
 	toggle()
 	return ..()
-
 
 /obj/machinery/atmospherics/binary/pump/click_alt(mob/living/user)
 	set_max()
 	return CLICK_ACTION_SUCCESS
 
-
 /obj/machinery/atmospherics/binary/pump/ai_click_alt()
 	set_max()
 	return ..()
-
 
 /obj/machinery/atmospherics/binary/pump/proc/set_max()
 	if(powered())
@@ -92,7 +87,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	var/output_starting_pressure = air2.return_pressure()
 
-	if( (target_pressure - output_starting_pressure) < 0.01)
+	if((target_pressure - output_starting_pressure) < 0.01)
 		//No need to pump gas if target is already reached!
 		return 1
 
@@ -224,7 +219,6 @@ Thus, the two variables affect pump operation are set in New():
 	if(!..())
 		return
 	update_icon()
-
 
 /obj/machinery/atmospherics/binary/pump/attackby(obj/item/I, mob/user, params)
 	. = ..()

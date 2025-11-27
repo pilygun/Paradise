@@ -35,7 +35,6 @@
 				continue
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
 
-
 /proc/create_area(mob/creator, new_area_type = /area)
 	// Passed into the above proc as list/break_if_found
 	var/static/list/area_or_turf_fail_types = typecacheof(list(
@@ -106,11 +105,13 @@
 	 * A list of all machinery tied to an area along with the area itself. key=area name,value=list(area,list of machinery)
 	 * we use this to keep track of what areas are affected by the blueprints & what machinery of these areas needs to be reconfigured accordingly
 	 */
-	var/area/affected_areas = list()
+	var/list/area/affected_areas = list()
 	for(var/turf/the_turf as anything in turfs)
 		var/area/old_area = the_turf.loc
-		old_area.turfs_to_uncontain += the_turf
-		newA.contained_turfs += the_turf
+		LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, the_turf.z, list())
+		LISTASSERTLEN(newA.turfs_by_zlevel, the_turf.z, list())
+		old_area.turfs_to_uncontain_by_zlevel[the_turf.z] += the_turf
+		newA.turfs_by_zlevel[the_turf.z] += the_turf
 
 		//keep rack of all areas affected by turf changes
 		affected_areas[old_area.name] = old_area

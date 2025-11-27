@@ -29,7 +29,6 @@
 		var/mark = ""
 		icon = 'icons/misc/mark.dmi'
 		icon_state = "blank"
-		anchored = TRUE
 		layer = 99
 		plane = HUD_PLANE
 		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -50,18 +49,15 @@
 	name = "begin"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "begin"
-	anchored = TRUE
 
 /obj/effect/projection
 	name = "Projection"
 	desc = "This looks like a projection of something."
-	anchored = TRUE
-
 
 /obj/effect/shut_controller
 	name = "shut controller"
 	var/moving = null
-	var/list/parts = list(  )
+	var/list/parts = list()
 
 /obj/structure/showcase
 	name = "Showcase"
@@ -81,15 +77,13 @@
 	name = "mobl"
 	var/master = null
 
-	var/list/container = list(  )
-
+	var/list/container = list()
 
 /obj/structure/showcase/horrific_experiment
 	name = "horrific experiment"
 	desc = "Some sort of pod filled with blood and vicerea. You swear you can see it moving..."
 	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_mess"
-
 
 /obj/effect/supplypod_selector
 	icon_state = "supplypod_selector"
@@ -102,7 +96,6 @@
 	plane = LIGHTING_PLANE
 	layer = LIGHTING_LAYER
 	blend_mode = BLEND_ADD
-
 
 /obj/effect/dummy/lighting_obj
 	name = "lighting fx obj"
@@ -133,10 +126,8 @@
 		return INITIALIZE_HINT_QDEL
 
 /obj/effect/frosty_breath //used only for unathi firebreath, so... yeah..
-	icon = 'icons/effects/effects.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_MOB_LAYER
-	anchored = TRUE
 
 /obj/effect/frosty_breath/Initialize(mapload, mob/living/carbon/C)
 	. = ..()

@@ -4,7 +4,6 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "qpad"
 	anchored = TRUE
-	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
@@ -40,14 +39,12 @@
 	teleport_speed = max(initial(teleport_speed) - (E*10), 0)
 	teleport_cooldown = max(initial(teleport_cooldown) - (E * 100), 0)
 
-
 /obj/machinery/quantumpad/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(exchange_parts(user, I))
 		return ATTACK_CHAIN_PROCEED_SUCCESS
 	return ..()
-
 
 /obj/machinery/quantumpad/crowbar_act(mob/user, obj/item/I)
 	. = TRUE
@@ -109,7 +106,7 @@
 	doteleport(user)
 
 /obj/machinery/quantumpad/proc/sparks()
-	do_sparks(5, 1, get_turf(src))
+	do_sparks(5, TRUE, get_turf(src))
 
 /obj/machinery/quantumpad/attack_ghost(mob/dead/observer/ghost)
 	if(linked_pad)
@@ -164,7 +161,6 @@
 				to_chat(user, span_warning("Teleport failed due to bluespace interference."))
 
 /obj/machinery/quantumpad/cere
-	name = "quantum pad"
 	var/destination
 	var/address
 
@@ -191,7 +187,6 @@
 		desc = "This leads to [destination]"
 	else
 		desc = "This leads to nowhere."
-
 
 //cere only
 /obj/machinery/quantumpad/cere/science_arrivals
@@ -226,7 +221,6 @@
 	preset_target = /obj/machinery/quantumpad/cere/cargo_science
 /obj/machinery/quantumpad/cere/science_cargo2
 	preset_target = /obj/machinery/quantumpad/cere/cargo_science2
-
 
 /obj/machinery/quantumpad/cere/cargo_servise
 	preset_target = /obj/machinery/quantumpad/cere/servise_cargo

@@ -6,7 +6,6 @@
 	dead_icon = null
 	status = ORGAN_ROBOT
 	origin_tech = "materials=4;biotech=7;abductor=3"
-	beating = TRUE
 	var/cooldown_low = 300
 	var/cooldown_high = 300
 	var/next_activation = 0
@@ -26,7 +25,7 @@
 		DATIVE = "мясистой массе",
 		ACCUSATIVE = "мясистую массу",
 		INSTRUMENTAL = "мясистой массой",
-		PREPOSITIONAL = "мясистой массе"
+		PREPOSITIONAL = "мясистой массе",
 	)
 
 /obj/item/organ/internal/heart/gland/update_icon_state()
@@ -81,7 +80,7 @@
 	if(initial(uses) == 1)
 		uses = initial(uses)
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
-	hud.remove_from_hud(owner)
+	hud.remove_atom_from_hud(owner)
 	clear_mind_control()
 	. = ..()
 
@@ -90,7 +89,7 @@
 	if(special != ORGAN_MANIPULATION_ABDUCTOR && uses)
 		Start()
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
-	hud.add_to_hud(owner)
+	hud.add_atom_to_hud(owner)
 	update_gland_hud()
 
 /obj/item/organ/internal/heart/gland/on_life()
@@ -133,7 +132,6 @@
 	cooldown_high = 1200
 	uses = -1
 	icon_state = "slime"
-	mind_control_uses = 1
 	mind_control_duration = 2400
 
 /obj/item/organ/internal/heart/gland/slime/insert(mob/living/carbon/M, special = ORGAN_MANIPULATION_DEFAULT)
@@ -155,7 +153,6 @@
 	cooldown_high = 700
 	uses = -1
 	icon_state = "mindshock"
-	mind_control_uses = 1
 	mind_control_duration = 6000
 
 /obj/item/organ/internal/heart/gland/mindshock/activate()
@@ -197,13 +194,11 @@
 	h_owner.set_species(pick(random_species), keep_missing_bodyparts = TRUE)
 	addtimer(CALLBACK(h_owner, TYPE_PROC_REF(/mob/living/carbon/human, insert_new_gland), old_control_uses), 0)
 
-
 /mob/living/carbon/human/proc/insert_new_gland(mind_controls)
 	if(QDELETED(src))
 		return
 	var/obj/item/organ/internal/heart/gland/pop/replace_gland = new(src)
 	replace_gland.mind_control_uses = mind_controls
-
 
 /obj/item/organ/internal/heart/gland/ventcrawling
 	origin_tech = "materials=4;biotech=5;bluespace=4;abductor=3"
@@ -212,21 +207,16 @@
 	uses = 1
 	icon_state = "vent"
 	mind_control_uses = 4
-	mind_control_duration = 1800
-
 
 /obj/item/organ/internal/heart/gland/ventcrawling/activate()
 	to_chat(owner, span_notice("Ваше тело кажется невероятно гибким."))
 	ADD_TRAIT(owner, TRAIT_VENTCRAWLER_ALWAYS, type)
-
 
 /obj/item/organ/internal/heart/gland/viral
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
 	icon_state = "viral"
-	mind_control_uses = 1
-	mind_control_duration = 1800
 
 /obj/item/organ/internal/heart/gland/viral/activate()
 	to_chat(owner, span_warning("Вам нехорошо."))
@@ -245,7 +235,6 @@
 	uses = 10
 	icon_state = "emp"
 	mind_control_uses = 3
-	mind_control_duration = 1800
 	emp_proof = TRUE	// EMP should not stop our own heart instantly
 
 /obj/item/organ/internal/heart/gland/emp/activate()
@@ -267,12 +256,10 @@
 	S.master_commander = owner
 
 /obj/item/organ/internal/heart/gland/egg
-	cooldown_low = 300
 	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
 	mind_control_uses = 2
-	mind_control_duration = 1800
 
 /obj/item/organ/internal/heart/gland/egg/activate()
 	owner.visible_message(span_alertalien("[owner] [pick(EGG_LAYING_MESSAGES)]"))
@@ -337,13 +324,11 @@
 	for(var/mob/living/carbon/human/H in oview(3, owner)) // Blood decals for simple animals would be neat. aka Carp with blood on it.
 		H.add_mob_blood(owner)
 
-
 /obj/item/organ/internal/heart/gland/plasma
 	cooldown_low = 1200
 	cooldown_high = 1800
 	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
 	uses = -1
-	mind_control_uses = 1
 	mind_control_duration = 800
 
 /obj/item/organ/internal/heart/gland/plasma/activate()
@@ -356,7 +341,7 @@
 		sleep(50)
 		if(!owner)
 			return
-		owner.visible_message(span_danger("[capitalize(owner)] отрыгива[pluralize_ru(owner.gender,"ет","ют")] облако плазмы!"))
+		owner.visible_message(span_danger("[capitalize(owner)] отрыгива[PLUR_ET_YUT(owner)] облако плазмы!"))
 		var/turf/simulated/T = get_turf(owner)
 		if(istype(T))
 			T.atmos_spawn_air(LINDA_SPAWN_TOXINS|LINDA_SPAWN_20C,50)
