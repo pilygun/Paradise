@@ -1,6 +1,5 @@
 /obj/structure/AIcore
 	density = TRUE
-	anchored = FALSE
 	name = "AI core"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "0"
@@ -14,40 +13,7 @@
 	QDEL_NULL(laws)
 	QDEL_NULL(circuit)
 	QDEL_NULL(brain)
-	if(state == AI_READY_CORE)
-		INVOKE_ASYNC(src, PROC_REF(death_alarm))
-
 	return ..()
-
-
-/obj/structure/AIcore/proc/death_alarm()
-	var/obj/item/radio/headset/all_channels/dummy = new(src)
-	var/static/msg = "Внимание! Обнаружено повреждение внутренних систем станционного ИИ. \
-					Требуется срочное вмешательство."
-	var/static/sender = "Автоматическая система оповещений"
-	dummy.autosay(msg, sender, COMM_FREQ_NAME)
-	qdel(dummy)
-
-	var/obj/item/pda/dummy_pda = new /obj/item/pda()
-	dummy_pda.owner = sender
-	var/datum/data/pda/app/messenger/sender_messenger = dummy_pda.find_program(/datum/data/pda/app/messenger)
-	var/obj/machinery/message_server/message_server = find_pda_server()
-
-	if(!message_server)
-		return
-
-	for(var/obj/item/pda/pda in GLOB.PDAs)
-		if(!(pda.ownjob in GLOB.ai_death_alarm_jobs))
-			continue
-
-		var/datum/data/pda/app/messenger/messenger = pda.find_program(/datum/data/pda/app/messenger)
-		if(!messenger?.can_receive())
-			continue
-
-		sender_messenger.create_message(pda, message = msg)
-
-	qdel(dummy_pda)
-
 
 /obj/structure/AIcore/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -124,7 +90,7 @@
 				laws = ai_module.laws
 				return ATTACK_CHAIN_PROCEED_SUCCESS
 
-			if(istype(I, /obj/item/mmi))
+			if(is_mmi(I))
 				add_fingerprint(user)
 				if(brain)
 					to_chat(user, span_warning("There is already [brain] installed into the frame."))
@@ -169,7 +135,6 @@
 				return ATTACK_CHAIN_BLOCKED_ALL
 
 	return ..()
-
 
 /obj/structure/AIcore/crowbar_act(mob/living/user, obj/item/I)
 	if(state !=CIRCUIT_CORE && state != GLASS_CORE && !(state == CABLED_CORE && brain))
@@ -234,7 +199,6 @@
 			to_chat(user, span_notice("You disconnect the monitor."))
 			state = GLASS_CORE
 	update_icon(UPDATE_ICON_STATE)
-
 
 /obj/structure/AIcore/wirecutter_act(mob/living/user, obj/item/I)
 	if(state != CABLED_CORE)
@@ -320,7 +284,7 @@
 	for(var/obj/structure/AIcore/deactivated/D in world)
 		cores["[D] ([D.loc.loc])"] = D
 
-	if(!cores.len)
+	if(!length(cores))
 		to_chat(src, "No deactivated AI cores were found.")
 
 	var/id = tgui_input_list(usr, "Which core?", "Toggle AI Core Latejoin", cores, null)
@@ -337,14 +301,12 @@
 		GLOB.empty_playable_ai_cores += D
 		to_chat(src, "\The [id] is now <font color=\"#008000\">available</font> for latejoining AIs.")
 
-
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.
 If adding stuff to this, don't forget that an AI need to cancel_camera() whenever it physically moves to a different location.
 That prevents a few funky behaviors.
 */
 //The type of interaction, the player performing the operation, the AI itself, and the card object, if any.
-
 
 /atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(istype(card))
@@ -353,11 +315,10 @@ That prevents a few funky behaviors.
 			return 0
 	return 1
 
-
 /obj/structure/AIcore/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(state != AI_READY_CORE || !..())
 		return
- //Transferring a carded AI to a core.
+//Transferring a carded AI to a core.
 	if(interaction == AI_TRANS_FROM_CARD)
 		AI.control_disabled = FALSE
 		AI.aiRadio.disabledAi = FALSE

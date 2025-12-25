@@ -17,14 +17,14 @@
 /* This comment bypasses grep checks */ /var/__prof
 
 /proc/__detect_prof()
-	if (world.system_type == UNIX)
-		if (fexists("./libprof.so"))
+	if(world.system_type == UNIX)
+		if(fexists("./libprof.so"))
 			// No need for LD_LIBRARY_PATH badness.
 			return __prof = "./libprof.so"
-		else if (fexists("./prof"))
+		else if(fexists("./prof"))
 			// Old dumb filename.
 			return __prof = "./prof"
-		else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/prof"))
+		else if(fexists("[world.GetConfig("env", "HOME")]/.byond/bin/prof"))
 			// Old dumb filename in `~/.byond/bin`.
 			return __prof = "prof"
 		else
@@ -47,7 +47,7 @@ GLOBAL_VAR_INIT(profiler_enabled, FALSE)
 
 /client/proc/profiler_start()
 	set name = "Tracy Profiler Start"
-	set category = "Debug"
+	set category = STATPANEL_DEBUG
 	set desc = "Starts the tracy profiler and writes the data to the server's data directory."
 
 	if(holder && holder.rights != R_HOST)
@@ -59,7 +59,7 @@ GLOBAL_VAR_INIT(profiler_enabled, FALSE)
 
 /client/proc/profiler_stop()
 	set name = "Tracy Profiler Stop"
-	set category = "Debug"
+	set category = STATPANEL_DEBUG
 	set desc = "Stop the tracy profiler."
 
 	if(holder && holder.rights != R_HOST)

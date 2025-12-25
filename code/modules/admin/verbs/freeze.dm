@@ -23,12 +23,6 @@ GLOBAL_LIST_EMPTY(frozen_atom_list) // A list of admin-frozen atoms.
 
 ///mob freeze procs
 
-/mob/living
-	/// Used for preventing attacks on admin-frozen mobs.
-	var/frozen = null
-	/// Used for keeping track of previous sleeping value with admin freeze.
-	var/admin_prev_sleeping = 0
-
 /mob/living/admin_Freeze(client/admin, skip_overlays = FALSE, mech = null)
 	if(!istype(admin))
 		return
@@ -57,20 +51,17 @@ GLOBAL_LIST_EMPTY(frozen_atom_list) // A list of admin-frozen atoms.
 		admin_prev_sleeping = null
 
 	to_chat(src, "<b><font color= red>You have been [frozen ? "frozen" : "unfrozen"] by [admin]</b></font>")
-	message_admins("<span class='notice'>[key_name_admin(admin)] [frozen ? "froze" : "unfroze"] [key_name_admin(src)] [mech ? "in a [mech]" : ""]</span>")
+	message_admins(span_notice("[key_name_admin(admin)] [frozen ? "froze" : "unfroze"] [key_name_admin(src)] [mech ? "in a [mech]" : ""]"))
 	log_admin("[key_name(admin)] [frozen ? "froze" : "unfroze"] [key_name(src)] [mech ? "in a [mech]" : ""]")
 	update_icons()
 
 	return frozen
-
 
 /mob/living/simple_animal/slime/admin_Freeze(admin)
 	if(..()) // The result of the parent call here will be the value of the mob's `frozen` variable after they get (un)frozen.
 		adjustHealth(1000) //arbitrary large value
 	else
 		revive()
-
-/mob/living/simple_animal/var/admin_prev_health = null
 
 /mob/living/simple_animal/admin_Freeze(admin)
 	if(..()) // The result of the parent call here will be the value of the mob's `frozen` variable after they get (un)frozen.
@@ -95,5 +86,5 @@ GLOBAL_LIST_EMPTY(frozen_atom_list) // A list of admin-frozen atoms.
 	if(occupant)
 		occupant.admin_Freeze(admin, mech = name) // We also want to freeze the driver of the mech.
 	else
-		message_admins("<span class='notice'>[key_name_admin(admin)] [frozen ? "froze" : "unfroze"] an empty [name]</span>")
+		message_admins(span_notice("[key_name_admin(admin)] [frozen ? "froze" : "unfroze"] an empty [name]"))
 		log_admin("[key_name(admin)] [frozen ? "froze" : "unfroze"] an empty [name]")
