@@ -61,9 +61,6 @@
 
 	// Readd to ourselves.
 	attached_to.vis_contents |= src
-<<<<<<< HEAD
-=======
 
 /obj/effect/abstract/particle_holder_tgmc/reset_transform
 	appearance_flags = KEEP_APART | TILE_BOUND | RESET_TRANSFORM
->>>>>>> 4aaec7360347739fcc46b8b922df1a9efc879404
