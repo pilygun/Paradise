@@ -137,10 +137,7 @@
 #include "code\__DEFINES\obj_flags.dm"
 #include "code\__DEFINES\organ.dm"
 #include "code\__DEFINES\overlays.dm"
-<<<<<<< Updated upstream
 #include "code\__DEFINES\particle.dm"
-=======
->>>>>>> Stashed changes
 #include "code\__DEFINES\path.dm"
 #include "code\__DEFINES\pda.dm"
 #include "code\__DEFINES\pipes.dm"
@@ -275,15 +272,11 @@
 #include "code\__HELPERS\radio.dm"
 #include "code\__HELPERS\russian.dm"
 #include "code\__HELPERS\sanitize_values.dm"
-<<<<<<< Updated upstream
 #include "code\__HELPERS\screen_objs.dm"
 #include "code\__HELPERS\see_through_maps.dm"
 #include "code\__HELPERS\shell.dm"
 #include "code\__HELPERS\spatial_info.dm"
 #include "code\__HELPERS\stack_trace.dm"
-=======
-#include "code\__HELPERS\shell.dm"
->>>>>>> Stashed changes
 #include "code\__HELPERS\stat_tracking.dm"
 #include "code\__HELPERS\stoplag.dm"
 #include "code\__HELPERS\string_assoc_lists.dm"
@@ -669,11 +662,8 @@
 #include "code\datums\components\pref_holder.dm"
 #include "code\datums\components\radioactivity.dm"
 #include "code\datums\components\ritual_object.dm"
-<<<<<<< Updated upstream
 #include "code\datums\components\seethrough.dm"
 #include "code\datums\components\shell.dm"
-=======
->>>>>>> Stashed changes
 #include "code\datums\components\shielded.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\spawner.dm"
@@ -923,11 +913,8 @@
 #include "code\datums\status_effects\gas.dm"
 #include "code\datums\status_effects\neutral.dm"
 #include "code\datums\status_effects\screwy_hud.dm"
-<<<<<<< Updated upstream
 #include "code\datums\status_effects\silicons.dm"
 #include "code\datums\status_effects\sport_reagents.dm"
-=======
->>>>>>> Stashed changes
 #include "code\datums\status_effects\status_effect.dm"
 #include "code\datums\status_effects\status_effects_absorption.dm"
 #include "code\datums\status_effects\wet_stacks.dm"
@@ -1711,13 +1698,10 @@
 #include "code\game\objects\structures\transit_tubes\station.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube_pod.dm"
-<<<<<<< Updated upstream
 #include "code\game\sound\sound.dm"
 #include "code\game\sound\sound_keys\sound_keys.dm"
 #include "code\game\sound\sound_keys\sound_keys_assoc.dm"
 #include "code\game\sound\sound_keys\sound_keys_reagents.dm"
-=======
->>>>>>> Stashed changes
 #include "code\game\turfs\baseturf.dm"
 #include "code\game\turfs\simulated.dm"
 #include "code\game\turfs\turf.dm"
@@ -1759,7 +1743,6 @@
 #include "code\modules\actionspeed\modifiers\items.dm"
 #include "code\modules\actionspeed\modifiers\mobs.dm"
 #include "code\modules\actionspeed\modifiers\status_effects.dm"
-<<<<<<< Updated upstream
 #include "code\modules\addition_goals\addition_goal_console.dm"
 #include "code\modules\addition_goals\addition_goals.dm"
 #include "code\modules\addition_goals\shuttle.dm"
@@ -1768,8 +1751,6 @@
 #include "code\modules\addition_goals\goals\medical.dm"
 #include "code\modules\addition_goals\goals\prisoners.dm"
 #include "code\modules\addition_goals\goals\trash.dm"
-=======
->>>>>>> Stashed changes
 #include "code\modules\admin\admin.dm"
 #include "code\modules\admin\admin_investigate.dm"
 #include "code\modules\admin\admin_memo.dm"
@@ -2647,12 +2628,8 @@
 #include "code\modules\map_fluff\de_kerberos_2.dm"
 #include "code\modules\map_fluff\delta.dm"
 #include "code\modules\map_fluff\event.dm"
-<<<<<<< Updated upstream
 #include "code\modules\map_fluff\fast_load.dm"
 #include "code\modules\map_fluff\game_tests.dm"
-=======
-#include "code\modules\map_fluff\maps.dm"
->>>>>>> Stashed changes
 #include "code\modules\map_fluff\multiz.dm"
 #include "code\modules\map_fluff\nova.dm"
 #include "code\modules\maptext_alerts\text_blurbs.dm"
