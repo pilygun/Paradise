@@ -40,6 +40,7 @@
 	var/obj/item/paicard/paicard
 	/// Are we even allowed to insert a pai card.
 	var/allow_pai = TRUE
+	/// Storing bot_name prior to pai and restoring it. MULEBOT uses this for suffix system
 	var/bot_name
 
 	var/disabling_timer_id = null
@@ -125,8 +126,8 @@
 	var/control_freq = BOT_FREQ
 	/// The radio filter the bot uses to identify itself on the network.
 	var/bot_filter
-	/// The type of bot it is, for radio control.
-	var/bot_type = NONE
+	/// Type of bot, one of the *_BOT defines.
+	var/bot_type
 	/// The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC
 	/// This holds text for what the bot is mode doing, reported on the remote bot control interface.
@@ -150,6 +151,32 @@
 		/datum/component/animal_temperature, \
 		minbodytemp = 0, \
 	)
+
+/mob/living/simple_animal/bot/Destroy()
+	if(paicard)
+		ejectpai()
+	set_path(null)
+
+	if(path_hud)
+		QDEL_NULL(path_hud)
+		path_hud = null
+
+	GLOB.bots_list -= src
+
+	QDEL_NULL(path)
+	QDEL_NULL(Radio)
+	QDEL_NULL(access_card)
+
+	if(reset_access_timer_id)
+		deltimer(reset_access_timer_id)
+		reset_access_timer_id = null
+
+	if(SSradio && bot_filter)
+		SSradio.remove_object(bot_core, control_freq)
+
+	QDEL_NULL(bot_core)
+
+	. = ..()
 
 /obj/item/radio/headset/bot
 	requires_tcomms = FALSE
@@ -253,32 +280,6 @@
 
 /mob/living/simple_animal/bot/med_hud_set_status()
 	return diag_hud_set_botstat() //we use a different hud
-
-/mob/living/simple_animal/bot/Destroy()
-	if(paicard)
-		ejectpai()
-	set_path(null)
-
-	if(path_hud)
-		QDEL_NULL(path_hud)
-		path_hud = null
-
-	GLOB.bots_list -= src
-
-	QDEL_NULL(path)
-	QDEL_NULL(Radio)
-	QDEL_NULL(access_card)
-
-	if(reset_access_timer_id)
-		deltimer(reset_access_timer_id)
-		reset_access_timer_id = null
-
-	if(SSradio && bot_filter)
-		SSradio.remove_object(bot_core, control_freq)
-
-	QDEL_NULL(bot_core)
-
-	return ..()
 
 /mob/living/simple_animal/bot/death(gibbed)
 	// Only execute the below if we successfully died
@@ -1079,11 +1080,15 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	use_power = NO_POWER_USE
 	var/mob/living/simple_animal/bot/owner = null
 
-/obj/machinery/bot_core/New(loc)
-	..()
+/obj/machinery/bot_core/Initialize(mapload)
+	. = ..()
 	owner = loc
 	if(!istype(owner))
 		qdel(src)
+
+/obj/machinery/bot_core/Destroy()
+	owner = null
+	. = ..()
 
 /**
  * Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
@@ -1318,3 +1323,14 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 		return
 	set_varspeed(initial(speed))
 	balloon_alert(src, "вы замедляетесь")
+
+/// AI bot access verb TGUI
+/mob/living/simple_animal/bot/proc/get_bot_data()
+	. = list(
+	"name" = name ? name : model, // name is the actual bot name. PAI may change it. Mulebot suffix system uses bot_name // WHY, WHO MADE THIS
+	"model" = model, //
+	"status" = mode, // BOT_IDLE is 0, using mode_name will bsod tgui
+	"location" = get_area(src),
+	"on" = on,
+	"UID" = UID(),
+	)
