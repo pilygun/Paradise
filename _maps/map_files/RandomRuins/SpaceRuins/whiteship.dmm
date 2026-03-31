@@ -167,8 +167,12 @@
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
+/obj/machinery/atmospherics/unary/vent_scrubber{
+	dir = 1;
+	name = "standard air scrubber";
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
 	},
 /turf/simulated/floor/plasteel{
 	dir = 9;
@@ -176,8 +180,12 @@
 	},
 /area/shuttle/abandoned)
 "dA" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 4
+/obj/machinery/atmospherics/unary/vent_scrubber{
+	dir = 4;
+	name = "standard air scrubber";
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
 	},
 /obj/machinery/light/small/built{
 	dir = 8
@@ -255,7 +263,12 @@
 	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
 	name = "Surgery Cleaner"
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/unary/vent_scrubber{
+	name = "standard air scrubber";
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
+	},
 /obj/structure/sign/poster/official/nanotrasen_logo{
 	pixel_y = 32
 	},
@@ -389,8 +402,12 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
+/obj/machinery/atmospherics/unary/vent_scrubber{
+	dir = 1;
+	name = "standard air scrubber";
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
 	},
 /obj/structure/coatrack,
 /obj/item/clothing/suit/storage/labcoat/cmo{
@@ -912,7 +929,12 @@
 /area/shuttle/abandoned)
 "sU" = (
 /obj/structure/table/tray,
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/unary/vent_scrubber{
+	name = "standard air scrubber";
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
+	},
 /obj/item/retractor,
 /obj/structure/sign/poster/official/nanotrasen_logo{
 	pixel_y = 32
@@ -1828,8 +1850,12 @@
 	},
 /area/shuttle/abandoned)
 "Nx" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
+/obj/machinery/atmospherics/unary/vent_scrubber{
+	dir = 1;
+	name = "standard air scrubber";
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
 	},
 /obj/structure/closet/l3closet,
 /turf/simulated/floor/plasteel{
@@ -2083,8 +2109,12 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 4
+/obj/machinery/atmospherics/unary/vent_scrubber{
+	dir = 4;
+	name = "standard air scrubber";
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
 	},
 /obj/structure/rack,
 /obj/item/extinguisher/mini,
@@ -2182,7 +2212,12 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/hardsuit/medical,
 /obj/item/clothing/mask/breath,
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/unary/vent_scrubber{
+	name = "standard air scrubber";
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
+	},
 /obj/item/tank/internals/emergency_oxygen/double,
 /turf/simulated/floor/plasteel{
 	dir = 8;
@@ -2281,8 +2316,12 @@
 /area/shuttle/abandoned)
 "Ym" = (
 /obj/structure/rack,
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
+/obj/machinery/atmospherics/unary/vent_scrubber{
+	dir = 1;
+	name = "standard air scrubber";
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
 	},
 /obj/item/tank/internals/emergency_oxygen/double,
 /turf/simulated/floor/plasteel{

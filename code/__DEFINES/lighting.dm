@@ -33,8 +33,7 @@
 #define LIGHTING_PLANE_ALPHA_VISIBLE 255
 #define LIGHTING_PLANE_ALPHA_NV_TRAIT 245
 #define LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE 192
-/// For lighting alpha, small amounts lead to big changes. even at 128 its hard to figure out what is dark and what is light, at 64 you almost can't even tell.
-#define LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE 128
+#define LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE 128 //For lighting alpha, small amounts lead to big changes. even at 128 its hard to figure out what is dark and what is light, at 64 you almost can't even tell.
 #define LIGHTING_PLANE_ALPHA_INVISIBLE 0
 
 #define standartize_alpha(__alpha) (__alpha / LIGHTING_PLANE_ALPHA_VISIBLE)

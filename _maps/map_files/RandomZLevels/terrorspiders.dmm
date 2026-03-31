@@ -6613,9 +6613,10 @@
 /turf/simulated/floor/engine/air,
 /area/awaymission/UO71/eng)
 "pv" = (
-/obj/machinery/atmospherics/air_sensor/all{
+/obj/machinery/atmospherics/air_sensor{
 	frequency = 1443;
-	id_tag = "UO71_air_sensor"
+	id_tag = "UO71_air_sensor";
+	output = 23
 	},
 /turf/simulated/floor/engine/air,
 /area/awaymission/UO71/eng)
@@ -8643,8 +8644,9 @@
 	},
 /area/awaymission/UO71/eng)
 "ty" = (
-/obj/machinery/atmospherics/air_sensor/all{
-	id_tag = "UO71_waste_sensor"
+/obj/machinery/atmospherics/air_sensor{
+	id_tag = "UO71_waste_sensor";
+	output = 127
 	},
 /turf/simulated/floor/engine{
 	name = "vacuum floor";
@@ -9218,8 +9220,9 @@
 /turf/simulated/floor/plasteel,
 /area/awaymission/UO71/eng)
 "uN" = (
-/obj/machinery/atmospherics/trinary/filter/n2{
+/obj/machinery/atmospherics/trinary/filter{
 	dir = 4;
+	filter_type = 2;
 	on = 1
 	},
 /turf/simulated/floor/plasteel{
@@ -9272,8 +9275,9 @@
 	},
 /area/awaymission/UO71/eng)
 "uS" = (
-/obj/machinery/atmospherics/trinary/filter/o2{
+/obj/machinery/atmospherics/trinary/filter{
 	dir = 4;
+	filter_type = 1;
 	on = 1
 	},
 /turf/simulated/floor/plasteel{
@@ -9872,7 +9876,7 @@
 	},
 /area/awaymission/UO71/eng)
 "wl" = (
-/obj/machinery/atmospherics/air_sensor/n2{
+/obj/machinery/atmospherics/air_sensor{
 	id_tag = "UO71_n2_sensor"
 	},
 /obj/machinery/light/small,
@@ -9883,7 +9887,7 @@
 /turf/simulated/floor/engine/n2,
 /area/awaymission/UO71/eng)
 "wn" = (
-/obj/machinery/atmospherics/air_sensor/o2{
+/obj/machinery/atmospherics/air_sensor{
 	id_tag = "UO71_o2_sensor"
 	},
 /obj/machinery/light/small,

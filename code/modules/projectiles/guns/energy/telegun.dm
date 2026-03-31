@@ -1,4 +1,5 @@
-// MARK: Telegun
+// Telegun for Tator RDs
+
 /obj/item/gun/energy/telegun
 	name = "Teleporter Gun"
 	desc = "An extremely high-tech bluespace energy gun capable of teleporting targets to far off locations."

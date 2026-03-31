@@ -217,8 +217,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/trinary/filter/n2{
+/obj/machinery/atmospherics/trinary/filter{
 	dir = 4;
+	filter_type = "n2";
 	name = "nitrogen filter";
 	on = 1
 	},

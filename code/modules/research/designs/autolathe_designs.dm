@@ -733,7 +733,7 @@
 	id = "9mmTEbox"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30500)
-	build_path = /obj/item/ammo_box/dot45NR
+	build_path = /obj/item/ammo_box/c9mmte
 	category = list(PRINTER_CATEGORY_HACKED, AUTOLATHE_CATEGORY_SECURITY)
 
 /datum/design/enforcer/disable
@@ -832,7 +832,7 @@
 	id = "c10mm"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 45500)
-	build_path = /obj/item/ammo_box/m10mm
+	build_path = /obj/item/ammo_box/c10mm
 	category = list(PRINTER_CATEGORY_HACKED, AUTOLATHE_CATEGORY_SECURITY)
 
 /datum/design/c45

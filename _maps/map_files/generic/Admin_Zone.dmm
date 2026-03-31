@@ -319,7 +319,7 @@
 /area/admin)
 "cX" = (
 /obj/structure/table/wood,
-/obj/item/gun/projectile/automatic/arg,
+/obj/item/gun/projectile/automatic/ar,
 /turf/simulated/floor/wood,
 /area/admin)
 "cZ" = (
@@ -2176,6 +2176,11 @@
 "yQ" = (
 /turf/simulated/floor/indestructible/grass,
 /area/tdome/newtdome/CQC)
+"yT" = (
+/obj/structure/table/wood,
+/obj/item/gun/projectile/automatic/pistol/enforcer/security,
+/turf/simulated/floor/wood,
+/area/admin)
 "yV" = (
 /obj/structure/rack,
 /obj/item/beach_ball/holoball{
@@ -3736,7 +3741,7 @@
 /area/admin)
 "SK" = (
 /obj/structure/table/wood,
-/obj/item/gun/projectile/automatic/ik60,
+/obj/item/gun/projectile/automatic/lasercarbine,
 /turf/simulated/floor/wood,
 /area/admin)
 "SN" = (
@@ -9313,7 +9318,7 @@ fE
 Sq
 EU
 iz
-IU
+yT
 jN
 CF
 Jp

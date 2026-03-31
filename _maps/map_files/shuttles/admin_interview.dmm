@@ -443,8 +443,8 @@
 /area/shuttle/administration)
 "tu" = (
 /obj/effect/turf_decal/siding/blue/corner{
-	color = "#444444";
-	dir = 1
+	dir = 1;
+	color = "#444444"
 	},
 /obj/machinery/light,
 /turf/simulated/floor/wood/fancy/cherry,
@@ -563,8 +563,8 @@
 /area/shuttle/administration)
 "AN" = (
 /obj/machinery/door/airlock/centcom{
-	id = "Interview";
-	name = "Interview room"
+	name = "Interview room";
+	id = "Interview"
 	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
@@ -611,6 +611,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/shuttle/administration)
+"Cv" = (
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	frequency = 1331;
+	id_tag = "admin_s_pump"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "vfloor"
+	},
+/area/shuttle/administration)
 "Dd" = (
 /turf/simulated/floor/plasteel{
 	dir = 8;
@@ -631,8 +640,8 @@
 /area/shuttle/administration)
 "EL" = (
 /obj/effect/turf_decal/siding/blue/corner{
-	color = "#444444";
-	dir = 8
+	dir = 8;
+	color = "#444444"
 	},
 /turf/simulated/floor/wood/fancy/cherry,
 /area/shuttle/administration)
@@ -709,9 +718,9 @@
 /area/shuttle/administration)
 "LH" = (
 /obj/machinery/ticket_machine{
-	id = 2;
+	pixel_y = 32;
 	pixel_x = 32;
-	pixel_y = 32
+	id = 2
 	},
 /turf/simulated/floor/plasteel{
 	dir = 4;
@@ -726,11 +735,11 @@
 	height = 18;
 	id = "admin";
 	name = "administration shuttle";
-	port_direction = 2;
-	preferred_direction = 8;
 	roundstart_move = "admin_away";
 	timid = 1;
-	width = 18
+	width = 18;
+	port_direction = 2;
+	preferred_direction = 8
 	},
 /obj/machinery/door/airlock/external{
 	frequency = 1331;
@@ -793,6 +802,12 @@
 /turf/simulated/floor/plasteel{
 	dir = 10;
 	icon_state = "darkredalt"
+	},
+/area/shuttle/administration)
+"Pv" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden,
+/turf/simulated/floor/shuttle{
+	icon_state = "vfloor"
 	},
 /area/shuttle/administration)
 "PT" = (
@@ -885,8 +900,8 @@
 /area/shuttle/administration)
 "Sg" = (
 /obj/effect/turf_decal/siding/blue/corner{
-	color = "#444444";
-	dir = 4
+	dir = 4;
+	color = "#444444"
 	},
 /obj/machinery/light,
 /turf/simulated/floor/wood/fancy/cherry,
@@ -1006,9 +1021,9 @@
 /area/shuttle/administration)
 "Uj" = (
 /obj/machinery/door_control{
-	id = "Interview";
-	name = "Interview room door-control";
 	normaldoorcontrol = 1;
+	name = "Interview room door-control";
+	id = "Interview";
 	pixel_y = -34
 	},
 /obj/machinery/door_control{
@@ -1457,8 +1472,8 @@ hA
 hA
 hA
 PT
-VV
-sY
+Cv
+Pv
 VV
 hA
 hA
@@ -1478,7 +1493,7 @@ dj
 hA
 qS
 VV
-VV
+sY
 kP
 hA
 dj

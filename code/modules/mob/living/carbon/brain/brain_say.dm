@@ -13,7 +13,7 @@
 
 	..(message)
 
-/mob/living/carbon/brain/whisper(message)
+/mob/living/carbon/brain/whisper(message as text)
 	if(!can_speak(warning = TRUE))
 		return
 

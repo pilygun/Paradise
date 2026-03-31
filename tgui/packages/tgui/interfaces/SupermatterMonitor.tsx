@@ -26,14 +26,14 @@ interface SupermatterData {
   SM_moles: number;
   SM_gas_coefficient: number;
   gases?: Array<{
-    tlv: string;
+    name: string;
     amount: number;
     portion: number;
   }>;
 }
 
 export const SupermatterMonitor = () => {
-  const { data } = useBackend<SupermatterData>();
+  const { act, data } = useBackend<SupermatterData>();
 
   if (data.active === 0) {
     return <SupermatterMonitorListView />;
@@ -239,11 +239,11 @@ const SupermatterMonitorDataView = () => {
               <LabeledList>
                 {filteredGases.map((gas) => (
                   <LabeledList.Item
-                    key={gas.tlv}
-                    label={getGasLabel(gas.tlv, gas.tlv)}
+                    key={gas.name}
+                    label={getGasLabel(gas.name, gas.name)}
                   >
                     <ProgressBar
-                      color={getGasColor(gas.tlv)}
+                      color={getGasColor(gas.name)}
                       value={gas.portion}
                       minValue={0}
                       maxValue={gasMaxAmount}

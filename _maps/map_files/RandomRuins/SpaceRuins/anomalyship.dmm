@@ -1771,7 +1771,8 @@
 "No" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	dir = 1;
-	frequency = 1331
+	frequency = 1331;
+	id_tag = "syndie_cargo_right_shuttle_pump"
 	},
 /turf/simulated/floor/plating,
 /area/ae13/hall)
@@ -2212,7 +2213,8 @@
 "TO" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	dir = 8;
-	frequency = 1331
+	frequency = 1331;
+	id_tag = "synd_pump_bottom"
 	},
 /turf/simulated/floor/plating,
 /area/ae13/hall)

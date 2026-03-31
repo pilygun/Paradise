@@ -35,6 +35,7 @@
 	. = STATUS_UPDATE_NONE
 	if(damage <= 0)
 		return .
+
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, sharp, used_weapon, spread_damage, forced)
 
 	switch(damagetype)
@@ -966,12 +967,3 @@
 	to_chat(src, span_warning("Неудача! Вы ощущаете слабость, потянув за рычаг, надеюсь оно того стоило."))
 	src.adjustCloneLoss(5)
 	return FALSE
-
-/mob/living/proc/adjust_organ_loss(slot, amount, maximum, required_organ_flag)
-	return
-
-/mob/living/proc/set_organ_loss(slot, amount, maximum, required_organ_flag)
-	return
-
-/mob/living/proc/get_organ_loss(slot, required_organ_flag)
-	return

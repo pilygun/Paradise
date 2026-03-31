@@ -1,4 +1,3 @@
-// MARK: Tasers
 /obj/item/gun/energy/taser
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
@@ -8,6 +7,15 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
 	accuracy = GUN_ACCURACY_SNIPER
+
+/obj/item/gun/energy/shock_revolver
+	name = "tesla revolver"
+	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
+	icon_state = "stunrevolver"
+	origin_tech = "combat=4;materials=4;powerstorage=4"
+	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
+	shaded_charge = TRUE
+	accuracy = GUN_ACCURACY_MINIMAL
 
 /obj/item/gun/energy/gun/advtaser
 	name = "hybrid taser"
@@ -36,17 +44,6 @@
 	..()
 	robocharge()
 
-/obj/item/gun/energy/gun/advtaser/mounted
-	name = "mounted taser"
-	desc = "An arm mounted dual-mode weapon that fires electrodes and disabler shots."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "taser"
-	item_state = "armcannonstun4"
-	selfcharge = TRUE
-	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses neural signals instead
-	attachable_allowed = null
-	
-// MARK: Disablers
 /obj/item/gun/energy/disabler
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
@@ -74,13 +71,3 @@
 
 /obj/item/gun/energy/disabler/cyborg/emp_act(severity)
 	return
-
-// MARK: Shock revolver
-/obj/item/gun/energy/shock_revolver
-	name = "tesla revolver"
-	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
-	icon_state = "stunrevolver"
-	origin_tech = "combat=4;materials=4;powerstorage=4"
-	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
-	shaded_charge = TRUE
-	accuracy = GUN_ACCURACY_MINIMAL

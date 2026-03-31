@@ -11,7 +11,6 @@
 	light_range = 2
 	light_system = MOVABLE_LIGHT
 	light_on = FALSE
-	heat = T3500K
 	var/active = 0
 	var/force_on = 30 //force when active
 	var/throwforce_on = 20
@@ -81,8 +80,8 @@
 	add_fingerprint(user)
 	update_icon(UPDATE_ICON_STATE)
 
-/obj/item/melee/energy/get_temperature()
-	return active * heat
+/obj/item/melee/energy/get_heat()
+	return active * 3500
 
 /obj/item/melee/energy/axe
 	name = "energy axe"

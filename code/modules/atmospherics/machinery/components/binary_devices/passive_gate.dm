@@ -11,6 +11,19 @@
 
 	var/target_pressure = ONE_ATMOSPHERE
 
+	var/id = null
+
+/obj/machinery/atmospherics/binary/passive_gate/atmos_init()
+	..()
+	if(frequency)
+		set_frequency(frequency)
+
+/obj/machinery/atmospherics/binary/passive_gate/Destroy()
+	if(SSradio)
+		SSradio.remove_object(src, frequency)
+	radio_connection = null
+	return ..()
+
 /obj/machinery/atmospherics/binary/passive_gate/update_icon_state()
 	..()
 	icon_state = "[on ? "on" : "off"]"
@@ -52,37 +65,57 @@
 		parent2.update = TRUE
 	return TRUE
 
-/obj/machinery/atmospherics/binary/passive_gate/get_data()
-	var/list/data = list(
-		"name" = name,
-		"machine_type" = "AGP",
-		"uid" = UID(),
+/obj/machinery/atmospherics/binary/passive_gate/proc/broadcast_status()
+	if(!radio_connection)
+		return 0
+
+	var/datum/signal/signal = new
+	signal.transmission_method = 1 //radio signal
+	signal.source = src
+
+	signal.data = list(
+		"tag" = id,
+		"device" = "AGP",
 		"power" = on,
-		"target_output" = target_pressure
+		"target_output" = target_pressure,
+		"sigtype" = "status"
 	)
 
-	return data
+	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/binary/passive_gate/update_params(list/params)
+	return 1
+
+/obj/machinery/atmospherics/binary/passive_gate/receive_signal(datum/signal/signal)
+	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+		return 0
+
 	var/old_on = on //for logging
 
-	if("power" in params)
-		on = params["power"]
+	if("power" in signal.data)
+		on = text2num(signal.data["power"])
 
-	if("power_toggle" in params)
+	if("power_toggle" in signal.data)
 		on = !on
 
-	if("set_output_pressure" in params)
-		target_pressure = clamp(
-			params["set_output_pressure"],
+	if("set_output_pressure" in signal.data)
+		target_pressure = between(
 			0,
-			ONE_ATMOSPHERE * 50
+			text2num(signal.data["set_output_pressure"]),
+			ONE_ATMOSPHERE*50
 		)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
 
-	update_appearance(UPDATE_ICON)
+	if("status" in signal.data)
+		spawn(2)
+			broadcast_status()
+		return //do not update_icon
+
+	spawn(2)
+		broadcast_status()
+	update_icon()
+	return
 
 /obj/machinery/atmospherics/binary/passive_gate/attack_hand(mob/user)
 	if(..())

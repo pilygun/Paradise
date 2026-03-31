@@ -469,8 +469,6 @@
 
 /// SLEEPING
 /mob/living/proc/IsSleeping()
-	if(HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
-		return
 	return has_status_effect(STATUS_EFFECT_SLEEPING)
 
 /mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
@@ -484,8 +482,6 @@
 		return
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
-	if(HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
-		return
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
 		S.duration = max(world.time + amount, S.duration)
@@ -497,8 +493,6 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount) & COMPONENT_NO_EFFECT)
 		return
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
-		return
-	if(HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
 		return
 	if(frozen) // If the mob has been admin frozen, sleeping should not be changeable
 		return

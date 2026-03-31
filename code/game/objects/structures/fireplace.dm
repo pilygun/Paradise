@@ -90,7 +90,7 @@
 		qdel(tool)
 		return ATTACK_CHAIN_BLOCKED_ALL
 
-	if(!tool.get_temperature())
+	if(!tool.get_heat())
 		return ..()
 
 	add_fingerprint(user)

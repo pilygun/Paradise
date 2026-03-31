@@ -130,7 +130,6 @@
 	light_on = FALSE
 	light_range = 1.5
 	light_color = LIGHT_COLOR_DIM_YELLOW
-	heat = T999K
 
 /obj/item/clothing/head/cakehat/process()
 	if(!on_fire)
@@ -171,9 +170,6 @@
 	if(!force || !on_fire)
 		return
 	toggle_cake_light()
-
-/obj/item/clothing/head/cakehat/get_temperature()
-	return on_fire * heat
 
 /*
  * Soviet Hats

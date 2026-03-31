@@ -1,7 +1,6 @@
 // Simple datum to keep track of a running holomap. Each machine capable of displaying the holomap will have one.
 /datum/station_holomap
 	var/image/base_map
-	var/icon/map_icon
 	var/image/cursor
 
 	var/list/overlay_data = list()
@@ -50,10 +49,10 @@
 
 	if(!base_map || reinit_base_map)
 		var/icon/extra_holomap = SSholomaps.extra_holomaps["[HOLOMAP_EXTRA_STATIONMAP]_[map_z]"]
-		map_icon = icon(extra_holomap)
+		var/icon/big_map = icon(extra_holomap)
 		if(crop)
-			map_icon.Crop(crop_x, crop_y, crop[CROP_X2], crop[CROP_Y2])
-		base_map = image(map_icon)
+			big_map.Crop(crop_x, crop_y, crop[CROP_X2], crop[CROP_Y2])
+		base_map = image(big_map)
 
 	if(isAI(user) || isAIEye(user))
 		var/turf/eye_turf = get_turf(user?.client?.eye)
@@ -95,31 +94,19 @@
 /// Make sure to set the pixel x and y of your overlays, or they'll render in the far bottom left.
 /datum/station_holomap/proc/update_map(list/overlays_to_use = list())
 	base_map.cut_overlays()
-	var/list/image/overlays = create_overlays(overlays_to_use)
-	for(var/image/overlay in overlays)
-		base_map.add_overlay(overlay)
-
-	if(bogus)
-		return
-
-	generate_legend(overlays_to_use)
-
-
-/datum/station_holomap/proc/create_overlays(list/overlays_to_use = list())
-	. = list()
 
 	if(bogus)
 		var/image/legend = image('icons/misc/64x64.dmi', "notfound")
 		legend.pixel_w = crop_w / 2 - ICON_SIZE_ALL
 		legend.pixel_z = crop_h / 2 - ICON_SIZE_ALL
-		. += legend
+		base_map.add_overlay(legend)
 		return
 
 	if(location_turf && location_turf.z == map_z && is_station_level(location_turf.z))
 		cursor.pixel_w = HOLOMAP_CENTER_X + location_turf.x - crop_x - 3
 		cursor.pixel_z = HOLOMAP_CENTER_Y + location_turf.y - crop_y - 3
 
-		. += cursor
+		base_map.add_overlay(cursor)
 		overlays_to_use["Вы здесь"] = list(
 			"icon" = image('icons/misc/8x8.dmi', "you"),
 			"markers" = list()
@@ -130,8 +117,9 @@
 			continue
 
 		for(var/image/map_layer in overlays_to_use[overlay]["markers"])
-			. += map_layer
+			base_map.add_overlay(map_layer)
 
+	generate_legend(overlays_to_use)
 
 /datum/station_holomap/proc/reset_map()
 	disabled_overlays = list()

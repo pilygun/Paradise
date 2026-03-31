@@ -88,8 +88,8 @@
 /obj/item/fluff/tattoo_gun/update_overlays()
 	. = ..()
 	if(!used)
-		var/mutable_appearance/ink = mutable_appearance(icon, "ink_overlay")
-		ink.color = rgb(tattoo_r, tattoo_g, tattoo_b, 190)
+		var/image/ink = image(src.icon, src, "ink_overlay")
+		ink.icon += rgb(tattoo_r, tattoo_g, tattoo_b, 190)
 		. += ink
 
 /obj/item/fluff/tattoo_gun/New()
