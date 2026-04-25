@@ -938,7 +938,7 @@
 	if(isliving(pulling))
 		set_pull_offsets(pulling, grab_state)
 
-	if(s_active && !(s_active in contents) && get_turf(s_active) != get_turf(src))	//check !(s_active in contents) first so we hopefully don't have to call get_turf() so much.
+	if(s_active && !(s_active.IsReachableBy(src)))	//check !(s_active in contents) first so we hopefully don't have to call get_turf() so much.
 		s_active.close(src)
 
 	if(body_position == LYING_DOWN && !buckled && prob(getBruteLoss() * 200 / maxHealth))
@@ -2257,7 +2257,7 @@
 			"[DECLENT_RU_CAP(src, NOMINATIVE)] опрокидывает [target]!")]")
 		)
 
-/mob/living/proc/get_fracture_spread_bonus()
+/mob/living/proc/get_fracture_spread_bonus(is_left_hand = TRUE)
 	return 0
 
 /// Prints an ominous message if something bad is going to happen to you
