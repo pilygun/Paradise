@@ -2,7 +2,6 @@
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/projectile/ion
 	muzzle_flash_color = LIGHT_COLOR_BLUE
-	delay = 0.4 SECONDS
 	select_name = "ion"
 	fire_sound = 'sound/weapons/ionrifle.ogg'
 
@@ -56,7 +55,7 @@
 
 /obj/item/ammo_casing/energy/flora/gamma/fire(atom/target, mob/living/user, list/modifiers, distro, quiet, zone_override, spread, atom/firer_source_atom, damage_mod = 1, stamina_mod = 1)
 	playsound(src.loc, 'sound/weapons/floragun_gamma.ogg', 75, TRUE)
-	if(!do_after(user, 0.5 SECONDS, user, DA_IGNORE_USER_LOC_CHANGE, progress = FALSE))
+	if(!do_after(user, 0.5 SECONDS, user, DA_IGNORE_USER_LOC_CHANGE, show_progress = FALSE))
 		return FALSE
 	. = ..()
 
@@ -106,7 +105,6 @@
 	fire_sound = 'sound/weapons/bulletflyby.ogg'
 	click_cooldown_override = 2
 	harmful = FALSE
-	delay = 3
 
 /obj/item/ammo_casing/energy/shuriken/borg
 	e_cost = 50
@@ -241,6 +239,5 @@
 	desc = "A broadhead spike made out of a weird silvery metal."
 	projectile_type = /obj/projectile/bullet/spike
 	muzzle_flash_effect = null
-	delay = 3 //and delay has to be stored here on energy guns
 	select_name = "spike"
 	fire_sound = 'sound/weapons/bladeslice.ogg'

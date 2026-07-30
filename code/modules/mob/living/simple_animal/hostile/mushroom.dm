@@ -58,6 +58,9 @@
 	health = maxHealth
 
 /mob/living/simple_animal/hostile/mushroom/CanAttack(atom/the_target) // Mushroom-specific version of CanAttack to handle stupid attack_same = 2 crap so we don't have to do it for literally every single simple_animal/hostile because this shit never gets spawned
+	if(the_target == src)
+		return FALSE
+
 	if(!the_target || isturf(the_target) || is_light(the_target))
 		return FALSE
 
@@ -126,9 +129,6 @@
 		add_overlay(cap_dead)
 	else
 		add_overlay(cap_living)
-
-	if(blocks_emissive)
-		add_overlay(get_emissive_block())
 
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message(span_notice("[src] starts to slowly recover."))

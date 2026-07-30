@@ -283,8 +283,11 @@
 
 	//if area isn't specified use current
 	area.apc |= src
-	update_icon()
-	addtimer(CALLBACK(src, PROC_REF(update)), 5)
+
+	// Make the apc visually interactive
+	register_context()
+	addtimer(CALLBACK(src, PROC_REF(update)), 0.5 SECONDS)
+	update_appearance()
 
 	var/static/list/hovering_mob_typechecks = list(
 		/mob/living/silicon = list(
@@ -299,10 +302,11 @@
 	GLOB.apcs -= src
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
-	area.power_light = 0
-	area.power_equip = 0
-	area.power_environ = 0
-	area.power_change()
+	if(area)
+		area.power_light = FALSE
+		area.power_equip = FALSE
+		area.power_environ = FALSE
+		area.power_change()
 	if(occupier)
 		malfvacate(TRUE)
 	QDEL_NULL(wires)
@@ -642,7 +646,8 @@
 		if(!do_after(user, 2 SECONDS * coil.toolspeed, src, category = DA_CAT_TOOL) || opened == APC_CLOSED || terminal || !host_turf.can_have_cabling() || host_turf.underfloor_accessibility != UNDERFLOOR_INTERACTABLE || !has_electronics() || QDELETED(coil))
 			return ATTACK_CHAIN_PROCEED
 		var/obj/structure/cable/node = host_turf.get_cable_node()
-		if(prob(50) && electrocute_mob(user, node, node, 1, TRUE))
+		CALCULATE_SKILL_MOD(user, ELECTRICITY_NEGATIVE_CHANCE_MOD, prob_mod)
+		if(prob(50 * prob_mod) && electrocute_mob(user, node, node, 1, TRUE))
 			do_sparks(5, TRUE, src)
 			return ATTACK_CHAIN_BLOCKED_ALL
 		if(!coil.use(10))
@@ -1156,10 +1161,12 @@
 	return "[area.name] : [equipment_channel]/[lighting_channel]/[environment_channel] ([last_used_equipment+last_used_lighting+last_used_environment]) : [cell? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/proc/update()
+	var/area/area = src.area
 	if(operating && !shorted)
 		area.power_light = (lighting_channel > CHANNEL_SETTING_AUTO_OFF)
 		area.power_equip = (equipment_channel > CHANNEL_SETTING_AUTO_OFF)
 		area.power_environ = (environment_channel > CHANNEL_SETTING_AUTO_OFF)
+		playsound(loc, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if(lighting_channel)
 			emergency_power = TRUE
 			if(emergency_power_timer)
@@ -1171,6 +1178,7 @@
 		area.power_light = FALSE
 		area.power_equip = FALSE
 		area.power_environ = FALSE
+		playsound(loc, 'sound/machines/terminal_off.ogg', 50, FALSE)
 		emergency_power_timer = addtimer(CALLBACK(src, PROC_REF(turn_emergency_power_off)), 10 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
 	area.power_change()
 
@@ -1404,6 +1412,8 @@
 /obj/machinery/power/apc/process()
 	if(stat & (BROKEN|MAINT))
 		return
+	var/area/area = src.area
+	var/obj/item/stock_parts/cell/cell = src.cell
 	if(!area.requires_power)
 		return
 
@@ -1436,18 +1446,19 @@
 		log_debug("Status: [main_status] - Excess: [excess] - Last Equip: [last_used_equipment] - Last Light: [last_used_lighting] - Longterm: [longtermpower]")
 
 	if(cell && !shorted)
+		var/cell_rate = GLOB.CELLRATE
 		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, GLOB.CELLRATE * last_used_total)	// clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, cell_rate * last_used_total)	// clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
 		if(excess > last_used_total)		// if power excess recharge the cell
 										// by the same amount just used
 			cell.give(cellused)
-			add_load(cellused/GLOB.CELLRATE)		// add the load used to recharge the cell
+			add_load(cellused / cell_rate)		// add the load used to recharge the cell
 
 		else		// no excess, and not enough per-apc
-			if((cell.charge/GLOB.CELLRATE + excess) >= last_used_total)		// can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess)	//recharge with what we can
+			if((cell.charge / cell_rate + excess) >= last_used_total)		// can we draw enough from cell+grid to cover last usage?
+				cell.charge = min(cell.maxcharge, cell.charge + cell_rate * excess)	//recharge with what we can
 				add_load(excess)		// so draw what we can from the grid
 				charging = APC_NOT_CHARGING
 
@@ -1474,8 +1485,8 @@
 		if(chargemode && charging == APC_IS_CHARGING && operating)
 			if(excess > 0)		// check to make sure we have enough to charge
 				// Max charge is capped to % per second constant
-				var/ch = min(excess*GLOB.CELLRATE, cell.maxcharge*GLOB.CHARGELEVEL)
-				add_load(ch/GLOB.CELLRATE) // Removes the power we're taking from the grid
+				var/ch = min(excess * cell_rate, cell.maxcharge * GLOB.CHARGELEVEL)
+				add_load(ch / cell_rate) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
 			else
@@ -1489,7 +1500,7 @@
 
 		if(chargemode)
 			if(charging == APC_NOT_CHARGING)
-				if(excess > cell.maxcharge*GLOB.CHARGELEVEL)
+				if(excess > cell.maxcharge * GLOB.CHARGELEVEL)
 					chargecount++
 				else
 					chargecount = 0

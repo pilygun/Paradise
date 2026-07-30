@@ -24,7 +24,7 @@
 
 	var/obj/structure/spacevine/SV = new()
 
-	for(var/area/hallway/A in GLOB.areas)
+	for(var/area/station/hallway/A in GLOB.areas)
 		for(var/turf/F in A)
 			if(F.Enter(SV))
 				turfs += F
@@ -152,7 +152,7 @@
 	if(prob(20))
 		ChangeTurf(baseturf) //nar sie eats this shit
 
-/turf/simulated/floor/vines/singularity_pull(S, current_size)
+/turf/simulated/floor/vines/singularity_pull(atom/singularity, current_size)
 	if(current_size >= STAGE_FIVE)
 		if(prob(50))
 			ChangeTurf(baseturf)
@@ -632,7 +632,7 @@
 /obj/structure/spacevine_controller/singularity_act()
 	return
 
-/obj/structure/spacevine_controller/singularity_pull()
+/obj/structure/spacevine_controller/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/structure/spacevine_controller/Destroy()

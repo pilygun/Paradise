@@ -158,16 +158,15 @@
 
 	/// List of of blobs, their offsprings and blobburnouts spawned by them
 	var/list/blobs = list(
-		"infected" = list(),
-		"offsprings" = list(),
-		"minions" = list()
+		BLOB_GROUP_INFECTED = list(),
+		BLOB_GROUP_OFFSPRINGS = list(),
+		BLOB_GROUP_MINIONS = list()
 	)
 	/// Count of blob tiles to blob win
 	var/blob_win_count = BLOB_BASE_TARGET_POINT
 	/// Number of resource produced by the core
 	var/blob_point_rate = 3
-	/// Number of bursted blob infected
-	var/bursted_blobs_count = 0
+
 	/// Total blob submode stage
 	var/blob_stage = BLOB_STAGE_NONE
 	/// The need to delay the end of the game when the blob wins
@@ -239,8 +238,7 @@
  */
 /datum/game_mode/proc/post_setup()
 
-	spawn(ROUNDSTART_LOGOUT_REPORT_TIME)
-		display_roundstart_logout_report()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)
 
 	INVOKE_ASYNC(src, PROC_REF(set_mode_in_db)) // Async query, dont bother slowing roundstart
 
@@ -412,7 +410,7 @@
 	if(escaped_on_pod_5)
 		SSblackbox.record_feedback("nested tally", "round_end_stats", escaped_on_pod_5, list("escapees", "on_pod_5"))
 
-	SSdiscord.send2discord_simple(DISCORD_WEBHOOK_PRIMARY, "A round of [name] has ended - [surviving_total] survivors, [ghosts] ghosts. Round ID - [GLOB.round_id]. Duration - [ROUND_TIME_TEXT()]")
+	GLOB.discord_manager.send2discord_simple(DISCORD_WEBHOOK_PRIMARY, "A round of [name] has ended - [surviving_total] survivors, [ghosts] ghosts. Round ID - [GLOB.round_id]. Duration - [ROUND_TIME_TEXT()]")
 
 	if(!SSredis.connected)
 		return FALSE
@@ -755,7 +753,7 @@
 	if(player.assigned_role)
 		jobtext = " the <b>[player.assigned_role]</b>"
 
-	var/text = "<b>[player.get_display_key()]</b> was <b>[player.name]</b>[jobtext] and"
+	var/text = "<b>[player.get_mind_key()]</b> was <b>[player.name]</b>[jobtext] and"
 	if(player.current)
 		if(player.current.stat == DEAD)
 			text += " [span_redtext("died")]"
@@ -776,7 +774,7 @@
 	return text
 
 /proc/printeventplayer(datum/mind/player)
-	var/text = "<b>[player.get_display_key()]</b> was <b>[player.name]</b>"
+	var/text = "<b>[player.get_mind_key()]</b> was <b>[player.name]</b>"
 	if(player.special_role != SPECIAL_ROLE_EVENTMISC)
 		text += " the [player.special_role]"
 
@@ -817,7 +815,7 @@
 		if(!goal.can_gain())
 			continue
 
-		#ifndef GAME_TESTS
+		#ifndef UNIT_TESTS
 		possible += goal
 		#endif
 
@@ -879,7 +877,6 @@
 	. += auto_declare_completion_sst()
 	. += auto_declare_completion_sit()
 	. += auto_declare_completion_blob()
-	. += auto_declare_completion_heist()
 	. += auto_declare_completion_ninja()
 	. += auto_declare_completion_thief()
 	. += auto_declare_completion_goon_vampire()
@@ -888,11 +885,11 @@
 	. += auto_declare_completion_sintouched()
 	list_clear_nulls(.)
 
-/datum/game_mode/proc/apocalypse_cinema(obj/singularity/god/god, inevitable = FALSE)
-	if(istype(god, /obj/singularity/god/narsie))
+/datum/game_mode/proc/apocalypse_cinema(obj/god/god, inevitable = FALSE)
+	if(istype(god, /obj/god/narsie))
 		return SSticker.cultdat.apocalypse_cinema
 
-	if(istype(god, /obj/singularity/god/ratvar))
+	if(istype(god, /obj/god/ratvar))
 		return /datum/cinematic/cult_arm_ratvar
 
 	return FALSE
@@ -912,7 +909,7 @@
 	)
 	sleep(30 SECONDS)
 
-	var/obj/singularity/god/god = locate(/obj/singularity/god) in GLOB.poi_list
+	var/obj/god/god = locate(/obj/god) in GLOB.poi_list
 
 	if(!god)
 		GLOB.minor_announcement.announce(

@@ -170,10 +170,7 @@
 		buyer.put_in_any_hand_if_possible(spawned)
 
 	// Append item icons to the uplink's purchase log
-	var/list/items_to_log = spawned.get_uplink_log_items()
-	for(var/atom/atom_to_display in items_to_log)
-		target_uplink.purchase_log += span_fontsize4(icon2base64html(atom_to_display))
-
+	spawned.log_contents_to_uplink(target_uplink)
 	return spawned
 
 /// Handles refund tracking for discount category items.
@@ -493,10 +490,10 @@
 /datum/uplink_item/jobspecific/lockermech
 	name = "Синди-Шкафомех"
 	desc = "Массивный и невероятно смертоносный экзоскетлет \"Синдиката\" (на самом деле нет)."
-	item = /obj/mecha/combat/lockersyndie/loaded
+	item = /obj/item/mecha_drop
 	cost = 25
 	job = list(JOB_TITLE_CIVILIAN, JOB_TITLE_ROBOTICIST)
-	surplus = 0
+	surplus = TRUE
 
 /datum/uplink_item/jobspecific/combat_drone
 	name = "Руководство по эксплуатации боевого дрона"
@@ -696,7 +693,7 @@
 			Оно оснащено алгоритмами ближнего боя и имеет обновленные протоколы безопасности для работы с микробатареями."
 	item = /obj/item/ipc_combat_upgrade
 	cost = 11
-	race = list(SPECIES_MACNINEPERSON)
+	race = list(SPECIES_MACHINEPERSON)
 
 /datum/uplink_item/racial/supercharge
 	name = "Имплант cуперзаряда"
@@ -704,7 +701,7 @@
 			Он выпускает специальный химический коктейль, который снимает и значительно сокращает эффект оглушения, а также повышает скорость передвижения."
 	item = /obj/item/implanter/supercharge
 	cost = 40
-	race = list(SPECIES_MACNINEPERSON)
+	race = list(SPECIES_MACHINEPERSON)
 
 /datum/uplink_item/racial/combat_exoframe
 	name = "Боевой каркас экзоскелета"
@@ -713,7 +710,7 @@
 			Поставляется с одноразовым автоимплантером для установки на месте."
 	item = /obj/item/storage/box/syndie_kit/combat_exoframe
 	cost = 28
-	race = list(SPECIES_MACNINEPERSON)
+	race = list(SPECIES_MACHINEPERSON)
 
 //Slime People
 
@@ -830,6 +827,13 @@
 	desc = "Легендарный мощный пистолет с магазином на 7 патронов калибра .50AE. Поставляется с тремя дополнительными магазинами и двумя коробками патронов."
 	item = /obj/item/storage/box/syndie_kit/desert_eagle
 	cost = 50
+
+/datum/uplink_item/dangerous/kedr
+	name = "Пистолет-пулемёт K-45"
+	desc = "Комплект с компактным пистолет-пулемётом K-45 калибра 9 мм, четыре дополнительных магазина к нему и универсальный глушитель."
+	item = /obj/item/storage/box/syndie_kit/kedr_kit
+	cost = 35
+	excludefrom = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 
 /datum/uplink_item/dangerous/smg
 	name = "Пистолет-пулемёт \"C-20rm\""
@@ -1079,6 +1083,13 @@
 	desc = "Магазин на 15 экспансивных патронов калибра 10 мм. Эти патроны наносят намного больше повреждений, чем стандартные, но они совершенно бесполезны против брони."
 	item = /obj/item/ammo_box/magazine/m10mm/hp
 	cost = 2
+
+
+/datum/uplink_item/ammo/kedr_ammo
+	name = "Пистолет-пулемет K-45 — 4 магазина 9 мм"
+	desc = "Четыре магазина на 20 стандартных патронов калибра 9 мм. Подходят к пистолет-пулемету K-45."
+	item = /obj/item/storage/box/syndie_kit/kedr_ammo
+	cost = 4
 
 /datum/uplink_item/ammo/bullbuck
 	name = "Барабан 12g — \"Магнум Картечь\""
@@ -1435,7 +1446,7 @@
 	name = "Дегидрированный Космический карп"
 	desc = "Просто добавьте воды, чтобы обзавестись ручным карпом, который будет настроен агрессивно по отношению ко всем, кроме вас. \
 			Он замаскирован под игрушечного карпа. Не забудьте обнять карпа перед тем, как налить воду, иначе он не признает вас своим хозяином."
-	item = /obj/item/toy/carpplushie/dehy_carp
+	item = /obj/item/toy/plushie/carp/dehy_carp
 	cost = 7
 
 /**
@@ -1704,8 +1715,8 @@
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Переносной монитор"
 	desc = "Мобильное устройство, которое позволяет просматривать изображения с камер наблюдения, установленных на станции. \
-			При переключении между камерами издаётся характерный звук."
-	item = /obj/item/camera_bug
+			При переключении между камерами издаётся характерный звук. Обладает режимом продвинутого слежения."
+	item = /obj/item/camera_bug/syndicate
 	cost = 3
 	surplus = 90
 
@@ -1946,13 +1957,6 @@
 	item = /obj/item/borg/upgrade/mounted_seat/pre_emaged
 	cost = 30
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
-
-/datum/uplink_item/device_tools/autoimplanter
-	name = "Автоимплантер"
-	desc = "Устройство, позволяющее устанавливать 3 кибернетических импланта в полевых условиях без необходимости хирургического вмешательства."
-	item = /obj/item/autoimplanter/traitor
-	cost = 28
-	excludefrom = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 
 /datum/uplink_item/device_tools/binary
 	name = "Ключ бинарного перевода"
@@ -2332,6 +2336,18 @@
 	item = /obj/item/implanter/fake_mindshield
 	cost = 5
 
+/datum/uplink_item/implants/neurotrainer
+	name = "Нейротренер небоевых навыков"
+	desc = "Нейротренер который позволяет улучший любой небоевой навык на ваш выбор."
+	item = /obj/item/neurotrainer/all_without_combat
+	cost = 8
+
+/datum/uplink_item/implants/combat_neurotrainer
+	name = "Нейротренер боевых навыков"
+	desc = "Нейротренер который позволяет улучший любой боевой навык на ваш выбор."
+	item = /obj/item/neurotrainer/combat
+	cost = 15
+
 /**
  * MARK: Cybernetic Implants
  */
@@ -2404,6 +2420,12 @@
 	cost = 33
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 
+/datum/uplink_item/cyber_implants/autoimplanter
+	name = "Автоимплантер"
+	desc = "Устройство, позволяющее устанавливать кибернетический имплант в полевых условиях без необходимости хирургического вмешательства."
+	item = /obj/item/autoimplanter/oneuse
+	cost = 4
+	uplinktypes = list(UPLINK_TYPE_TRAITOR)
 
 /**
  * MARK: Pointless Badassery
@@ -2422,7 +2444,7 @@
 	name = "Электронная сигарета \"Синдиката\""
 	desc = "Со вкусом \"Двойное яблочко\"."
 	item = /obj/item/ecig/syndi
-	cost = 6
+	cost = 3
 
 /datum/uplink_item/badass/syndiecards
 	name = "Игральные карты \"Синдиката\""
@@ -2449,7 +2471,7 @@
 /datum/uplink_item/badass/balloon
 	name = "Фирменный воздушный шар \"Синдикат\""
 	desc = "Изящный красный воздушный шар с эмблемой \"Синдиката\"."
-	item = /obj/item/toy/syndicateballoon
+	item = /obj/item/toy/balloon/syndicate
 	cost = 100
 	can_discount = FALSE
 
@@ -2572,10 +2594,9 @@
 		remaining_TC -= chosen_item.cost
 		itemlog += chosen_item.name // To make the name more readable for the log compared to just i.item
 
-	target_uplink.purchase_log += "<big>[icon2base64html(crate)]</big>"
 	for(var/bought_item in bought_items)
-		var/obj/purchased = new bought_item(crate)
-		target_uplink.purchase_log += "<big>[icon2base64html(purchased)]</big>"
+		new bought_item(crate)
+	crate.log_contents_to_uplink(target_uplink)
 	add_game_logs("purchased a surplus crate with [jointext(itemlog, ", ")]", buyer)
 
 /datum/uplink_item/bundles_TC/telecrystal
@@ -2616,7 +2637,7 @@
 	name = "Воздушный шарик Контрактника"
 	desc = "Изящный воздушный шар, выполненный в черно-золотых тонах и украшенный символикой контрактников. \
 			Чтобы приобрести этот предмет, необходимо успешно завершить все предоставленные контракты в самой сложной локации."
-	item = /obj/item/toy/syndicateballoon/contractor
+	item = /obj/item/toy/balloon/contractor
 	cost = 240
 
 /datum/uplink_item/contractor/baton

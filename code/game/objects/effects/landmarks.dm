@@ -8,7 +8,7 @@
 /obj/effect/landmark/Initialize(mapload)
 	. = ..()
 	set_tag()
-	GLOB.landmarks_list += src
+	GLOB.landmarks_list |= src
 
 /obj/effect/landmark/Destroy()
 	GLOB.landmarks_list -= src
@@ -21,7 +21,7 @@
 /obj/effect/landmark/ex_act()
 	return
 
-/obj/effect/landmark/singularity_pull()
+/obj/effect/landmark/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/landmark/singularity_act()
@@ -180,13 +180,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/awaystart)
 
 /obj/effect/landmark/spawner/carp/Initialize(mapload)
 	spawner_list = GLOB.carplist
-	return ..()
-
-/obj/effect/landmark/spawner/raider_spawn
-	name = "voxstart"
-
-/obj/effect/landmark/spawner/raider_spawn/Initialize(mapload)
-	spawner_list = GLOB.raider_spawn
 	return ..()
 
 /obj/effect/landmark/spawner/ertdirector
@@ -381,13 +374,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/awaystart)
 
 /obj/effect/landmark/start/Initialize(mapload)
 	. = ..()
-	GLOB.start_landmarks_list += src
+	GLOB.start_landmarks_list |= src
+
+/obj/effect/landmark/start/set_tag()
 	if(name != "start")
 		tag = "start*[name]"
 
 /obj/effect/landmark/start/Destroy()
 	GLOB.start_landmarks_list -= src
-	tag = null
 	return ..()
 
 /obj/effect/landmark/start/civilian
@@ -828,14 +822,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/awaystart)
 /obj/effect/landmark/start_override/prisoner
 	connected_outfit = /datum/outfit/job/assistant/prisoner
 
-// MARK: Game Tests
+// MARK: Unit Tests
 /// Marks the bottom left of the testing zone.
-/obj/effect/landmark/game_test/bottom_left_corner
-	name = "game test zone bottom left"
+/obj/effect/landmark/unit_test/bottom_left_corner
+	name = "unit test zone bottom left"
 
 /// Marks the top right of the testing zone.
-/obj/effect/landmark/game_test/top_right_corner
-	name = "game test zone top right"
+/obj/effect/landmark/unit_test/top_right_corner
+	name = "unit test zone top right"
 
 /obj/effect/landmark/start/hangover
 	name = "hangover spawn"
@@ -850,14 +844,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/awaystart)
 	/// Whether our landmark was taken
 	var/used = FALSE
 
-/obj/effect/landmark/start/hangover/Destroy()
-	hangover_debris = null
-	party_debris = null
-	return ..()
-
 /obj/effect/landmark/start/hangover/Initialize(mapload)
 	. = ..()
 	create_debris(get_turf(src))
+
+/obj/effect/landmark/start/hangover/Destroy()
+	LAZYCLEARLIST(hangover_debris)
+	LAZYCLEARLIST(party_debris)
+	return ..()
 
 /obj/effect/landmark/start/hangover/proc/create_debris(turf/our_turf)
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
@@ -880,6 +874,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/awaystart)
 				party_debris += new /obj/effect/decal/cleanable/confetti(party_turf_to_spawn_on)
 			if(prob(10))
 				party_debris += new /obj/item/toy/balloon(party_turf_to_spawn_on)
+			if(prob(5))
+				party_debris += new /obj/item/toy/balloon/long(party_turf_to_spawn_on)
 
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 		return

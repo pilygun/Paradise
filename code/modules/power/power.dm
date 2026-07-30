@@ -7,6 +7,7 @@
 /////////////////////////////
 
 /obj/machinery/power
+	abstract_type = /obj/machinery/power
 	name = null
 	icon = 'icons/obj/engines_and_power/power.dmi'
 	anchored = TRUE
@@ -373,7 +374,6 @@
 	return null
 
 /area/proc/get_apc()
-	for(var/thing in GLOB.apcs)
-		var/obj/machinery/power/apc/APC = thing
-		if(APC.area == src)
-			return APC
+	for(var/obj/machinery/power/apc/apc as anything in GLOB.apcs)
+		if(apc.area == src)
+			return apc
