@@ -548,7 +548,7 @@
 		var/obj/item/stack/spacecash/S = H.get_active_hand()
 		if(istype(S))
 			data["userMoney"] = S.amount
-			data["guestNotice"] = "Принимаем наличные. У вас есть: [S.amount] кредит[DECL_CREDIT(S.amount)]."
+			data["guestNotice"] = "Принимаем наличные. У вас есть: [S.amount] кредит[DECL_0_A_OV(S.amount)]."
 		else if(istype(H))
 			var/obj/item/card/id/idcard = H.get_id_card()
 			if(istype(account))
@@ -762,10 +762,11 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/customat/emp_act(severity)
+	. = ..()
 	switch(severity)
-		if(1)
+		if(EMP_HEAVY)
 			COOLDOWN_START(src, emp_cooldown, weak_emp_cooldown)
-		if(2)
+		if(EMP_LIGHT)
 			COOLDOWN_START(src, emp_cooldown, strong_emp_cooldown)
 
 /obj/machinery/customat/proc/expel(obj/structure/disposalholder/holder)

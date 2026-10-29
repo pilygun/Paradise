@@ -319,7 +319,7 @@
 		var/time_to_destination = round(SSshuttle.emergency.timeLeft(600))
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds")
 		GLOB.minor_announcement.announce(
-			message = "Эвакуационный шаттл достигнет места назначения через [time_to_destination] [declension_ru(time_to_destination, "минуту", "минуты", "минут")]."
+			message = "Эвакуационный шаттл достигнет места назначения через [time_to_destination] минут[DECL_U_Y_0(time_to_destination)]."
 		)
 		message_admins(span_adminnotice("[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds"))
 		href_list["check_antagonist"] = TRUE
@@ -1455,6 +1455,9 @@
 	else if(href_list["select_equip"])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/select_equipment, locateUID(href_list["select_equip"]))
 
+	else if(href_list["custom_equip"])
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/custom_equipment, locateUID(href_list["custom_equip"]))
+
 	else if(href_list["change_voice"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1822,7 +1825,7 @@
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal, selected_mob)
 
 	else if(href_list["adminplayerobservefollow"])
-		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_observe_target, locateUID(href_list["adminplayerobservefollow"]))
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_observe_target, locateUID(href_list["adminplayerobservefollow"]), FALSE)
 
 	else if(href_list["check_antagonist"])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/check_antagonists)
@@ -2219,6 +2222,9 @@
 		output_ai_laws()
 
 	else if(href_list["adminmoreinfo"])
+		if(!check_rights(R_ADMIN))
+			return
+
 		var/mob/subject = locateUID(href_list["adminmoreinfo"])
 		if(!ismob(subject))
 			to_chat(usr, span_warning("This can only be used on instances of type /mob"), confidential = TRUE)
@@ -2986,7 +2992,7 @@
 						addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(doPortalSpawn), turf, pathToSpawn, prefs["amount"]["value"], storm), i*prefs["delay"]["value"])
 
 			if("tripleAI")
-				usr.client.triple_ai()
+				SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb/triple_ai)
 				SSblackbox.record_feedback("tally", "admin_secrets_fun_used", 1, "Triple AI")
 
 			if("mass_mindswap")
@@ -3306,9 +3312,9 @@
 				log_and_message_admins("made everything kawaii.")
 				for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
 					SEND_SOUND(human, sound(
-							ANNOUNCER_ANIMES,
+							SSstation.announcer.event_sounds[ANNOUNCER_ANIMES],
 							channel = CHANNEL_ANNOUNCER,
-							volume = 40,
+							volume = 100 * USER_VOLUME(human, CHANNEL_ANNOUNCER),
 							))
 					if(!human.dna.species.nojumpsuit && !isvox(human) && !isplasmaman(human) \
 						&& !isshadowling(human) && !isvoxarmalis(human) && !is_space_or_openspace(get_turf(human)))
@@ -3454,10 +3460,19 @@
 					log_admin("[key_name(usr)] moved the gamma armory")
 					GLOB.gamma_ship_location = !GLOB.gamma_ship_location
 
+			if("nuclear_overload")
+				SSblackbox.record_feedback("tally", "admin_secrets_fun_used", 1, "Disable Fission Reactor Safeties")
+				message_admins("[key_name_admin(usr)] disabled reactor safeties")
+				log_admin("[key_name(usr)] disabled reactor safeties")
+				if(GLOB.main_fission_reactor)
+					INVOKE_ASYNC(GLOB.main_fission_reactor, TYPE_PROC_REF(/obj/machinery/atmospherics/fission_reactor/, overload_reactor))
+				else
+					log_admin("An admin attempted to override fission reactor safeties, but no reactor was found!")
+
 			if("spawn_cargo_crate")
 				if(!you_realy_want_do_this())
 					return
-				create_cargo_crate()
+				SSadmin_verbs.dynamic_invoke_verb(owner, /datum/admin_verb/spawn_cargo)
 
 			if("borg_skins")
 				if(!check_rights(R_SKINS))
@@ -3963,19 +3978,18 @@
 /datum/admins/proc/mass_mindswap()
 	if(!check_rights(R_EVENT) || !you_realy_want_do_this(owner.mob))
 		return
-
+	var/datum/action/cooldown/spell/pointed/mindswap/swap = new
 	for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
 		if(!human.mind)
 			continue
 
 		var/mob/living/target = safepick(GLOB.human_list - human)
-
 		if(!target \
-		|| !/obj/effect/proc_holder/spell/mind_transfer::valid_target(target, human))
+		|| !swap.is_valid_target(target))
 			continue
-
-		/obj/effect/proc_holder/spell/mind_transfer::cast(list(target), human)
-
+		swap.owner = human
+		swap.cast(target)
+	qdel(swap)
 	log_and_message_admins("Initiated mass mindswap")
 
 /datum/admins/proc/change_lava_type()

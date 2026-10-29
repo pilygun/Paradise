@@ -1,5 +1,5 @@
 /mob/living/carbon/Life(seconds, times_fired)
-	set invisibility = 0
+	set invisibility = FALSE
 
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
@@ -22,8 +22,6 @@
 
 	if(LAZYLEN(processing_patches))
 		handle_patches()
-
-	handle_wetness(times_fired)
 
 	// Increase germ_level regularly
 	handle_germs()
@@ -218,11 +216,9 @@
 		organ.on_life()
 
 /mob/living/carbon/handle_chemicals_in_body()
+	if(HAS_TRAIT(src, TRAIT_BLOCK_METABOLIZE))
+		return
 	reagents.metabolize(src)
-
-/mob/living/carbon/proc/handle_wetness(times_fired)
-	if(times_fired % 20==2) //dry off a bit once every 20 ticks or so
-		wetlevel = max(wetlevel - 1,0)
 
 /mob/living/carbon/proc/handle_stomach(times_fired)
 	for(var/thing in stomach_contents)

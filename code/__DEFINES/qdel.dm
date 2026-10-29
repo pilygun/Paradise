@@ -18,10 +18,13 @@
  *
  * Functionally identical to [QDEL_HINT_QUEUE] if [GC_FAILURE_HARD_LOOKUP] is not enabled in _compiler_options.dm.
  */
-#warn qdel REFERENCE_TRACKING enabled
 #define QDEL_HINT_FINDREFERENCE 5
 /// Behavior as [QDEL_HINT_FINDREFERENCE], but only if the GC fails and a hard delete is forced.
 #define QDEL_HINT_IFFAIL_FINDREFERENCE 6
+#endif
+
+#if defined(REFERENCE_TRACKING) && !defined(CIBUILDING)
+#warn qdel REFERENCE_TRACKING enabled
 #endif
 
 //defines for the gc_destroyed var
@@ -64,6 +67,15 @@
 #define QDEL_LIST_IN(L, time) addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(______qdel_list_wrapper), L), time, TIMER_STOPPABLE)
 #define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) { qdel(L[I]); qdel(I); } L.Cut(); }
 #define QDEL_LIST_ASSOC_VAL(L) if(L) { for(var/I in L) qdel(L[I]); L.Cut(); }
+
+#define QDEL_LIST_CONTENTS(L) do { \
+	if(L) { \
+		for(var/I in L) \
+			qdel(I); \
+		if(L) \
+			L.Cut(); \
+	} \
+} while(FALSE)
 
 ///Sleep check QDEL. Like sleep check death, but checks deleting. Good for non mobs.
 #define SLEEP_CHECK_QDEL(X) sleep(X); if(QDELETED(src)) return;

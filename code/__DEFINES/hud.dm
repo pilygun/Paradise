@@ -111,7 +111,8 @@
 #define ANTAG_HUD_TEAM_2 30
 #define ANTAG_HUD_TEAM_3 31
 #define ANTAG_HUD_VOX_RAIDER 32
-#define THOUGHTS_HUD 33
+#define ANTAG_HUD_ZOMBIE 33
+#define THOUGHTS_HUD 34
 //species hud
 #define DATA_HUD_KIDAN_PHEROMONES 34
 
@@ -173,6 +174,14 @@
 #define ui_palette_scroll "WEST+1:8,NORTH-6:28"
 #define ui_palette_scroll_offset(north_offset) ("WEST+1:8,NORTH-[6+north_offset]:28")
 
+// Ammo counter
+#define ui_ammo1 "EAST-1:28,CENTER+1:25"
+#define ui_ammo2 "EAST-1:28,CENTER+2:27"
+#define ui_ammo3 "EAST-1:28,CENTER+3:29"
+#define ui_ammo4 "EAST-1:28,CENTER+4:31"
+
+#define MAXHUD_POSSIBLE 4
+
 // Plane group keys, used to group swaths of plane masters that need to appear in subwindows
 /// The primary group, holds everything on the main window
 #define PLANE_GROUP_MAIN "main"
@@ -184,3 +193,11 @@
 
 /// The filter name for the hover outline
 #define HOVER_OUTLINE_FILTER "hover_outline"
+
+//used to set the default viewport to the user's preference.
+#define VIEWPORT_USE_PREF "use_pref"
+#define WIDESCREEN_PARTIAL_VIEWPORT_SIZE "17x15"
+#define WIDESCREEN_VIEWPORT_SIZE "19x15"
+#define SQUARE_VIEWPORT_SIZE "15x15"
+/// Largest viewport possible, required for checking if someone can see an object
+#define LARGEST_VIEWPORT_SIZE WIDESCREEN_VIEWPORT_SIZE

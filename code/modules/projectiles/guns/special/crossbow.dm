@@ -27,6 +27,7 @@
 	return cell
 
 /obj/item/gun/throw/crossbow/emp_act(severity)
+	. = ..()
 	if(cell && severity)
 		cell.emp_act(severity)
 
@@ -141,10 +142,7 @@
 		set_tension()
 		return CLICK_ACTION_SUCCESS
 
-/obj/item/gun/throw/crossbow/verb/set_tension()
-	set name = "Регулировка натяжения"
-	set category = VERB_CATEGORY_OBJECT
-	set src in usr
+GAME_VERB_SRC(/obj/item/gun/throw/crossbow, set_tension, usr, "Регулировка натяжения", VERB_CATEGORY_HIDDEN)
 
 	if(usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return

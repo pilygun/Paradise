@@ -38,6 +38,8 @@
 		/datum/skill/combat/guns = SKILL_LEVEL_BEGINNER,
 		/datum/skill/combat/melee = SKILL_LEVEL_BEGINNER,
 	)
+	discount_skill_category = list(/datum/skill/service, /datum/skill/general)
+	base_free_skill_point = DEFAULT_FREE_POINTS_FOR_SERVICE_JOBS
 
 
 /datum/outfit/job/hop
@@ -69,6 +71,8 @@
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_CREW
+	discount_skill_category = list(/datum/skill/service)
+	base_free_skill_point = DEFAULT_FREE_POINTS_FOR_SERVICE_JOBS
 
 /datum/job/service/bartender
 	title = JOB_TITLE_BARTENDER
@@ -131,6 +135,7 @@
 		/datum/skill/service/cleaning = SKILL_LEVEL_BEGINNER,
 		/datum/skill/combat/fists = SKILL_LEVEL_BASIC,
 	)
+	discount_skill_category = list(/datum/skill/service, /datum/skill/general/cooking)
 
 /datum/outfit/job/chef
 	name = JOB_TITLE_RU_CHEF
@@ -238,7 +243,7 @@
 		/obj/item/toy/crayon/rainbow = 1,
 		/obj/item/storage/fancy/crayons = 1,
 		/obj/item/reagent_containers/spray/waterflower = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/bottleofbanana = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/bottleofbanana = 1,
 		/obj/item/instrument/bikehorn = 1,
 		/obj/item/clown_recorder = 1,
 	)
@@ -275,7 +280,6 @@
 	if(!(locate(/datum/action/innate/mimicking) in actions))
 		var/datum/action/innate/mimicking/mimicking = new
 		mimicking.Grant(src)
-	add_verb(src, /mob/living/carbon/human/proc/mimicking)
 
 /datum/action/innate/mimicking
 	name = "Подражание"
@@ -384,8 +388,6 @@
 	return list("name" = name, "voice" = voice, "selected" = selected, "id" = UID())
 
 /mob/living/carbon/human/proc/mimicking(mob/living/carbon/human/H)
-	set name = "Имитировать голос"
-	set category = VERB_CATEGORY_IC
 	if(!H)
 		to_chat(usr, span_notice("Используйте <b>ПКМ</b> для выбора цели."))
 	var/datum/action/innate/mimicking/mimic = locate(/datum/action/innate/mimicking) in usr.actions
@@ -453,7 +455,7 @@
 	pda = /obj/item/pda/mime
 	backpack_contents = list(
 		/obj/item/toy/crayon/mime = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing = 1,
 		/obj/item/cane = 1,
 	)
 	backpack = /obj/item/storage/backpack/mime
@@ -473,9 +475,8 @@
 		return
 
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe/conjure/build/mime_wall(null))
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/mime/speak(null))
-		H.mind.miming = TRUE
+		H.mind.AddSpell(new /datum/action/cooldown/spell/mime)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/forcewall/mime)
 
 /datum/job/service/janitor
 	title = JOB_TITLE_JANITOR
@@ -494,6 +495,7 @@
 		/datum/skill/service/drink_mixing = SKILL_LEVEL_BEGINNER,
 		/datum/skill/service/cleaning = SKILL_LEVEL_PROFESSIONAL,
 	)
+	discount_skill_category = list(/datum/skill/service, /datum/skill/general/carrying)
 
 /datum/outfit/job/janitor
 	name = JOB_TITLE_RU_JANITOR
@@ -559,6 +561,7 @@
 		/datum/skill/service/cleaning = SKILL_LEVEL_BEGINNER,
 		/datum/skill/combat/melee = SKILL_LEVEL_BASIC,
 	)
+	discount_skill_category = list(/datum/skill/service, /datum/skill/general/carrying, /datum/skill/combat/melee)
 
 /datum/outfit/job/chaplain
 	name = JOB_TITLE_RU_CHAPLAIN
@@ -579,7 +582,7 @@
 		return
 
 	if(H.mind)
-		H.mind.isholy = TRUE
+		ADD_TRAIT(H.mind, TRAIT_HOLY, INNATE_TRAIT)
 		ADD_TRAIT(H, TRAIT_HEALS_FROM_HOLY_PYLONS, INNATE_TRAIT)
 
 	INVOKE_ASYNC(src, PROC_REF(religion_pick), H)
@@ -625,23 +628,8 @@
 		new_deity = deity_name
 	bible.deity_name = new_deity
 	SSblackbox.record_feedback("text", "religion_deity", 1, "[new_deity]", 1)
-
-	user.AddSpell(new /obj/effect/proc_holder/spell/chaplain_bless(null))
+	var/datum/action/cooldown/spell/pointed/bless/b_action = new()
+	b_action.Grant(user)
 
 	if(SSticker)
 		SSticker.Bible_deity_name = bible.deity_name
-
-/datum/job/service/explorer
-	title = JOB_TITLE_EXPLORER
-	flag = JOB_FLAG_EXPLORER
-	access = list(ACCESS_MAINT_TUNNELS, ACCESS_GATEWAY, ACCESS_EVA, ACCESS_EXTERNAL_AIRLOCKS)
-	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_GATEWAY, ACCESS_EVA, ACCESS_EXTERNAL_AIRLOCKS)
-	outfit = /datum/outfit/job/explorer
-	hidden_from_job_prefs = TRUE
-
-/datum/outfit/job/explorer
-	// This outfit is never used, because there are no slots for this job.
-	// To get it, you have to go to the HOP and ask for a transfer to it.
-	name = JOB_TITLE_RU_EXPLORER
-	jobtype = /datum/job/service/explorer
-	uniform = /obj/item/clothing/under/color/random

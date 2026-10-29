@@ -330,7 +330,7 @@
 	name = "Элитарный соус шефа"
 	desc = "Фирменный соус, приготовленный из мухоморов. Токсический эффект будет зависеть от того, как долго он остаётся в организме, \
 			чем больше доза, тем больше времени потребуется для её усвоения."
-	item = /obj/item/reagent_containers/food/condiment/syndisauce
+	item = /obj/item/reagent_containers/condiment/syndisauce
 	cost = 1
 	job = list(JOB_TITLE_CHEF)
 
@@ -481,7 +481,7 @@
 /datum/uplink_item/jobspecific/gbs
 	name = "Бутылка с вирусом ГБС"
 	desc = "Содержит чрезвычайно смертельный вирус ГБС, в начальной фазе имитирующий симптомы гриппа, но со временем разрывает тело носителя."
-	item = /obj/item/reagent_containers/glass/bottle/gbs
+	item = /obj/item/reagent_containers/cup/bottle/gbs
 	cost = 60
 	job = list(JOB_TITLE_VIROLOGIST)
 	surplus = 0
@@ -566,6 +566,16 @@
 	excludefrom = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	job = list(JOB_TITLE_ENGINEER, JOB_TITLE_ENGINEER_TRAINEE, JOB_TITLE_CHIEF_ENGINEER, \
 			JOB_TITLE_SPACEPOD_TECHNICIAN, JOB_TITLE_ROBOTICIST, JOB_TITLE_PARAMEDIC)
+
+/datum/uplink_item/jobspecific/meltdown_rod
+	name = "Стержень ядерного расплава"
+	desc = "Специально разработанный ядерный стержень, гарантирующий вызов расплава любого реактора, в который он будет помещён."
+	item = /obj/item/nuclear_rod/fuel/meltdown
+	cost = 25
+	job = list(JOB_TITLE_ENGINEER, JOB_TITLE_CHIEF_ENGINEER, JOB_TITLE_ENGINEER_TRAINEE, JOB_TITLE_ATMOSTECH)
+	hijack_only = TRUE
+	excludefrom = list(UPLINK_TYPE_NUCLEAR)
+	surplus = 0
 
 //SCI
 
@@ -663,7 +673,7 @@
 /datum/uplink_item/jobspecific/poisonbottle
 	name = "Бутылка с ядом"
 	desc = "Синдикат отправит вам флакон с 40 единицами случайно выбранного яда. Этот яд может быть как совершенно неэффективным, так и крайне смертельным."
-	item = /obj/item/reagent_containers/glass/bottle/traitor
+	item = /obj/item/reagent_containers/cup/bottle/traitor
 	cost = 10
 	job = list(JOB_TITLE_RD, JOB_TITLE_CMO, JOB_TITLE_DOCTOR, JOB_TITLE_MINING_MEDIC, JOB_TITLE_MEDICAL_INTERN, JOB_TITLE_PSYCHIATRIST, \
 			JOB_TITLE_CHEMIST, JOB_TITLE_PARAMEDIC, JOB_TITLE_VIROLOGIST, JOB_TITLE_BARTENDER, JOB_TITLE_CHEF)
@@ -830,7 +840,7 @@
 
 /datum/uplink_item/dangerous/kedr
 	name = "Пистолет-пулемёт K-45"
-	desc = "Комплект с компактным пистолет-пулемётом K-45 калибра 9 мм, четыре дополнительных магазина к нему и универсальный глушитель."
+	desc = "Комплект с компактным пистолетом-пулемётом K-45 калибра 9 мм, четыре дополнительных магазина к нему и универсальный глушитель."
 	item = /obj/item/storage/box/syndie_kit/kedr_kit
 	cost = 35
 	excludefrom = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
@@ -986,6 +996,14 @@
 	surplus = 0
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 
+/datum/uplink_item/dangerous/hunting_spear
+	name = "Охотничье копье"
+	desc = "Крайне незаконная модификация стандартных прото-кинетических копий. Бросок копья по цели или же промах приведет к телепортации копья обратно \
+	в руку пользователя. Если копье сможет проткнуть живое существо, то наконечник отсоединится и останется в вашей жертве, принося ужасающие страдания. \
+	В отличие от базовой версии, данное копье способно работать в условиях стандартного давления. Самое главное — не допустите, чтобы ваш враг успел перехватить копье до его возвращения в вашу руку."
+	item = /obj/item/twohanded/mining_spear/syndie
+	cost = 30
+
 /**
  * MARK: Support & Mechas
  */
@@ -1087,7 +1105,7 @@
 
 /datum/uplink_item/ammo/kedr_ammo
 	name = "Пистолет-пулемет K-45 — 4 магазина 9 мм"
-	desc = "Четыре магазина на 20 стандартных патронов калибра 9 мм. Подходят к пистолет-пулемету K-45."
+	desc = "Четыре магазина на 20 стандартных патронов калибра 9 мм. Подходят к пистолету-пулемёту K-45."
 	item = /obj/item/storage/box/syndie_kit/kedr_ammo
 	cost = 4
 
@@ -1456,6 +1474,13 @@
 	item = /obj/item/toy/plushie/carp/dehy_carp
 	cost = 7
 
+/datum/uplink_item/stealthy_weapons/assassin_pen
+	name = "Ручка ассасина"
+	desc = "Небольшое одноразовое устройство в корпусе ручки, способное тихо выстрелить встроенным десяти миллиметровым экспансивным патроном при ударе в ближнем бою. \
+			Особо эффективно против незащищённых целей. Перед выстрелом необходимо взвести щёлкнув кнопкой ручки."
+	item = /obj/item/pen/assassin
+	cost = 5
+
 /**
  * MARK: Grenades & Explosives
  */
@@ -1599,6 +1624,12 @@
 	desc = "Пояс, содержащий 4 мощные боевые осколочные гранаты."
 	item = /obj/item/storage/belt/grenade/frag
 	cost = 10
+
+/datum/uplink_item/explosives/contact_frag_grenade
+	name = "Пояс боевых контактных осколочных гранат"
+	desc = "Пояс, содержащий 4 мощные боевые контактные осколочные гранаты."
+	item = /obj/item/storage/belt/grenade/frag/contact
+	cost = 20
 
 /datum/uplink_item/explosives/grenadier
 	name = "Пояс гренадера"
@@ -1786,6 +1817,14 @@
 			Однако, они не отличаются стабильностью, и маскировка отключается примерно через 30 минут."
 	item = /obj/item/storage/box/syndie_kit/chameleon_counter
 	cost = 6
+
+/datum/uplink_item/stealthy_tools/midichlorian_injector
+	name = "Инъектор мидихлориан"
+	desc = "Всего одна инъекция наделит любой организм связью с Силой, а также дарует мастерство владения энергетическим мечом. \
+			Энергетический меч в комплекте."
+	item = /obj/item/storage/box/syndie_kit/midichlorian
+	cost = 60
+	excludefrom = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 
 /**
  * MARK: Devices & Tools
@@ -2347,13 +2386,13 @@
 	name = "Нейротренер небоевых навыков"
 	desc = "Нейротренер который позволяет улучший любой небоевой навык на ваш выбор."
 	item = /obj/item/neurotrainer/all_without_combat
-	cost = 8
+	cost = 2
 
 /datum/uplink_item/implants/combat_neurotrainer
 	name = "Нейротренер боевых навыков"
 	desc = "Нейротренер который позволяет улучший любой боевой навык на ваш выбор."
 	item = /obj/item/neurotrainer/combat
-	cost = 15
+	cost = 10
 
 /**
  * MARK: Cybernetic Implants

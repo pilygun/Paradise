@@ -16,10 +16,10 @@
 	item_state = "mender"
 	belt_icon = "mender"
 	volume = 200
-	possible_transfer_amounts = null
+	has_variable_transfer_amount = FALSE
 	visible_transfer_rate = FALSE
 	resistance_flags = ACID_PROOF
-	container_type = REFILLABLE | AMOUNT_VISIBLE
+	container_type = REFILLABLE | AMOUNT_VISIBLE | NO_SPLASH
 	temperature_min = 270
 	temperature_max = 350
 	pass_open_check = TRUE
@@ -106,7 +106,7 @@
 
 	var/protection = 0
 	if(!ignore_flags)
-		if(!target.can_inject(user, FALSE))
+		if(!target.can_inject(user, TRUE))
 			return .
 
 		if(ishuman(target))

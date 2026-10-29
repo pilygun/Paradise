@@ -50,6 +50,7 @@
 	return ..()
 
 /obj/item/pet_carrier/emp_act(intensity)
+	. = ..()
 	for(var/mob/living/M in contents)
 		M.emp_act(intensity)
 
@@ -140,6 +141,7 @@
 		. += image(icon, icon_state = "[icon_state]_[color_skin]")
 
 /obj/item/pet_carrier/emp_act(intensity)
+	. = ..()
 	for(var/mob/living/M in contents)
 		M.emp_act(intensity)
 
@@ -189,26 +191,6 @@
 			free_content()
 			change_state()
 		return
-
-/obj/item/pet_carrier/verb/open_close()
-	set name = "Откр/закр переноску"
-	set desc = "Меняет состояние дверцы переноски, блокируя или разблокируя возможность достать содержимое."
-	set category = VERB_CATEGORY_OBJECT
-
-	if(usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
-		return
-
-	change_state()
-
-/obj/item/pet_carrier/verb/unload_content()
-	set name = "Опустошить переноску"
-	set desc = "Вытаскивает животное из переноски."
-	set category = VERB_CATEGORY_OBJECT
-
-	if(usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
-		return
-
-	try_free_content(null, usr)
 
 /obj/item/pet_carrier/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
 	if(!ishuman(user))

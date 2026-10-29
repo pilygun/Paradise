@@ -172,16 +172,6 @@
 	..()
 	update_icon(UPDATE_OVERLAYS)
 
-/obj/item/defibrillator/verb/toggle_paddles_verb()
-	set name = "Взять электроды"
-	set category = VERB_CATEGORY_OBJECT
-	set src in oview(1)
-
-	if(usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
-		return
-
-	toggle_paddles(usr)
-
 /obj/item/defibrillator/proc/toggle_paddles(mob/living/carbon/human/user = usr)
 	if(!paddles)
 		balloon_alert(user, "электроды отсутствуют!")
@@ -335,6 +325,7 @@
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/defibrillator/compact/advanced/emp_act(severity)
+	. = ..()
 	if(world.time > next_emp_message)
 		atom_say("Предупреждение: зафиксирован мощный электро-магнитный импульс. Защитная система предотвратила возможное повреждение оборудования.")
 		playsound(src, 'sound/machines/defib_saftyon.ogg', 50)
@@ -359,6 +350,7 @@
 	var/obj/item/defibrillator/defib
 	/// Whether or not the paddles are on cooldown. Used for tracking icon states.
 	var/on_cooldown = FALSE
+	var/req_defib = TRUE
 
 /obj/item/twohanded/shockpaddles/get_ru_names()
 	return alist(
@@ -405,11 +397,15 @@
 		PREPOSITIONAL = "электродах боевого дефибриллятора",
 	)
 
-/obj/item/twohanded/shockpaddles/Initialize(mapload, mainunit)
+/obj/item/twohanded/shockpaddles/Initialize(mapload, obj/item/defibrillator/mainunit)
 	. = ..()
+	if(req_defib && QDELETED(mainunit))
+		return INITIALIZE_HINT_QDEL
 	add_defib_component(mainunit)
 
-/obj/item/twohanded/shockpaddles/proc/add_defib_component(mainunit)
+/obj/item/twohanded/shockpaddles/proc/add_defib_component(obj/item/defibrillator/mainunit)
+	if(QDELETED(src))
+		return
 	if(check_defib_exists(mainunit))
 		update_icon(UPDATE_ICON_STATE)
 		AddComponent(/datum/component/defib, actual_unit = defib, ignore_hardsuits = defib.ignore_hardsuits, safe_by_default = defib.safety, emp_proof = defib.hardened, emag_proof = defib.emag_proof, heart_attack_chance = defib.heart_attack_probability)
@@ -421,6 +417,11 @@
 
 /obj/item/twohanded/shockpaddles/Destroy()
 	defib = null
+	UnregisterSignal(src, list(
+		COMSIG_DEFIB_READY,
+		COMSIG_DEFIB_SHOCK_APPLIED,
+		COMSIG_DEFIB_PADDLES_APPLIED,
+	))
 	return ..()
 
 /// Check to see if we should abort this before we've even gotten started
@@ -494,6 +495,7 @@
 /obj/item/twohanded/shockpaddles/borg
 	desc = "Пара встроенных электродов с тонкими металлическими пластинами. Используются для подачи мощных ударов электрическим током."
 	var/safety = TRUE
+	req_defib = FALSE
 
 /obj/item/twohanded/shockpaddles/borg/dropped(mob/user, slot, silent = FALSE)
 	SHOULD_CALL_PARENT(FALSE)

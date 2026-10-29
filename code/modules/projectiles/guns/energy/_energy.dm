@@ -7,6 +7,7 @@
 	fire_sound_text = "laser blast"
 	ammo_x_offset = 2
 	attachable_allowed = GUN_MODULE_CLASS_ENERGY_WEAPON
+	weapon_weight = WEAPON_MEDIUM
 
 	/// What type of power cell this uses
 	var/obj/item/stock_parts/cell/cell
@@ -34,6 +35,11 @@
 	var/can_add_sibyl_system = TRUE
 	var/obj/item/gun_module/sibyl/sibyl_mod = null
 	var/isclockwork = FALSE
+	/// If our charge overlay is dependent for shot colour
+	var/colour_denendent = FALSE
+
+	/// Divisor for EMP damage to the weapon's cell. Higher values mean more resistance.
+	var/emp_resistance = 1
 
 /obj/item/gun/energy/examine(mob/user)
 	. = ..()
@@ -61,7 +67,7 @@
 	if(!length(ammo_type))
 		return
 	var/obj/projectile/exam_proj
-	readout += "- Имеет <b>[length(ammo_type)]</b> режим[DECL_CREDIT(length(ammo_type))] стрельбы."
+	readout += "- Имеет <b>[length(ammo_type)]</b> режим[DECL_0_A_OV(length(ammo_type))] стрельбы."
 	for(var/obj/item/ammo_casing/energy/for_ammo as anything in ammo_type)
 		exam_proj = for_ammo.projectile_type
 
@@ -74,13 +80,18 @@
 
 		if(initial(exam_proj.damage) > 0) // Don't divide by 0!!!!!
 			var/lethality_str = initial(exam_proj.damage_type) == STAMINA ? span_blue("<b>нелетального</b>") : span_red("<b>летального</b>")
-			var/lethal_hits_to_crit = span_warning("[HITS_TO_CRIT((initial(exam_proj.damage) * damage_mod) * for_ammo.pellets)] попадан[declension_ru(HITS_TO_CRIT((initial(exam_proj.damage) * damage_mod) * for_ammo.pellets), "ие", "ия", "ий")]")
+			var/lethal_hits_to_crit = span_warning("[HITS_TO_CRIT((initial(exam_proj.damage) * damage_mod) * for_ammo.pellets)] попадан[DECL_E_YA_J(HITS_TO_CRIT((initial(exam_proj.damage) * damage_mod) * for_ammo.pellets))]")
 			readout += "- Для [lethality_str] устранения противника в режиме \"[span_warning("[for_ammo.select_name]")]\" потребуется в среднем [lethal_hits_to_crit]."
 			if(initial(exam_proj.stamina) > 0) // In case a projectile does damage AND stamina damage (Energy Crossbow)
-				var/non_lethal_hits_to_crit = span_warning("[HITS_TO_CRIT((initial(exam_proj.stamina) * stamina_mod) * for_ammo.pellets)] попадан[declension_ru(HITS_TO_CRIT((initial(exam_proj.stamina) * stamina_mod) * for_ammo.pellets), "ие", "ия", "ий")]")
+				var/non_lethal_hits_to_crit = span_warning("[HITS_TO_CRIT((initial(exam_proj.stamina) * stamina_mod) * for_ammo.pellets)] попадан[DECL_E_YA_J(HITS_TO_CRIT((initial(exam_proj.stamina) * stamina_mod) * for_ammo.pellets))]")
 				readout += "- Для <b>[span_blue("нелетального")]</b> обезвреживания противника в режиме \"[span_warning("[for_ammo.select_name]")]\" потребуется в среднем [non_lethal_hits_to_crit]."
 
 	return readout.Join("\n") // Sending over the singular string, rather than the whole list
+
+/obj/item/gun/energy/get_display_ammo_count()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/current_fires = floor(cell.charge / shot.e_cost)
+	return current_fires
 
 /obj/item/gun/energy/attackby(obj/item/item, mob/living/user, list/modifiers)
 	if(istype(item, /obj/item/gun_module/sibyl))
@@ -105,23 +116,26 @@
 
 	return ..()
 
-/obj/item/gun/energy/proc/toggle_voice()
-	set name = "Сменить голос Sibyl System"
-	set category = VERB_CATEGORY_OBJECT
-	set desc = "Кликните для переключения голосовой подсистемы."
+GAME_PROC_SRC(/obj/item/gun/energy, toggle_voice, usr, "Сменить голос Sibyl System", VERB_CATEGORY_HIDDEN)
 
 	if(sibyl_mod)
 		sibyl_mod.toggle_voice(usr)
 
 /obj/item/gun/energy/emp_act(severity)
-	cell?.use(round(cell.charge / severity))
-	if(chambered)//phil235
-		if(chambered.BB)
-			qdel(chambered.BB)
-			chambered.BB = null
-		chambered = null
-	newshot() //phil235
-	update_icon()
+	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_PRE_EMP_ACT, severity)
+	// Strange: the flags weren't getting through via the parent emp_act(), so we’re passing them explicitly.
+	..(severity, protection)
+	if(!(protection & EMP_PROTECT_CONTENTS))
+		cell?.emp_act(severity, emp_resistance)
+	if(protection & EMP_PROTECT_SELF)
+		return protection
+	if(chambered?.BB)
+		qdel(chambered.BB)
+		chambered.BB = null
+	chambered = null
+	newshot()
+	update_appearance()
+	return protection
 
 /obj/item/gun/energy/get_cell()
 	return cell
@@ -179,7 +193,10 @@
 		update_icon()
 
 /obj/item/gun/energy/can_shoot(mob/living/user, silent = FALSE)
-	if(user && sibyl_mod)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(. && user && sibyl_mod)
 		if(!sibyl_mod.check_auth(user))
 			return FALSE
 
@@ -213,6 +230,7 @@
 /obj/item/gun/energy/process_fire(zone_override, secondary_fire = FALSE)
 	if(!chambered && can_shoot(gun_user))
 		process_chamber()
+	gun_user?.hud_used?.update_ammo_hud(src, get_display_ammo_count())
 	return ..()
 
 /obj/item/gun/energy/proc/select_fire(mob/living/user)
@@ -268,6 +286,18 @@
 			"spike" = "стрельба шипами",
 			"kinetic" = "кинетический выстрел",
 			"accelerator" = "ускоренный выстрел",
+			"hitscan" = "лазер",
+			"precise hitscan" = "точный выстрел",
+			"scatter hitscan" = "рассеяный выстрел",
+			"anti-vehicle hitscan" = "усиленный выстрел",
+			"pierce hitscan" = "пробивной выстрел",
+			"energy hitscan" = "стандартная настройка",
+			"ricochet hitscan" = "стрельба рикошетом",
+			"fast hitscan" = "быстрая стрельба",
+			"fast_shooting" = "режим \"ливня\"",
+			"scatter-disabler" = "рассеяный нейтрализатор",
+			"scatter-lethal" = "рассеянный лазер",
+			"heavy-disabler" = "тяжелый нейтрализатор",
 		)
 
 		balloon_alert(user, "[gun_modes_ru[shot.fluff_select_name ? shot.fluff_select_name : shot.select_name]]")
@@ -277,6 +307,7 @@
 			chambered.BB = null
 		chambered = null
 	newshot()
+	gun_user.hud_used?.update_ammo_hud(src, get_display_ammo_count())
 	update_icon()
 
 /obj/item/gun/energy/update_icon(updates = ALL)
@@ -318,7 +349,10 @@
 			for(var/i = ratio, i >= 1, i--)
 				. += image(icon = icon, icon_state = new_icon_state, pixel_w = ammo_x_offset * (i - 1))
 		else
-			. += image(icon = icon, icon_state = "[overlay_name]_[modifystate ? "[shot.select_name]_" : ""]charge[ratio]")
+			var/image/overlay_image = image(icon = icon, icon_state = "[overlay_name]_[modifystate ? "[shot.select_name]_" : ""]charge[ratio]")
+			if(colour_denendent)
+				overlay_image.color = shot.overlay_color
+			. += overlay_image
 
 /obj/item/gun/energy/suicide_act(mob/user)
 	if(can_trigger_gun(user))

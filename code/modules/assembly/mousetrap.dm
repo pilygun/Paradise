@@ -6,8 +6,6 @@
 	origin_tech = "combat=1;materials=2;engineering=1"
 	var/armed = FALSE
 
-	bomb_name = "contact mine"
-
 /obj/item/assembly/mousetrap/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
@@ -28,7 +26,7 @@
 	armed = !armed
 	if(!armed && ishuman(usr))
 		var/mob/living/carbon/human/user = usr
-		if((user.getBrainLoss() >= 60 || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
+		if(!user.check_brain_for_complex_interactions() || HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 			to_chat(user, "Your hand slips, setting off the trigger.")
 			pulse(FALSE, user)
 
@@ -87,7 +85,7 @@
 	if(!armed)
 		to_chat(user, span_notice("You arm [src]."))
 	else
-		if((user.getBrainLoss() >= 60 || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
+		if(!user.check_brain_for_complex_interactions() || HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 			triggered(user, user.hand ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND)
 			user.visible_message(
 				span_warning("[user] accidentally sets off [src], breaking [user.p_their()] fingers."),
@@ -100,7 +98,7 @@
 	playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
 
 /obj/item/assembly/mousetrap/attack_hand(mob/living/user)
-	if(armed && (user.getBrainLoss() >= 60 || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
+	if(armed && (!user.check_brain_for_complex_interactions() || HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
 		triggered(user, user.hand ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND)
 		user.visible_message(
 			span_warning("[user] accidentally sets off [src], breaking [user.p_their()] fingers."),
@@ -152,13 +150,6 @@
 /obj/item/assembly/mousetrap/click_alt(mob/user)
 	hide_under(user)
 	return CLICK_ACTION_SUCCESS
-
-/obj/item/assembly/mousetrap/verb/hide_under_verb()
-	set src in oview(1)
-	set name = "Спрятать"
-	set category = VERB_CATEGORY_OBJECT
-
-	hide_under(usr)
 
 /obj/item/assembly/mousetrap/proc/hide_under(mob/user = usr)
 	if(!isliving(user) || user.incapacitated() || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))

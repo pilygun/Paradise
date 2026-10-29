@@ -1,6 +1,7 @@
 /datum/species/machine
 	name = SPECIES_MACHINEPERSON
 	name_plural = "Machines"
+	ru_genitive = "машины"
 
 	blurb = "Positronic intelligence really took off in the 26th century, and it is not uncommon to see independant, free-willed \
 	robots on many human stations, particularly in fringe systems where standards are slightly lax and public opinion less relevant \
@@ -126,14 +127,6 @@
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.remove_atom_from_hud(human)
 
-	add_verb(human, list(
-		/mob/living/carbon/human/proc/emote_ping,
-		/mob/living/carbon/human/proc/emote_beep,
-		/mob/living/carbon/human/proc/emote_buzz,
-		/mob/living/carbon/human/proc/emote_buzz2,
-		/mob/living/carbon/human/proc/emote_yes,
-		/mob/living/carbon/human/proc/emote_no))
-
 /datum/species/machine/gain_muscles(mob/living/target, default, max_level, can_become_stronger)
 	..(target, default, max_level, FALSE)
 
@@ -144,14 +137,6 @@
 
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_atom_to_hud(human)
-
-	remove_verb(human, list(
-		/mob/living/carbon/human/proc/emote_ping,
-		/mob/living/carbon/human/proc/emote_beep,
-		/mob/living/carbon/human/proc/emote_buzz,
-		/mob/living/carbon/human/proc/emote_buzz2,
-		/mob/living/carbon/human/proc/emote_yes,
-		/mob/living/carbon/human/proc/emote_no))
 
 /datum/species/machine/is_allowed_hair_style(mob/living/carbon/human/human, datum/robolimb/robohead, datum/sprite_accessory/style)
 	. = ..()
@@ -192,10 +177,10 @@
 
 	else if(robohead.is_monitor) //Means that the character's head is a monitor (has a screen). Time to customize.
 		var/list/hair = list()
-		for(var/i in GLOB.hair_styles_public_list)
-			var/datum/sprite_accessory/hair/tmp_hair = GLOB.hair_styles_public_list[i]
+		for(var/key, value in SSaccessories.hairstyles_list)
+			var/datum/sprite_accessory/hair/tmp_hair = value
 			if((head_organ.dna.species.name in tmp_hair.species_allowed) && (robohead.company in tmp_hair.models_allowed)) //Populate the list of available monitor styles only with styles that the monitor-head is allowed to use.
-				hair += i
+				hair += key
 
 		var/file = file2text("config/custom_sprites.txt")		//Pulls up the custom_sprites list
 		var/lines = splittext(file, "\n")

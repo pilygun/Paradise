@@ -25,7 +25,7 @@
 			message = "[mobname] умер-ррр-р-р во-во-во..."
 			destroy = TRUE
 		if("emp")
-			var/name = prob(50) ? mob_area.name : pick(SSmapping.teleportlocs)
+			var/name = prob(50) ? mob_area.name : pick(GLOB.teleportlocs)
 			message = "Потерян сигнал жизнедеятельности от [mobname] в [name]!"
 		else
 			if(is_type_in_typecache(mob_area, stealth_areas))
@@ -44,6 +44,7 @@
 	qdel(src)
 
 /obj/item/implant/death_alarm/emp_act(severity)	//for some reason alarms stop going off in case they are emp'd, even without this
+	. = ..()
 	activate("emp")	//let's shout that this dude is dead
 
 /obj/item/implant/death_alarm/death_trigger(mob/source, gibbed)

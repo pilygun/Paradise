@@ -84,6 +84,7 @@
 	component_parts += new /obj/item/assembly/igniter(null)
 	component_parts += new /obj/item/stack/sheet/glass(null)
 	RefreshParts()
+	ADD_TRAIT(src, TRAIT_LOGISTICS_COMPATIBLE, INNATE_TRAIT)
 	// Special access for built on Taipan machines
 	var/area/area = get_area(src)
 	if(istype(area, /area/syndicate/unpowered/syndicate_space_base))
@@ -100,6 +101,12 @@
 	component_parts += new /obj/item/assembly/igniter(null)
 	component_parts += new /obj/item/stack/sheet/glass(null)
 	RefreshParts()
+
+/obj/machinery/mineral/ore_redemption/logistics
+
+/obj/machinery/mineral/ore_redemption/logistics/Initialize(mapload)
+	. = ..()
+	install_logistics_interface(LOGISTICS_MODE_SEND)
 
 /**
  * # Ore Redemption Machine (Golem)
@@ -333,11 +340,12 @@
 		var/datum/design/D = files.known_designs[v]
 		alloys += list(list(
 			"id" = D.id,
-			"name" = D.build_object_name,
+			"name" = CallMaterialName(D.id),
 			"description" = D.desc,
 			"amount" = get_num_smeltable_alloy(D)
 		))
 	data["alloys"] = alloys
+	data["logistics_enabled"] = logistics_board_installed()
 
 	return data
 
@@ -346,6 +354,8 @@
 		return
 
 	. = TRUE
+	if(try_logistics_ui_act(action, usr))
+		return
 	switch(action)
 		if("claim")
 			if(!inserted_id || !points)
@@ -353,7 +363,7 @@
 			if(anyone_claim || (req_access_claim in inserted_id.access))
 				inserted_id.mining_points += points
 				inserted_id.total_mining_points += points
-				to_chat(usr, span_notice("<b>[points] [declension_ru(points, "очко", "очка","очков")] добычи</b> получено. Всего за смену: <b>[inserted_id.total_mining_points] [declension_ru(inserted_id.total_mining_points, "очко", "очка","очков")]</b>!"))
+				to_chat(usr, span_notice("<b>[points] очк[DECL_O_A_OV(points)] добычи</b> получено. Всего за смену: <b>[inserted_id.total_mining_points] очк[DECL_O_A_OV(inserted_id.total_mining_points)]</b>!"))
 				points = 0
 			else
 				to_chat(usr, span_warning("Доступ запрещён."))

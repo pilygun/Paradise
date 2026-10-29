@@ -342,6 +342,7 @@
 				deal_damage(50)
 
 /obj/spacepod/emp_act(severity)
+	. = ..()
 	occupant_sanity_check()
 	cargo_hold.emp_act(severity)
 
@@ -352,9 +353,9 @@
 		COOLDOWN_START(src, cooldown_emp, 80 SECONDS / severity)
 
 	switch(severity)
-		if(1)
+		if(EMP_HEAVY)
 			message_to_riders(span_warning("Консоль челнока мигает: ОБНАРУЖЕНА МОЩНАЯ ЭМИ-ВОЛНА!"))
-		if(2)
+		if(EMP_LIGHT)
 			message_to_riders(span_warning("Консоль челнока мигает: ОБНАРУЖЕНА ЭМИ-ВОЛНА!"))
 
 /obj/spacepod/proc/play_sound_to_riders(mysound)
@@ -1224,7 +1225,7 @@
 		to_chat(user, span_warning("Батарея не обнаружена."))
 		. = FALSE
 	else if(!COOLDOWN_FINISHED(src, cooldown_emp))
-		to_chat(user, span_warning("Интерфейс не отвечает. Перезагрузка через [COOLDOWN_TIMELEFT(src, cooldown_emp)] [DECL_SEC_MIN(COOLDOWN_TIMELEFT(src, cooldown_emp))]."))
+		to_chat(user, span_warning("Интерфейс не отвечает. Перезагрузка через [COOLDOWN_TIMELEFT(src, cooldown_emp)] [DECL_U_Y_0(COOLDOWN_TIMELEFT(src, cooldown_emp))]."))
 		. = FALSE
 	else if(!battery.use(1 / skill_factor))
 		to_chat(user, span_warning("Недостаточно энергии."))

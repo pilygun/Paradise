@@ -69,6 +69,7 @@
 /datum/move_loop/proc/loop_stopped()
 	SHOULD_CALL_PARENT(TRUE)
 	status &= ~MOVELOOP_STATUS_RUNNING
+	EVLOG_TEXT(moving, EVLOG_CATEGORY_MOVELOOPS, "Moveloop stopped")
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_STOP)
 
 /datum/move_loop/proc/info_deleted(datum/source)
@@ -122,6 +123,8 @@
 
 	owner?.processing_move_loop_flags = flags
 	var/result = move() //Result is an enum value. Enums defined in __DEFINES/movement.dm
+	if(result)
+		EVLOG_PATH(moving, EVLOG_CATEGORY_MOVELOOPS, "Moved using [src]", list(old_loc, moving.loc)) //You might think, this runs a lot; but if not logging, it only does a lookup on the event logger.
 	if(moving)
 		var/direction = get_dir(old_loc, moving.loc)
 		SEND_SIGNAL(moving, COMSIG_MOVABLE_MOVED_FROM_LOOP, src, old_dir, direction)
@@ -425,6 +428,7 @@
 /datum/move_loop/has_target/jps/proc/on_finish_pathing(list/path)
 	movement_path = path
 	is_pathing = FALSE
+	EVLOG_PATH(moving, EVLOG_CATEGORY_JPS, "Planned AI path", movement_path)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, path)
 
 /datum/move_loop/has_target/jps/move()
@@ -432,6 +436,7 @@
 		if(is_pathing)
 			return MOVELOOP_NOT_READY
 		else
+			EVLOG_TEXT(moving, EVLOG_CATEGORY_JPS, "Path recalculating due to lack of path")
 			INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 			return MOVELOOP_FAILURE
 
@@ -446,6 +451,7 @@
 		if(length(movement_path))
 			movement_path.Cut(1,2)
 	else
+		EVLOG_TEXT(moving, EVLOG_CATEGORY_MOVELOOPS, "Path recalculating due to obstruction")
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE
 
@@ -629,6 +635,7 @@
 /datum/move_loop/has_target/move_towards/Destroy()
 	if(home && ismovable(target))
 		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	moving_towards = null
 	return ..()
 
 /datum/move_loop/has_target/move_towards/move()
@@ -852,6 +859,9 @@
 /datum/move_manager/proc/move_disposals(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/disposal_holder, priority, flags, extra_info, delay, timeout)
 
+/datum/move_manager/proc/move_logistics(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/logistics_holder, priority, flags, extra_info, delay, timeout)
+
 /// Disposal holders need to move through a chain of pipes
 /// Rather then through the world. This supports this
 /// If this ever changes, get rid of this, add drift component like logic to the holder
@@ -872,5 +882,24 @@
 		return FALSE
 	var/atom/old_loc = moving.loc
 	holder.current_pipe = holder.current_pipe.transfer(holder)
+	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
+
+/datum/move_loop/logistics_holder
+
+/datum/move_loop/logistics_holder/setup(delay = 1, timeout = INFINITY)
+	if(!istype(moving, /obj/structure/logistics_holder))
+		stack_trace("You tried to make a [moving.type] object move like a logistics holder, stop that!")
+		return FALSE
+	return ..()
+
+/datum/move_loop/logistics_holder/move()
+	var/obj/structure/logistics_holder/holder = moving
+	if(QDELETED(holder) || !holder.current_pipe)
+		return FALSE
+	var/atom/old_loc = moving.loc
+	var/obj/structure/logistics_pipe/next_pipe = holder.current_pipe.transfer(holder)
+	if(QDELETED(holder))
+		return MOVELOOP_SUCCESS
+	holder.current_pipe = next_pipe
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 

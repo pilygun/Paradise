@@ -1,6 +1,7 @@
 /datum/species/plasmaman
 	name = SPECIES_PLASMAMAN
 	name_plural = "Plasmamen"
+	ru_genitive = "плазмолюда"
 	icobase = 'icons/mob/human_races/r_plasmaman_sb.dmi'
 	deform = 'icons/mob/human_races/r_plasmaman_pb.dmi'  // TODO: Need deform.
 	dangerous_existence = TRUE //So so much
@@ -82,12 +83,10 @@
 
 /datum/species/plasmaman/on_species_gain(mob/living/carbon/human/H)
 	. = ..()
-	add_verb(H, /mob/living/carbon/human/proc/emote_rattle)
 	RegisterSignal(H, COMSIG_CARBON_RECEIVE_FRACTURE, PROC_REF(on_fracture))
 
 /datum/species/plasmaman/on_species_loss(mob/living/carbon/human/H)
 	. = ..()
-	remove_verb(H, /mob/living/carbon/human/proc/emote_rattle)
 	UnregisterSignal(H, COMSIG_CARBON_RECEIVE_FRACTURE)
 
 //внёс перевод акцента речи, шипящий звук. Но я не смог осилить и он почему-то по прежнему не работает, похоже не тут настраивается -- ПУПС

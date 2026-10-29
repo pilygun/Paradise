@@ -17,16 +17,15 @@ emp_act
 		var/reflected = FALSE
 
 		switch(can_reflect)
-			if(1) // proper reflection
+			if(REFLECT_NORMAL)
 				reflected = TRUE
-			if(2) //If target is holding a toy sword
+			if(REFLECT_TOY) //If target is holding a toy sword
 				var/static/list/safe_list = list(/obj/projectile/beam/lasertag, /obj/projectile/beam/practice)
 				reflected = is_type_in_list(P, safe_list) //And it's safe
 
 		if(reflected)
 			visible_message(span_danger("[DECLENT_RU_CAP(src, NOMINATIVE)] отражает [P.declent_ru(ACCUSATIVE)]!"), \
-							span_userdanger("[DECLENT_RU_CAP(src, NOMINATIVE)] отражает [P.declent_ru(ACCUSATIVE)]!"),\
-							projectile_message = TRUE)
+							span_userdanger("[DECLENT_RU_CAP(src, NOMINATIVE)] отражает [P.declent_ru(ACCUSATIVE)]!"))
 			add_attack_logs(P.firer, src, "hit by [P.type] but got reflected")
 			P.reflect_back(src)
 			return -1
@@ -167,7 +166,7 @@ emp_act
 					damtype = DROPLIMB_BLUNT
 				if(BURN)
 					damtype = DROPLIMB_BURN
-		if(P.dismember_head && istype(affecting, /obj/item/organ/external/head))
+		if(P.dismember_head && ishead(affecting))
 			damtype = DROPLIMB_SHARP
 		affecting.droplimb(FALSE, damtype)
 
@@ -254,6 +253,24 @@ emp_act
 
 	if(shield_result == HIT_RESULT_REFLECY_BACK)
 		return HIT_RESULT_REFLECY_BACK
+
+	if(shield_result == HIT_RESULT_PARRY)
+		return HIT_RESULT_PARRY
+
+	if(wear_suit && wear_suit.hit_reaction(src, AM, attack_text, 0, damage, attack_type))
+		return HIT_RESULT_SUCCESS
+
+	if(w_uniform && w_uniform.hit_reaction(src, AM, attack_text, 0, damage, attack_type))
+		return HIT_RESULT_SUCCESS
+
+	if(head && head.hit_reaction(src, AM, attack_text, 0, damage, attack_type))
+		return HIT_RESULT_SUCCESS
+
+	if(l_hand && l_hand.hit_reaction(src, AM, attack_text, 0, damage, attack_type))
+		return HIT_RESULT_SUCCESS
+
+	if(r_hand && r_hand.hit_reaction(src, AM, attack_text, 0, damage, attack_type))
+		return HIT_RESULT_SUCCESS
 
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_CHECK_SHIELDS, AM, attack_text, 0, damage, attack_type) & SHIELD_BLOCK)
 		return HIT_RESULT_SUCCESS
@@ -398,7 +415,7 @@ emp_act
 			continue
 		if(affecting.brute_dam != brute_was || affecting.burn_dam != burn_was)
 			should_update_health = TRUE
-		if(!istype(affecting, /obj/item/organ/external/head) || !prob(min(acidpwr * acid_volume / 10, 90)))	//Applies disfigurement
+		if(!ishead(affecting) || !prob(min(acidpwr * acid_volume / 10, 90)))	//Applies disfigurement
 			continue
 		var/obj/item/organ/external/head/head_organ = affecting
 		if(has_pain())
@@ -488,7 +505,11 @@ emp_act
 			stack_trace("Human somehow has no chest bodypart.")
 			return ATTACK_CHAIN_BLOCKED_ALL
 
-	if(user != src && check_shields(item, item.force, "[item.declent_ru(ACCUSATIVE)]", ITEM_ATTACK, item.armour_penetration))
+	var/shield_check = check_shields(item, item.force, "[item.declent_ru(ACCUSATIVE)]", ITEM_ATTACK, item.armour_penetration)
+
+	if(user != src && shield_check)
+		if(shield_check == HIT_RESULT_PARRY)
+			user.Knockdown(PERFECT_PARRY_MELEE_KNOCKDOWN)
 		return ATTACK_CHAIN_BLOCKED
 
 	if(check_martial_art_defense(src, user, item, span_warning("[src] блокиру[PLUR_ET_YUT(src)] [item.declent_ru(ACCUSATIVE)]!")))
@@ -576,7 +597,7 @@ emp_act
 					update_worn_undersuit()
 
 	if(apply_damage_result && (item.force > 10 || (item.force >= 5 && prob(33))))
-		forcesay(GLOB.hit_appends)	//forcesay checks stat already
+		force_say(GLOB.hit_appends)	//forcesay checks stat already
 
 	. |= dna.species.spec_proceed_attack_results(item, src, user, affecting)
 
@@ -641,6 +662,7 @@ emp_act
 
 	else if(item && (((throwingdatum ? throwingdatum.speed : item.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || item.embedded_ignore_throwspeed_threshold) && can_embed(item) && !HAS_TRAIT(src, TRAIT_EMBEDIMMUNE) && prob(item.embed_chance))
 		embed_item_inside(item)
+		item.on_human_ebedded(src)
 		hitpush = FALSE
 		skipcatch = TRUE //can't catch the now embedded item
 
@@ -884,3 +906,8 @@ emp_act
 		if(FIRE_VARIANT_TYPE_B) //Armor Shredding Greenfire
 			SetSlowed(1 SECONDS, (SLOWDOWN_AMT_GREENFIRE))
 			to_chat(src, span_danger("Вязкий напалм обволакивает ваши конечности, и вы с трудом двигаетесь сквозь пламя!"))
+
+/mob/living/carbon/human/get_emp_protection()
+	. = ..()
+	for(var/obj/item/clothing/each_clothing in get_equipped_items())
+		. += each_clothing.emp_protection

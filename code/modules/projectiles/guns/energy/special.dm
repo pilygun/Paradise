@@ -151,8 +151,9 @@
 /obj/item/gun/energy/printer/update_overlays()
 	return list()
 
-/obj/item/gun/energy/printer/emp_act()
-	return
+/obj/item/gun/energy/printer/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 // MARK: Instakill Lasers
 /obj/item/gun/energy/laser/instakill
@@ -166,8 +167,9 @@
 	accuracy = GUN_ACCURACY_RIFLE
 	attachable_allowed = GUN_MODULE_CLASS_NONE
 
-/obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
-	return
+/obj/item/gun/energy/laser/instakill/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/laser/instakill/red
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
@@ -212,7 +214,7 @@
 	clumsy_check = FALSE //Admin spawn only, might as well let clowns use it.
 	selfcharge = TRUE
 	ammo_x_offset = 3
-	var/mimic_type = /obj/item/gun/projectile/automatic/pistol //Setting this to the mimicgun type does exactly what you think it will.
+	var/mimic_type = /obj/item/gun/projectile/automatic/pistol/stechkin //Setting this to the mimicgun type does exactly what you think it will.
 	accuracy = GUN_ACCURACY_DEFAULT
 
 /obj/item/gun/energy/mimicgun/newshot()
@@ -403,8 +405,9 @@
 	icon_state = "emittercannon"
 	var/charge_cost = 750
 
-/obj/item/gun/energy/emittercannon/emp_act(severity)
-	return
+/obj/item/gun/energy/emittercannon/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 // MARK: Chrono gun
 /obj/item/gun/energy/chrono_gun
@@ -492,7 +495,6 @@
 	item_state = ""
 	ninja_weapon = TRUE
 	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_MEDIUM
 	slot_flags = NONE
 	item_flags = DROPDEL|ABSTRACT|NOBLUDGEON
 	ammo_type = list(/obj/item/ammo_casing/energy/shuriken)
@@ -527,6 +529,7 @@
 	qdel(src)
 
 /obj/item/gun/energy/shuriken_emitter/can_shoot(mob/user)
+	. = ..()
 	return !my_suit.ninjacost(cost * burst_amount)
 
 /obj/item/gun/energy/shuriken_emitter/borg
@@ -545,6 +548,7 @@
 	return
 
 /obj/item/gun/energy/shuriken_emitter/borg/can_shoot(mob/user)
+	. = ..()
 	return TRUE
 
 // MARK: Noise cannon

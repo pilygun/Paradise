@@ -36,6 +36,10 @@
 /atom/DblClick(location, control, params)
 	usr.DblClickOn(src,params)
 
+/atom/MouseWheel(delta_x,delta_y,location,control,params)
+	if(flags & INITIALIZED)
+		usr.MouseWheelOn(src, delta_x, delta_y, params)
+
 /**
  * Standard mob ClickOn()
  *
@@ -114,7 +118,7 @@
 	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
 		return
 
-	if(is_ventcrawling(usr) && isitem(A)) // stops inventory actions in vents
+	if(usr && is_ventcrawling(usr) && isitem(A)) // stops inventory actions in vents
 		var/obj/item/item = A
 		if(item.item_flags & (IN_INVENTORY|IN_STORAGE))
 			return
@@ -637,3 +641,17 @@
 
 #undef MAX_SAFE_BYOND_ICON_SCALE_TILES
 #undef MAX_SAFE_BYOND_ICON_SCALE_PX
+
+/// MouseWheelOn
+/mob/proc/MouseWheelOn(atom/A, delta_x, delta_y, params)
+	SEND_SIGNAL(src, COMSIG_MOUSE_SCROLL_ON, A, delta_x, delta_y, params)
+
+/mob/dead/observer/MouseWheelOn(atom/A, delta_x, delta_y, params)
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+		var/view = 0
+		if(delta_y > 0)
+			view = -1
+		else
+			view = 1
+		add_view_range(view)

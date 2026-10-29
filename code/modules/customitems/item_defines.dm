@@ -56,7 +56,7 @@
 		to_chat(user, span_notice("[target] already has body markings, any more would look silly!"))
 		return .
 
-	var/datum/sprite_accessory/body_markings/tattoo/temp_tatt = GLOB.marking_styles_list[tattoo_icon]
+	var/datum/sprite_accessory/body_markings/tattoo/temp_tatt = SSaccessories.body_markings_list[tattoo_icon]
 	if(!(target.dna.species.name in temp_tatt.species_allowed))
 		to_chat(user, span_notice("You can't think of a way to make the [tattoo_name] design work on [target == user ? "your" : "[target]'s"] body type."))
 		return .
@@ -255,7 +255,7 @@
 /obj/item/storage/toolbox/fluff/lunchbox/populate_contents()
 	new /obj/item/reagent_containers/food/snacks/sandwich(src)
 	new /obj/item/reagent_containers/food/snacks/chips(src)
-	new /obj/item/reagent_containers/food/drinks/cans/cola(src)
+	new /obj/item/reagent_containers/cup/soda_cans/cola(src)
 
 /obj/item/fluff/wingler_comb
 	name = "blue comb"
@@ -827,10 +827,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
-/obj/item/clothing/suit/fluff/kluys/verb/toggle()
-	set name = "Режим наноткани"
-	set category = VERB_CATEGORY_OBJECT
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/suit/fluff/kluys, toggle, usr, "Режим наноткани", VERB_CATEGORY_HIDDEN)
 
 	if(usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return FALSE
@@ -1099,10 +1096,7 @@
 	. = ..()
 	verbs -= /obj/item/clothing/under/verb/rollsuit
 
-/obj/item/clothing/under/fluff/jane_sidsuit/verb/toggle_zipper()
-	set name = "Молния костюма"
-	set category = VERB_CATEGORY_OBJECT
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/under/fluff/jane_sidsuit, toggle_zipper, usr, "Молния костюма", VERB_CATEGORY_HIDDEN)
 
 	if(usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return FALSE
@@ -1250,16 +1244,6 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "superior_boots"
 	item_state = "superior_boots"
-
-/obj/item/nullrod/fluff/chronx //chronx100: Hughe O'Splash
-	fluff_transformations = list(/obj/item/nullrod/fluff/chronx/scythe)
-
-/obj/item/nullrod/fluff/chronx/scythe
-	name = "Soul Collector"
-	desc = "An ancient scythe used by the worshipers of Cthulhu. Tales say it is used to prepare souls for Cthulhu's great devouring. Someone carved their name into the handle: Hughe O'Splash"
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "chronx_scythe"
-	item_state = "chronx_scythe"
 
 /obj/item/clothing/head/fluff/chronx //chronx100: Hughe O'Splash
 	name = "Cthulhu's Hood"

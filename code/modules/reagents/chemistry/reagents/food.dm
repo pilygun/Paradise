@@ -12,7 +12,7 @@
 	var/diet_flags = DIET_OMNI | DIET_HERB | DIET_CARN
 
 /datum/reagent/consumable/on_mob_life(mob/living/M)
-	if(!isvampire(M))
+	if(!isvampire(M) && !HAS_TRAIT(M, TRAIT_I_WANT_BRAINS))
 		M.adjust_nutrition(nutriment_factor)	// For hunger and fatness
 	return ..()
 
@@ -27,14 +27,14 @@
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
-	if(!isvampire(M))
+	if(!isvampire(M) && !HAS_TRAIT(M, TRAIT_I_WANT_BRAINS))
 		update_flags |= M.adjustBruteLoss(-brute_heal, FALSE, affect_robotic = FALSE)
 		update_flags |= M.adjustFireLoss(-burn_heal, FALSE, affect_robotic = FALSE)
 	return ..() | update_flags
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
-	// taste data can sometimes be ("salt" = 3, "chips" = 1)
-	// and we want it to be in the form ("salt" = 0.75, "chips" = 0.25)
+	// taste data can sometimes be ("sodiumchloride" = 3, "chips" = 1)
+	// and we want it to be in the form ("sodiumchloride" = 0.75, "chips" = 0.25)
 	// which is called "normalizing"
 	if(!supplied_data)
 		supplied_data = data
@@ -90,10 +90,14 @@
 
 /datum/reagent/consumable/nutriment/protein/on_mob_add(mob/living/user)
 	. = ..()
+	if(user.dna.species.reagent_tag & SYNTHETIC)
+		return
 	user.apply_status_effect(status_effect_type)
 
 /datum/reagent/consumable/nutriment/protein/on_mob_delete(mob/living/user)
 	. = ..()
+	if(user.dna.species.reagent_tag & SYNTHETIC)
+		return
 	user.remove_status_effect(status_effect_type)
 
 /datum/reagent/consumable/nutriment/protein/liquid
@@ -324,10 +328,10 @@
 						eyes_covered = TRUE
 						safe_thing = victim.wear_mask
 			if(victim.head)
-				if(victim.head.flags_cover & MASKCOVERSEYES)
+				if(victim.head.flags_cover & HEADCOVERSEYES)
 					eyes_covered = TRUE
 					safe_thing = victim.head
-				if(victim.head.flags_cover & MASKCOVERSMOUTH)
+				if(victim.head.flags_cover & HEADCOVERSMOUTH)
 					mouth_covered = TRUE
 					safe_thing = victim.head
 				if(isclothing(victim.head))
@@ -505,7 +509,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/datum/antagonist/vampire/vamp = H.mind?.has_antag_datum(/datum/antagonist/vampire)
-		if(vamp?.is_garlic_affected && !vamp.get_ability(/datum/vampire_passive/full)) //incapacitating but not lethal.
+		if(!vamp.get_ability(/datum/vampire_passive/full)) //incapacitating but not lethal.
 			if(prob(min(25, current_cycle)))
 				to_chat(H, span_danger("Аромат чеснока не выветривается из вашего носа! Вы едва можете думать..."))
 				H.Weaken(2 SECONDS)

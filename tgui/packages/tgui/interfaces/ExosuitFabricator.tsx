@@ -1,6 +1,4 @@
-import { classes } from '../../common/react';
-import { createSearch, declension_ru } from '../../common/string';
-import { useBackend } from '../backend';
+import { declension_ru } from 'common/l10n';
 import { useState } from 'react';
 import {
   Box,
@@ -9,12 +7,15 @@ import {
   Dropdown,
   Icon,
   Input,
-  ProgressBar,
   Section,
   Stack,
-} from '../components';
-import { Countdown } from '../components/Countdown';
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+import { useBackend } from '../backend';
+import { Countdown } from '../components';
 import { Window } from '../layouts';
+import { LogisticsButton } from './common/LogisticsButton';
 
 // __DEFINES/construction.dm, L73
 const MINERAL_MATERIAL_AMOUNT = 2000;
@@ -33,6 +34,7 @@ type ExosuitFabricatorData = {
   categories: string[];
   designs: DesignData[];
   syncing: boolean;
+  logistics_enabled: boolean;
 };
 
 type DesignData = {
@@ -130,7 +132,7 @@ const Materials = (properties) => {
 
 const Designs = (properties) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
-  const { curCategory, categories, designs, syncing } = data;
+  const { curCategory, categories, designs, syncing, logistics_enabled } = data;
   const [searchText, setSearchText] = useState('');
   const searcher = createSearch<DesignData>(searchText, (design) => {
     return design.name;
@@ -142,35 +144,43 @@ const Designs = (properties) => {
       scrollable
       className="Exofab__designs"
       title={
-        <Dropdown
-          className="Exofab__dropdown"
-          selected={curCategory}
-          options={categories}
-          onSelected={(cat) =>
-            act('category', {
-              cat: cat,
-            })
-          }
-        />
-      }
-      buttons={
-        <Box mt={-3.5}>
-          <Button
-            icon="plus"
-            tooltip={'Добавлеие всех шаблонов из категории в очередь печати.'}
-            onClick={() => act('queueall')}
-          >
-            Добавить всё
-          </Button>
-          <Button
-            disabled={syncing}
-            iconSpin={syncing}
-            icon="sync-alt"
-            onClick={() => act('sync')}
-          >
-            {syncing ? 'Синхронизация...' : 'Синхронизация с сетью НИО'}
-          </Button>
-        </Box>
+        <Stack fill fontSize={1} align="center">
+          <Stack.Item>
+            <Dropdown
+              width={19}
+              selected={curCategory}
+              options={categories}
+              onSelected={(cat) =>
+                act('category', {
+                  cat: cat,
+                })
+              }
+            />
+          </Stack.Item>
+          <Stack.Item grow />
+          <Stack.Item>
+            <LogisticsButton enabled={!!logistics_enabled} />
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              icon="plus"
+              tooltip={'Добавлеие всех шаблонов из категории в очередь печати.'}
+              onClick={() => act('queueall')}
+            >
+              Добавить всё
+            </Button>
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              disabled={syncing}
+              iconSpin={syncing}
+              icon="sync-alt"
+              onClick={() => act('sync')}
+            >
+              {syncing ? 'Синхронизация...' : 'Синхронизация с сетью НИО'}
+            </Button>
+          </Stack.Item>
+        </Stack>
       }
     >
       <Input
@@ -195,27 +205,19 @@ const Building = (properties) => {
   const { building, buildStart, buildEnd, worldTime } = data;
   return (
     <Section className="Exofab__building" stretchContents>
-      <ProgressBar.Countdown
-        start={buildStart}
-        current={worldTime}
-        end={buildEnd}
+      <Countdown
+        progressBar
+        timeStart={buildStart}
+        timeEnd={buildEnd}
+        format={(v, f) => f.substr(3)}
       >
-        <Stack>
-          <Stack.Item>
-            <Icon name="cog" spin />
+        <Stack fill>
+          <Stack.Item grow>
+            <Icon spin name="cog" /> Building
           </Stack.Item>
-          <Stack.Item>
-            Печать {building}
-            &nbsp;(
-            <Countdown
-              current={worldTime}
-              timeLeft={buildEnd - worldTime}
-              format={(v, f) => f.substr(3)}
-            />
-            )
-          </Stack.Item>
+          <Stack.Item>{building}</Stack.Item>
         </Stack>
-      </ProgressBar.Countdown>
+      </Countdown>
     </Section>
   );
 };
@@ -224,7 +226,7 @@ const Queue = (properties) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
   const { queue, processingQueue } = data;
   const queueDeficit = Object.entries(data.queueDeficit).filter(
-    (a) => a[1] < 0
+    (a) => a[1] < 0,
   );
   const queueTime = queue.reduce((a, b) => a + b.time, 0);
   return (
@@ -359,7 +361,7 @@ const MaterialCount = (properties) => {
                 Math.round((curAmount / MINERAL_MATERIAL_AMOUNT) * 10) / 10,
                 '',
                 'а',
-                'ов'
+                'ов',
               )}
               )
             </Box>

@@ -495,8 +495,7 @@
 	icon_state = "cyborg_upgrade5"
 	require_module = TRUE
 	var/repair_amount = -1
-	var/repair_tick = 1
-	var/msg_cooldown = 0
+	var/repair_tick = TRUE
 	var/on = FALSE
 	var/powercost = 10
 	var/mob/living/silicon/robot/cyborg
@@ -549,26 +548,27 @@
 /obj/item/borg/upgrade/selfrepair/proc/activate_sr()
 	START_PROCESSING(SSobj, src)
 	on = TRUE
+	balloon_alert(cyborg, "саморемонт начат")
 	update_icon(UPDATE_ICON_STATE)
 
 /obj/item/borg/upgrade/selfrepair/proc/deactivate_sr()
 	STOP_PROCESSING(SSobj, src)
 	on = FALSE
+	balloon_alert(cyborg, "саморемонт остановлен")
 	update_icon(UPDATE_ICON_STATE)
 
 /obj/item/borg/upgrade/selfrepair/process()
 	if(!repair_tick)
-		repair_tick = 1
+		repair_tick = TRUE
 		return
 
 	if(cyborg && (cyborg.stat != DEAD) && on)
 		if(!cyborg.cell)
-			to_chat(cyborg, span_warning("Self-repair module deactivated. Please, insert the power cell."))
 			deactivate_sr()
 			return
 
 		if(cyborg.cell.charge < powercost * 2)
-			to_chat(cyborg, span_notice("Self-repair module deactivated. Please recharge."))
+			balloon_alert(cyborg, "недостаточно энергии для саморемонта")
 			deactivate_sr()
 			return
 
@@ -583,18 +583,11 @@
 			cyborg.cell.use(powercost)
 		else
 			cyborg.cell.use(5)
-		repair_tick = 0
 
-		if((world.time - 2000) > msg_cooldown)
-			var/msgmode = "standby"
-			if(cyborg.health < 0)
-				msgmode = "critical"
-			else if(cyborg.health < cyborg.maxHealth)
-				msgmode = "normal"
-			to_chat(cyborg, span_notice("Self-repair is active in [span_boldnotice("[msgmode]")] mode."))
-			msg_cooldown = world.time
-	else
-		deactivate_sr()
+		repair_tick = FALSE
+		return
+
+	deactivate_sr()
 
 /obj/item/borg/upgrade/storageincreaser
 	name = "storage increaser"
@@ -792,10 +785,10 @@
 	if(!..())
 		return FALSE
 
-	for(var/obj/item/reagent_containers/glass/bucket/container in robot.module.modules)
+	for(var/obj/item/reagent_containers/cup/bucket/container in robot.module.modules)
 		qdel(container)
 
-	robot.module.modules += new /obj/item/reagent_containers/glass/beaker/bluespace(robot.module)
+	robot.module.modules += new /obj/item/reagent_containers/cup/beaker/bluespace(robot.module)
 	robot.module.rebuild()
 	return TRUE
 
@@ -803,10 +796,10 @@
 	if(!..())
 		return FALSE
 
-	for(var/obj/item/reagent_containers/glass/beaker/bluespace/container2 in robot.module)
+	for(var/obj/item/reagent_containers/cup/beaker/bluespace/container2 in robot.module)
 		qdel(container2)
 
-	robot.module.modules += new /obj/item/reagent_containers/glass/bucket(robot.module)
+	robot.module.modules += new /obj/item/reagent_containers/cup/bucket(robot.module)
 	robot.module.rebuild()
 	return TRUE
 

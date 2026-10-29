@@ -11,6 +11,7 @@
 	icon_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
 	singular_name = "ore chunk"
+	logistics_count_amount = TRUE
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 	var/list/stack_overlays
@@ -703,7 +704,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/magic/examine(mob/user)
 	. = ..()
 	if(COOLDOWN_FINISHED(src, COIN_SUMMON_COOLDOWN))
-		. += span_notice("[capitalize(declent_ru(NOMINATIVE))] ярко блестит!")
+		. += span_notice("[DECLENT_RU_CAP(src, NOMINATIVE)] ярко блестит!")
 
 /obj/item/coin/magic/attack_self(mob/user)
 	. = ..()
@@ -713,7 +714,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	COOLDOWN_START(src, COIN_SUMMON_COOLDOWN, 10 SECONDS)
 	var/list/mob/dead/observer/candidates = SSghost_spawns.poll_candidates("Вы хотите поиграть играть за слугу [user.real_name]?", ROLE_WIZARD, role_cleanname = "слугу", poll_time = 10 SECONDS, source = image('icons/mob/simple_human.dmi', "butler"))
 	if(!LAZYLEN(candidates))
-		to_chat(user, span_warning("[capitalize(declent_ru(NOMINATIVE))] остывает у вас в руке. Возможно, стоит попробовать позже."))
+		to_chat(user, span_warning("[DECLENT_RU_CAP(src, NOMINATIVE)] остывает у вас в руке. Возможно, стоит попробовать позже."))
 		return
 
 	var/mob/living/carbon/human/servant = new(user.loc)
@@ -799,8 +800,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			)
 
 /obj/item/coin/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(istype(throwingdatum?.thrower?.mind?.martial_art, /datum/martial_art/mr_chang))
-		throwingdatum.thrower.say(pick("Сдачу, пожалуйста!", "За сущие копейки!", "Сдачу!", "Кэшбек в кредит!"))
+	var/mob/thrower = throwingdatum?.get_thrower()
+	if(istype(thrower?.mind?.martial_art, /datum/martial_art/mr_chang))
+		thrower.say(pick("Сдачу, пожалуйста!", "За сущие копейки!", "Сдачу!", "Кэшбек в кредит!"))
 		embed_chance = 30
 		embedded_impact_pain_multiplier = 2
 		embedded_ignore_throwspeed_threshold = TRUE

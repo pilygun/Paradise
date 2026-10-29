@@ -77,8 +77,6 @@
 	var/mob/living/carbon/human/wearer
 	/// Internal storage in a modsuit.
 	var/obj/item/storage/backpack/modstorage/bag
-	/// Is it EMP proof?
-	var/emp_proof = FALSE
 	/// List of overlays the mod has. Needs to be cut onremoval / module deactivation
 	var/list/mod_overlays = list()
 	/// Is the jetpack on so we should make ion effects?
@@ -89,7 +87,6 @@
 	var/current_disguise = FALSE
 	/// AI or pAI mob inhabiting the MOD.
 	var/mob/living/silicon/ai_assistant
-
 
 /obj/item/mod/control/get_ru_names()
 	return alist(
@@ -153,9 +150,10 @@
 		else
 			. += span_notice("Слот для ядра пуст.")
 
-/obj/item/mod/control/examine_more(mob/user)
-	. = ..()
-	. += "<i>[extended_desc]</i>"
+/obj/item/mod/control/add_deep_lore()
+	if(!extended_desc)
+		return
+	AddElement(/datum/element/examine_lore, lore = extended_desc)
 
 /obj/item/mod/control/process()
 	if(seconds_electrified > 0)
@@ -407,11 +405,15 @@
 
 /obj/item/mod/control/emp_act(severity)
 	. = ..()
+	if(active && wearer)
+		to_chat(wearer, span_warning("Зафиксирован [severity > 1 ? "слабый" : "мощный"] всплеск ЭМИ!"))
+	if(. & EMP_PROTECT_SELF)
+		return .
+	for(var/obj/item/mod/module/module as anything in modules)
+		module.emp_act(severity)
 	if(!active || !wearer)
-		return
-	to_chat(wearer, span_warning("Зафиксирован [severity > 1 ? "слабый" : "мощный"] всплеск ЭМИ!"))
-	if(emp_proof)
-		return
+		return .
+
 	selected_module?.on_deactivation(display_message = TRUE)
 	wearer.apply_damage(10 / severity, BURN) //Test this with ion shotguns.
 	to_chat(wearer, span_danger("Костюм начинает резко нагреваться от ЭМИ, обжигая вас!"))

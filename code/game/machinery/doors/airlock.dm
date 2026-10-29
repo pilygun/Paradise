@@ -108,7 +108,7 @@ GLOBAL_LIST_EMPTY(airlock_emissive_underlays)
 
 	// This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
 	var/id_tag
-	var/shockedby = list()
+	var/list/shockedby
 	///the command the door is currently attempting to complete
 	var/cur_command = null
 	var/heat_resistance = 1500
@@ -317,10 +317,10 @@ GLOBAL_LIST_EMPTY(airlock_emissive_underlays)
 		electrified_until = 0
 	else if(duration)	//electrify door for the given duration seconds
 		if(user)
-			shockedby += text("\[[time_stamp()]\] - [user](ckey:[user.ckey])")
+			LAZYADD(shockedby, "\[[time_stamp()]\] - [user](ckey:[user.ckey])")
 			add_attack_logs(user, src, "Electrified", ATKLOG_ALL)
 		else
-			shockedby += text("\[[time_stamp()]\] - EMP)")
+			LAZYADD(shockedby, "\[[time_stamp()]\] - EMP)")
 		message = "The door is now electrified [duration == -1 ? "permanently" : "for [duration] second\s"]."
 		electrified_until = duration == -1 ? -1 : world.time + duration SECONDS
 		if(duration != -1)
@@ -838,11 +838,11 @@ GLOBAL_LIST_EMPTY(airlock_emissive_underlays)
 /obj/machinery/door/airlock/proc/headbutt_airlock(mob/user)
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
-		if((H.getBrainLoss() >= 60 || HAS_TRAIT(user, TRAIT_AIRLOCK_HIT)) && Adjacent(user))
+		if((!H.check_brain_for_complex_interactions() || HAS_TRAIT(user, TRAIT_AIRLOCK_HIT)) && Adjacent(user))
 			playsound(loc, 'sound/effects/bang.ogg', 25, TRUE)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message(span_warning("[user] headbutts the airlock."))
-				H.Weaken(10 SECONDS)
+				H.Knockdown(10 SECONDS)
 				H.apply_damage(10, def_zone = BODY_ZONE_HEAD)
 			else
 				visible_message(span_warning("[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet."))

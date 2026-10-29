@@ -36,7 +36,7 @@
 /datum/skill/combat/bows
 	id = "combat.bows"
 	name = "Стрельба из лука"
-	desc = "Влияет на меткость стрельбы из лука, а так же на самедление при нятянутой тетеве."
+	desc = "Влияет на меткость стрельбы из лука, а так же на замедление при натянутой тетиве."
 	duration_mod_names = list(BOW_SLOWDOWN_MOD, BOW_READY_TO_FIRE_MOD)
 	skills_mods = alist(
 		BOW_ACCURACY_MOD = alist(
@@ -122,7 +122,7 @@
 /datum/skill/combat/fists
 	id = "combat.fists"
 	name = "Безоружный бой"
-	desc = "Влияет на урон кулаками, шансы обезоруживания и скорость грабов."
+	desc = "Влияет на урон кулаками, шансы обезоруживания и скорость грабов. На высоких уровнях добавляет новое боевое исскуство."
 	duration_mod_names = list(FISTS_GRAB_MOD)
 	quality_mod_names = list(FISTS_DISARM_MOD)
 	skills_mods = alist(
@@ -130,10 +130,10 @@
 			SKILL_LEVEL_NONE = 0.6,
 			SKILL_LEVEL_BEGINNER = 0.75,
 			SKILL_LEVEL_BASIC = 1.0,
-			SKILL_LEVEL_ADVANCED = 1.25,
-			SKILL_LEVEL_PROFESSIONAL = 1.5,
-			SKILL_LEVEL_EXPERT = 1.75,
-			SKILL_LEVEL_LEGEND = 2,
+			SKILL_LEVEL_ADVANCED = 1.15,
+			SKILL_LEVEL_PROFESSIONAL = 1.3,
+			SKILL_LEVEL_EXPERT = 1.5,
+			SKILL_LEVEL_LEGEND = 1.75,
 			SKILL_LEVEL_UNAVAILABLE = 0.01,
 		),
 	)

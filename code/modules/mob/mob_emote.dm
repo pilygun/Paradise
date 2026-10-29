@@ -61,6 +61,9 @@
 
 	emote("me", m_type, input, intentional, ignore_cooldowns = ignore_cooldowns)
 
+/mob/proc/start_custom_emote(m_type = EMOTE_VISIBLE, message = null, intentional = FALSE, ignore_cooldowns = FALSE)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, custom_emote), arglist(args))
+
 /**
  * Get a list of all emote keys usable by the current mob.
  *
@@ -79,6 +82,7 @@
 	return all_keys
 
 /datum/emote/help
+	name = "Помощь"
 	key = "help"
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai)
 
@@ -131,6 +135,7 @@
 	to_chat(user, message)
 
 /datum/emote/flip
+	name = "Кувырок"
 	key = "flip"
 	key_third_person = "flips"
 	message = "дела%(ет,ют)% кувырок!"
@@ -179,6 +184,7 @@
 	return ..()
 
 /datum/emote/spin
+	name = "Крутиться"
 	key = "spin"
 	key_third_person = "spins"
 	hands_use_check = TRUE
@@ -204,4 +210,3 @@
 		user.Confused(24 SECONDS)
 		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, spin), 32, 1)
 	return TRUE
-

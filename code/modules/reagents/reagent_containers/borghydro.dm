@@ -6,7 +6,7 @@
 	icon = 'icons/obj/hypo.dmi'
 	item_state = "hypo"
 	icon_state = "borghypo"
-	possible_transfer_amounts = null
+	has_variable_transfer_amount = FALSE
 	var/mode = 1
 	var/charge_cost = 50
 	var/charge_tick = 0
@@ -22,6 +22,10 @@
 		"spaceacillin" = list('icons/effects/effects.dmi', "greenglow"), \
 		"charcoal" = list('icons/mob/screen_corgi.dmi', "tox1"), \
 		"hydrocodone" = list('icons/mob/actions/actions.dmi', "magicm"))
+
+/obj/item/reagent_containers/borghypo/Destroy(force)
+	QDEL_LIST(reagent_list)
+	return ..()
 
 /obj/item/reagent_containers/borghypo/get_ru_names()
 	return alist(
@@ -69,7 +73,7 @@
 		"pen_acid" = list('icons/mob/screen_corgi.dmi', "tox1"), \
 		"hydrocodone" = list('icons/mob/actions/actions.dmi', "magicm"), \
 		"perfluorodecalin" = list('icons/obj/surgery.dmi', "lungs"), \
-		"calomel" = list('icons/obj/items.dmi', "soap"), \
+		"calomel" = list('icons/obj/janitor.dmi', "soap"), \
 		"oculine" = list('icons/obj/surgery.dmi', "eyes"))
 	upgrade_path = null //no upgrades
 
@@ -85,10 +89,6 @@
 
 /obj/item/reagent_containers/borghypo/upgraded/super
 	bypass_protection = TRUE
-
-/obj/item/reagent_containers/borghypo/empty()
-	set hidden = TRUE
-	return
 
 /obj/item/reagent_containers/borghypo/Initialize(mapload)
 	for(var/R in reagent_ids)
@@ -166,7 +166,7 @@
 	var/contained = injected.name
 	var/trans = our_reagents.trans_to(target, amount_per_transfer_from_this)
 	add_attack_logs(user, target, "Injected with [name] containing [contained], transfered [trans] units", injected.harmless ? ATKLOG_ALMOSTALL : null)
-	to_chat(user, span_notice("Вы вкалываете <b>[trans]</b> единиц[DECL_SEC_MIN(trans)]. В хранилище осталось ещё <b>[our_reagents.total_volume]</b> единиц[declension_ru(our_reagents.total_volume, "а", "ы", "")] вещества."))
+	to_chat(user, span_notice("Вы вкалываете <b>[trans]</b> единиц[DECL_U_Y_0(trans)]. В хранилище осталось ещё <b>[our_reagents.total_volume]</b> единиц[DECL_A_Y_0(our_reagents.total_volume)] вещества."))
 
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
 	radial_menu(user)
@@ -197,7 +197,7 @@
 		for(var/datum/reagents/RS in reagent_list)
 			var/datum/reagent/R = locate() in RS.reagent_list
 			if(R)
-				. += span_notice("Содержит в себе <b>[R.volume]</b> единиц[DECL_SEC_MIN(R.volume)] вещества \"[R.name]\".")
+				. += span_notice("Содержит в себе <b>[R.volume]</b> единиц[DECL_U_Y_0(R.volume)] вещества \"[R.name]\".")
 				empty = FALSE
 
 		if(empty)
@@ -228,7 +228,7 @@
 		"salglu_solution" = list('icons/effects/bleed.dmi', "bleed10"), \
 		"epinephrine" = list('icons/obj/surgery.dmi', "heart-on"), \
 		"charcoal" = list('icons/mob/screen_corgi.dmi', "tox1"), \
-		"sal_acid" = list('icons/mob/actions/actions.dmi', "fleshmend"), \
+		"sal_acid" = list('icons/mob/actions/actions.dmi', "red_cross"), \
 		"salbutamol" = list('icons/obj/surgery.dmi', "lungs"))
 	upgrade_path = null //no upgrades
 

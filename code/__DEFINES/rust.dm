@@ -104,6 +104,14 @@
 #endif
 
 
+/**
+ * Generates a cave system layout for a whole z-level.
+ * width/height - size of the grid to generate
+ * prefabs_json - JSON array of structures that already exist on the grid and should be treated as immutable while the caves are shaped
+ * settings_json - JSON object with the tuning values
+*/
+#define rustlib_cave_system_generator_generate(width, height, prefabs_json, settings_json) RUSTLIB_CALL(cave_system_generator_generate, width, height, prefabs_json, settings_json)
+
 /// Generates a spritesheet at: [file_path][spritesheet_name]_[size_id].[png or dmi]
 /// The resulting spritesheet arranges icons in a random order, with the position being denoted in the "sprites" return value.
 /// All icons have the same y coordinate, and their x coordinate is equal to `icon_width * position`.
@@ -186,6 +194,8 @@
 #define rustlib_iconforge_gags_async(config_path, colors, output_dmi_path) RUSTLIB_CALL(iconforge_gags_async, "[config_path]", colors, output_dmi_path)
 
 #define rustlib_clear_uuid_storage(...) RUSTLIB_CALL(clear_uuid_storage)
+
+#define rustlib_exit_byond_process(...) RUSTLIB_CALL(exit_byond_process)
 
 #define RUSTLIB_ICONFORGE_BLEND_COLOR "BlendColor"
 #define RUSTLIB_ICONFORGE_BLEND_ICON "BlendIcon"

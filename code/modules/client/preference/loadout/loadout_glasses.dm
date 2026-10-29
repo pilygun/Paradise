@@ -39,6 +39,18 @@
 	index_name = "Prescription glasses"
 	path = /obj/item/clothing/glasses/regular
 
+/datum/gear/glasses/kamina
+	index_name = "Spiky Orange-tinted Shades"
+	path = /obj/item/clothing/glasses/fluff/kamina
+
+/datum/gear/glasses/green
+	index_name = "Spiky Green-tinted Shades"
+	path = /obj/item/clothing/glasses/fluff/kamina/green
+
+/datum/gear/glasses/threedglasses
+	index_name = "Threed Glasses"
+	path = /obj/item/clothing/glasses/threedglasses
+
 /datum/gear/glasses/sectacticool
 	index_name = "Security tactical glasses"
 	path = /obj/item/clothing/glasses/hud/security/sunglasses/tacticool
@@ -72,5 +84,8 @@
 /datum/gear/glasses/skillhudpatch
 	index_name = "Skills HUD eyepatch"
 	path = /obj/item/clothing/glasses/hud/skills/patch
-	allowed_roles = list(JOB_TITLE_HOP, JOB_TITLE_CAPTAIN)
+	allowed_roles = list(JOB_TITLE_HOP, JOB_TITLE_CAPTAIN, JOB_TITLE_REPRESENTATIVE)
 
+/datum/gear/glasses/goldblue
+	index_name = "round gold-rimmed glasses"
+	path = /obj/item/clothing/glasses/goldblue

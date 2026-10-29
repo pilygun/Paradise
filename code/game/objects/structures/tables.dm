@@ -210,6 +210,9 @@
 
 /obj/structure/table/can_touch(mob/living/user, flip = FALSE)
 	. = ..()
+	if(flip && user.mob_size <= MOB_SIZE_TINY)
+		to_chat(user, span_notice("Вы слишком маленький, чтобы перевернуть [declent_ru(ACCUSATIVE)]."))
+		return FALSE
 	if(. && !flip && flipped)
 		to_chat(user, span_notice("Вы не можете забраться на перевернутый стол."))
 		return FALSE
@@ -340,10 +343,7 @@
 		return FALSE
 	return check_table.straight_table_check(direction)
 
-/obj/structure/table/verb/do_flip()
-	set name = "Flip/Unflip table"
-	set desc = "Flips or unflips a table"
-	set src in oview(1)
+GAME_VERB_SRC(/obj/structure/table, do_flip, oview(1), "Flip/Unflip table", VERB_CATEGORY_HIDDEN)
 	actual_flip(usr)
 
 /// Used to determine whether the table can be flipped over.
@@ -453,10 +453,11 @@
 
 /obj/structure/table/glass
 	name = "glass table"
-	desc = "Looks fragile. You should totally flip it. It is begging for it."
+	desc = "Выглядит хрупко. Наверное, не стоит на него натыкаться."
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table-0"
 	buildstack = /obj/item/stack/sheet/glass
+	can_be_flipped = FALSE
 	canSmoothWith = null
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
@@ -465,6 +466,16 @@
 	smoothing_groups = SMOOTH_GROUP_GLASS_TABLES
 	canSmoothWith = SMOOTH_GROUP_GLASS_TABLES
 	base_icon_state = "glass_table"
+
+/obj/structure/table/glass/get_ru_names()
+	return alist(
+		NOMINATIVE = "стеклянный стол",
+		GENITIVE = "стеклянного стола",
+		DATIVE = "стеклянному столу",
+		ACCUSATIVE = "стеклянный стол",
+		INSTRUMENTAL = "стеклянным столом",
+		PREPOSITIONAL = "стеклянном столе",
+	)
 
 /obj/structure/table/glass/Initialize(mapload)
 	. = ..()
@@ -670,6 +681,7 @@
 	buildstack = /obj/item/stack/sheet/plasteel
 	max_integrity = 200
 	integrity_failure = 50
+	can_be_flipped = FALSE
 	armor = list(MELEE = 10, BULLET = 30, LASER = 30, ENERGY = 100, BOMB = 20, BIO = 0, FIRE = 80, ACID = 70)
 
 /obj/structure/table/reinforced/deconstruction_hints(mob/user)
@@ -696,7 +708,6 @@
 	icon_state = "brass_table-0"
 	base_icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	can_be_flipped = FALSE
 	frame = /obj/structure/table_frame/brass
 	framestack = /obj/item/stack/sheet/brass
 	buildstack = /obj/item/stack/sheet/brass

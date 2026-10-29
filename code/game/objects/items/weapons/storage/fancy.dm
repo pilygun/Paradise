@@ -590,24 +590,25 @@
 	icon_type = "vial"
 	use_sound = 'sound/items/handling/cardboard_box_rustle_light.ogg'
 	storage_slots = 6
-	can_hold = list(/obj/item/reagent_containers/glass/beaker/vial)
+	can_hold = list(/obj/item/reagent_containers/cup/beaker/vial)
 
 /obj/item/storage/fancy/vials/populate_contents()
-	for(var/I = 1 to storage_slots)
-		new /obj/item/reagent_containers/glass/beaker/vial(src)
+	for(var/I in 1 to storage_slots)
+		new /obj/item/reagent_containers/cup/beaker/vial(src)
+
 
 /obj/item/storage/lockbox/vials
 	name = "secure vial storage box"
 	desc = "A locked box for keeping things away from children."
 	icon = 'icons/obj/vialbox.dmi'
 	icon_state = "vialbox0"
-	can_hold = list(/obj/item/reagent_containers/glass/beaker/vial)
+	can_hold = list(/obj/item/reagent_containers/cup/beaker/vial)
 	storage_slots = 6
 	req_access = list(ACCESS_VIROLOGY)
 
 /obj/item/storage/lockbox/vials/populate_contents()
-	for(var/I = 1 to storage_slots)
-		new /obj/item/reagent_containers/glass/beaker/vial(src)
+	for(var/i in 1 to storage_slots)
+		new /obj/item/reagent_containers/cup/beaker/vial(src)
 	update_icon()
 
 /obj/item/storage/lockbox/vials/update_icon_state()
@@ -621,6 +622,16 @@
 			. += "cover"
 	else
 		. += "ledb"
+
+/obj/item/storage/lockbox/vials/zombie_cure
+	name = "secure vial storage box - 'Anti-Plague Sequences'"
+
+/obj/item/storage/lockbox/vials/zombie_cure/populate_contents()
+	new /obj/item/reagent_containers/cup/bottle/zombiecure1(src)
+	new /obj/item/reagent_containers/cup/bottle/zombiecure2(src)
+	new /obj/item/reagent_containers/cup/bottle/zombiecure3(src)
+	new /obj/item/reagent_containers/cup/bottle/zombiecure4(src)
+
 
 /*
  * MARK: Aquatic Starter Kit
@@ -661,10 +672,10 @@
 	pixel_y = 4
 	storage_slots = 14
 	can_hold = list(
-		/obj/item/reagent_containers/food/condiment/pack/sugar,
-		/obj/item/reagent_containers/food/condiment/pack/creamer,
-		/obj/item/reagent_containers/food/condiment/pack/aspartame,
-		/obj/item/reagent_containers/food/condiment/pack/chocolate,
+		/obj/item/reagent_containers/condiment/pack/sugar,
+		/obj/item/reagent_containers/condiment/pack/creamer,
+		/obj/item/reagent_containers/condiment/pack/aspartame,
+		/obj/item/reagent_containers/condiment/pack/chocolate,
 	)
 
 /obj/item/storage/fancy/coffee_condi_display/get_ru_names()
@@ -684,15 +695,15 @@
 	. = list()
 	var/list/added_overlays = list()
 
-	for(var/obj/item/reagent_containers/food/condiment/pack/pack in contents)
+	for(var/obj/item/reagent_containers/condiment/pack/pack in contents)
 		var/overlay_name
-		if(istype(pack, /obj/item/reagent_containers/food/condiment/pack/sugar))
+		if(istype(pack, /obj/item/reagent_containers/condiment/pack/sugar))
 			overlay_name = "condi_display_sugar"
-		else if(istype(pack, /obj/item/reagent_containers/food/condiment/pack/aspartame))
+		else if(istype(pack, /obj/item/reagent_containers/condiment/pack/aspartame))
 			overlay_name = "condi_display_sweetener"
-		else if(istype(pack, /obj/item/reagent_containers/food/condiment/pack/creamer))
+		else if(istype(pack, /obj/item/reagent_containers/condiment/pack/creamer))
 			overlay_name = "condi_display_creamer"
-		else if(istype(pack, /obj/item/reagent_containers/food/condiment/pack/chocolate))
+		else if(istype(pack, /obj/item/reagent_containers/condiment/pack/chocolate))
 			overlay_name = "condi_display_chocolate"
 
 		if(overlay_name && !(overlay_name in added_overlays))
@@ -701,13 +712,13 @@
 
 /obj/item/storage/fancy/coffee_condi_display/populate_contents()
 	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/food/condiment/pack/sugar(src)
+		new /obj/item/reagent_containers/condiment/pack/sugar(src)
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/food/condiment/pack/aspartame(src)
+		new /obj/item/reagent_containers/condiment/pack/aspartame(src)
 	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/food/condiment/pack/creamer(src)
+		new /obj/item/reagent_containers/condiment/pack/creamer(src)
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/food/condiment/pack/chocolate(src)
+		new /obj/item/reagent_containers/condiment/pack/chocolate(src)
 	update_appearance()
 
 /*

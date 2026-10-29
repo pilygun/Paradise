@@ -1,3 +1,5 @@
+#define DAMAGE_TO_SPRAY_BLOOD 10
+
 /mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(skipcatch || !isitem(AM))
 		return ..()
@@ -34,7 +36,7 @@
 /mob/living/carbon/water_act(volume, temperature, source, method = REAGENT_TOUCH)
 	. = ..()
 	if(volume > 10) // Anything over 10 volume will make the mob wetter.
-		wetlevel = min(wetlevel + 1,5)
+		adjust_wet_stacks(1)
 
 /mob/living/carbon/attackby(obj/item/item, mob/living/user, list/modifiers)
 	if(!length(surgeries) || user.a_intent != INTENT_HELP)
@@ -54,12 +56,10 @@
 		. = TRUE
 
 	for(var/datum/disease/virus/V in diseases)
-		if(V.spread_flags & CONTACT)
-			V.Contract(user, act_type = CONTACT, need_protection_check = TRUE, zone = user.hand ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND)
+		V.Contract(user, act_type = CONTACT, need_protection_check = TRUE, zone = user.hand ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND)
 
 	for(var/datum/disease/virus/V in user.diseases)
-		if(V.spread_flags & CONTACT)
-			V.Contract(src, act_type = CONTACT, need_protection_check = TRUE, zone = user.zone_selected)
+		V.Contract(src, act_type = CONTACT, need_protection_check = TRUE, zone = user.zone_selected)
 
 	if(body_position == LYING_DOWN && length(surgeries))
 		if(user.a_intent == INTENT_HELP)
@@ -105,8 +105,11 @@
 	var/armor = run_armor_check(def_zone, proj.flag, armour_penetration = proj.armour_penetration)
 	if(!proj.nodamage && !QDELETED(src))
 		apply_damage(proj.damage, proj.damage_type, def_zone, armor)
-		if(proj.damage_type == BRUTE && (!armor || prob(30) || proj.damage - armor >= 25))
-			spray_blood(get_dir(proj.starting, src), min(rand(1, max(1, floor((proj.damage - armor) / 10))), 5))
+		var/final_damage = proj.damage * ((100 - armor) / 100)
+		if(proj.damage_type == BRUTE && final_damage > DAMAGE_TO_SPRAY_BLOOD)
+			spray_blood(get_dir(proj.starting, src), min(rand(1, max(1, floor(final_damage / 10))), 5), final_damage)
 		if(proj.dismemberment)
 			check_projectile_dismemberment(proj, def_zone)
 	return proj.on_hit(src, armor, def_zone)
+
+#undef DAMAGE_TO_SPRAY_BLOOD

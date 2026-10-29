@@ -153,7 +153,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/g
 	var/datum/snake_fashion/snake_fashion = null
 
 	/// UID of a /mob that threw the item.
-	var/thrownby
+	var/datum/weakref/thrownby = null
 
 	/// So items can have custom embedd values
 	/// Because customisation is king
@@ -171,6 +171,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/g
 	/// A time in ticks, multiplied by the w_class.
 	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME
 	var/embedded_ignore_throwspeed_threshold = FALSE
+	/// If our item actually embeds into human
+	var/can_actually_embed = TRUE
 
 	/// What kind of tool are we?
 	var/tool_behaviour = NONE
@@ -569,23 +571,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/g
 	//if(anchored)
 	//	return
 
-	if(loc == user)
-		if(!allow_attack_hand_drop(user))
-			return
-
-		// inventory unequip delay
-		if(equip_delay_self > 0 && !user.is_general_slot(user.get_slot_by_item(src)))
-			user.visible_message(
-				span_notice("[user] начинает снимать [declent_ru(ACCUSATIVE)]..."),
-				span_notice("Вы начинаете снимать [declent_ru(ACCUSATIVE)]..."),
-			)
-			if(!do_after(user, equip_delay_self, user, timed_action_flags = (DA_IGNORE_LYING|DA_IGNORE_USER_LOC_CHANGE), max_interact_count = 1, cancel_on_max = TRUE, cancel_message = span_warning("Снятие [declent_ru(GENITIVE)] было прервано!")))
-				return
-
-		if(!user.temporarily_remove_item_from_inventory(src, silent = FALSE))
-			return
-
-	else if(isliving(loc))
+	if(!can_pickup(user))
 		return
 
 	. = pickup(user)
@@ -595,6 +581,31 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/g
 		return FALSE
 
 	add_fingerprint(user)
+
+/obj/item/proc/can_pickup(mob/user)
+	if(HAS_TRAIT(user, TRAIT_I_WANT_BRAINS))
+		return FALSE
+
+	if(loc == user)
+		if(!allow_attack_hand_drop(user))
+			return FALSE
+
+		// inventory unequip delay
+		if(equip_delay_self > 0 && !user.is_general_slot(user.get_slot_by_item(src)))
+			user.visible_message(
+				span_notice("[user] начинает снимать [declent_ru(ACCUSATIVE)]..."),
+				span_notice("Вы начинаете снимать [declent_ru(ACCUSATIVE)]..."),
+			)
+			if(!do_after(user, equip_delay_self, user, timed_action_flags = (DA_IGNORE_LYING|DA_IGNORE_USER_LOC_CHANGE), max_interact_count = 1, cancel_on_max = TRUE, cancel_message = span_warning("Снятие [declent_ru(GENITIVE)] было прервано!")))
+				return FALSE
+
+		if(!user.temporarily_remove_item_from_inventory(src, silent = FALSE))
+			return FALSE
+
+	else if(isliving(loc))
+		return FALSE
+
+	return TRUE
 
 /**
  * If we want to stop manual unequipping of item by hands, but only for user himself (almost NODROP)
@@ -694,8 +705,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/g
 		final_block_chance = 0
 	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, owner, hitby, damage, attack_type)
 	var/block_successful = (signal_result & COMPONENT_BLOCK_SUCCESSFUL) || prob(final_block_chance)
+	if((signal_result & COMPONENT_BLOCK_PERFECT) && attack_type == ITEM_ATTACK)
+		owner.visible_message(span_danger("[owner] контратаку[PLUR_ET_YUT(owner)] [attack_text] с помощью [declent_ru(GENITIVE)]!"))
+		return HIT_RESULT_PARRY
 	if(block_successful)
-		owner.visible_message(span_danger("[owner] блокиру[PLUR_ET_YUT(owner)] [attack_text] с помощью [declent_ru(GENITIVE)]!"), projectile_message = (attack_type == PROJECTILE_ATTACK))
+		owner.visible_message(span_danger("[owner] блокиру[PLUR_ET_YUT(owner)] [attack_text] с помощью [declent_ru(GENITIVE)]!"))
 		return signal_result || block_successful
 	return HIT_RESULT_FAILED
 
@@ -957,9 +971,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/g
 /obj/item/proc/mob_can_equip(mob/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, bypass_obscured = FALSE, bypass_incapacitated = FALSE)
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, bypass_obscured, bypass_incapacitated)
 
-/obj/item/verb/verb_pickup()
-	set src in oview(1)
-	set name = "Pick up"
+GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", VERB_CATEGORY_HIDDEN)
 
 	if(usr.incapacitated() || !isturf(loc) || !Adjacent(usr))
 		return
@@ -982,7 +994,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/g
  * This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
  */
 /obj/item/proc/IsReflect(def_zone)
-	return FALSE
+	return REFLECT_NOTHING
 
 /obj/item/proc/get_loc_turf()
 	var/atom/L = loc
@@ -1067,7 +1079,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/g
 	if(QDELETED(hit_atom))
 		return
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
+	if(signal_result & COMPONENT_MOVABLE_IMPACT_NEVERMIND)
+		return
 
 	var/itempush = TRUE
 	if(w_class < WEIGHT_CLASS_BULKY)
@@ -1571,3 +1585,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/g
 	if(ismob(loc))
 		var/mob/mob_loc = loc
 		mob_loc.update_clothing(slot_flags)
+
+/obj/item/proc/on_human_ebedded(/mob/living/carbon/human/our_target)
+	return

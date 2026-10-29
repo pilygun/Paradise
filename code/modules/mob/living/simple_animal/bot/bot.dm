@@ -528,6 +528,9 @@
 	return ..()
 
 /mob/living/simple_animal/bot/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/was_on = on
 	stat |= EMPED
 	var/obj/effect/overlay/pulse2 = new/obj/effect/overlay(loc)
@@ -1211,9 +1214,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 /mob/living/simple_animal/bot/sentience_act()
 	faction -= "silicon"
 
-/mob/living/simple_animal/bot/verb/show_laws()
-	set name = "Набор законов"
-	set category = VERB_CATEGORY_IC
+GAME_VERB(/mob/living/simple_animal/bot, show_laws, "Набор законов", VERB_CATEGORY_IC)
 
 	to_chat(src, "<b>Набор законов:</b>")
 	if(paicard?.pai && paicard.pai.master && paicard.pai.pai_law0)
@@ -1269,7 +1270,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 		hud.remove_atom_from_hud(src)
 
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
-	QDEL_LIST(path_images)
+	LAZYCLEARLIST(path_images)
 	if(newpath)
 		for(var/i in 1 to length(newpath))
 			var/turf/T = newpath[i]
@@ -1320,22 +1321,22 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 /mob/living/simple_animal/bot/proc/drop_part(obj/item/drop_item, dropzone)
 	new drop_item(dropzone)
 
-/obj/effect/proc_holder/spell/bot_speed
+/datum/action/cooldown/spell/bot_speed
 	name = "Speed Charge"
 	desc = "На некоторое время ускоряет работу внутренних систем робота."
-	action_icon_state = "adrenal-bot"
-	base_cooldown = 300 SECONDS
-	clothes_req = FALSE
-	human_req = FALSE
+	button_icon_state = "adrenal-bot"
+	cooldown_time = 300 SECONDS
+	spell_requirements = NONE
 
-/obj/effect/proc_holder/spell/bot_speed/create_new_targeting()
-	return new /datum/spell_targeting/self
+/datum/action/cooldown/spell/bot_speed/can_cast_spell(feedback)
+	return ..() && isbot(owner)
 
-/obj/effect/proc_holder/spell/bot_speed/cast(list/targets, mob/user = usr)
-	for(var/mob/living/simple_animal/bot/bot in targets)
-		bot.set_varspeed(0.1)
-		balloon_alert(src, "вы ускоряетесь")
-		addtimer(CALLBACK(bot, TYPE_PROC_REF(/mob/living/simple_animal/bot, reset_speed)), 45 SECONDS)
+/datum/action/cooldown/spell/bot_speed/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/simple_animal/bot/bot = cast_on
+	bot.set_varspeed(0.1)
+	bot.balloon_alert(bot, "вы ускоряетесь")
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/simple_animal/bot, reset_speed)), 45 SECONDS)
 
 /mob/living/simple_animal/bot/proc/reset_speed()
 	if(QDELETED(src))

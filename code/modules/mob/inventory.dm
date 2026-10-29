@@ -26,9 +26,7 @@
 /**
  * This proc is called whenever mob's client presses 'equip_held_object' hotkey
  */
-/mob/verb/quick_equip()
-	set name = "quick-equip"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/mob, quick_equip, "quick-equip")
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_quick_equip)))
 
@@ -299,6 +297,10 @@
  * Nonliving mobs don't have hands
  */
 /mob/proc/put_in_hand_check(obj/item/I, hand_id)
+	if(!istype(I) || QDELETED(I))
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_ABSTRACT_HANDS) && !(I.flags & ABSTRACT))
+		return FALSE
 	return FALSE
 
 /**
@@ -758,3 +760,11 @@
 	for(var/obj/item/implant/storage/internal_bag in contents)
 		belongings += internal_bag.contents
 	return belongings
+
+//Checks if we're holding an item of type: typepath
+/mob/proc/is_holding_item_of_type(typepath)
+	. = FALSE
+	if(istype(l_hand, typepath))
+		return l_hand
+	if(istype(r_hand, typepath))
+		return r_hand

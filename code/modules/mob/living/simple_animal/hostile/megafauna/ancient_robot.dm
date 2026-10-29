@@ -176,18 +176,18 @@ Difficulty: Very Hard
 		return
 
 	armour_penetration = 66
-	TL.armour_penetration = 66
-	TR.armour_penetration = 66
-	BL.armour_penetration = 66
-	BR.armour_penetration = 66
+	TL?.armour_penetration = 66
+	TR?.armour_penetration = 66
+	BL?.armour_penetration = 66
+	BR?.armour_penetration = 66
 
 /mob/living/simple_animal/hostile/megafauna/ancient_robot/unrage()
 	. = ..()
 	armour_penetration = 50
-	TL.armour_penetration = 50
-	TR.armour_penetration = 50
-	BL.armour_penetration = 50
-	BR.armour_penetration = 50
+	TL?.armour_penetration = 50
+	TR?.armour_penetration = 50
+	BL?.armour_penetration = 50
+	BR?.armour_penetration = 50
 
 /mob/living/simple_animal/hostile/megafauna/ancient_robot/OpenFire()
 	if(charging)
@@ -321,7 +321,7 @@ Difficulty: Very Hard
 	if(!body_shield_enabled)
 		return ..()
 	do_sparks(2, TRUE, src)
-	visible_message(span_danger("Щит [declent_ru(ACCUSATIVE)] отражает [P.declent_ru(ACCUSATIVE)] с искрами!"), span_userdanger("Вы отражаете снаряд!"), projectile_message = TRUE)
+	visible_message(span_danger("Щит [declent_ru(ACCUSATIVE)] отражает [P.declent_ru(ACCUSATIVE)] с искрами!"), span_userdanger("Вы отражаете снаряд!"))
 	if(P.damage)
 		disable_shield()
 

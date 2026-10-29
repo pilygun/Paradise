@@ -855,20 +855,45 @@
 /datum/language/angel/format_message(message, mob/speaker)
 	return span_message("<span class='[get_spans(speaker)]'>[message]</span>")
 
+/datum/language/zombie
+	name = LANGUAGE_ZOMBIE
+	desc = "Стонущий язык плотоядных зомби. Мозгииии..."
+	speech_verbs = list("стона%(ет,ют)%")
+	ask_verbs = list("стона%(ет,ют)%")
+	exclaim_verbs = list("кричи%(ет,ют)%")
+	colour = "zombie"
+	key = "zz"
+	flags = RESTRICTED | NOBABEL
+	syllables = list("Мозги", "Мозгииии", "Плоть", "Гррр", "Хннг", "Мооозги", "Мооозгиии")
+	english_names = TRUE
+
+/datum/language/zombie/scramble(input)
+	var/terminator = "..."
+	if(!length(input))
+		return "[pick(syllables)][terminator]"
+
+	var/last_letter = copytext(input, length(input))
+	if(last_letter in list("?", "!"))
+		terminator = last_letter
+
+	if(prob(90) || !length(input))
+		return "[pick(syllables)][terminator]"
+	return "[copytext_char(input, 1, min(7, length(input)))][terminator]"
+
 // Can we speak this language, as opposed to just understanding it?
 /mob/proc/can_speak_language(datum/language/speaking)
 	return universal_speak || (speaking == GLOB.all_languages[LANGUAGE_NOISE]) || LAZYIN(languages, speaking)
 
 //TBD
 /mob/proc/check_lang_data()
-	. = ""
+	. = list()
 
 	for(var/datum/language/L in languages)
 		if(!(L.flags & NONGLOBAL))
 			. += "<b>[L.name] (:[L.key])</b><br/>[L.desc]<br><br>"
 
 /mob/living/check_lang_data()
-	. = ""
+	. = list()
 
 	if(default_language)
 		. += "Текущий язык по умолчанию: [default_language] - <a href='byond://?src=[UID()];default_lang=reset'>Сброс</a><br><br>"
@@ -880,13 +905,10 @@
 			else
 				. += "<b>[L.name] (:[L.key])</b> - <a href=\"byond://?src=[UID()];default_lang=[L.name]\">По умолчанию</a><br>[L.desc]<br><br>"
 
-/mob/verb/check_languages()
-	set name = "Меню языков"
-	set category = VERB_CATEGORY_IC
-	set src = usr
+GAME_VERB(/mob, check_languages, "Меню языков", VERB_CATEGORY_IC)
 
 	var/datum/browser/popup = new(src, "checklanguage", "Меню языков", 420, 470)
-	popup.set_content(check_lang_data())
+	popup.set_content(jointext(check_lang_data(), ""))
 	popup.open()
 
 /mob/living/Topic(href, href_list)
@@ -904,13 +926,16 @@
 		return TRUE
 
 // Language handling.
-/mob/proc/add_language(language_name)
+/mob/proc/add_language(language_name, force)
 	var/result_flags = SEND_SIGNAL(src, COMSIG_LANG_PRE_ACT, language_name)
 	if(SEND_SIGNAL(src, COMSIG_MOB_LANGUAGE_ADD, language_name, result_flags) & DISEASE_MOB_LANGUAGE_PROCESSED)
 		return TRUE
 
 	var/datum/language/new_language = GLOB.all_languages[language_name]
 	if(new_language in languages)
+		return FALSE
+
+	if(HAS_TRAIT(src, TRAIT_LANGUAGE_LOCKED) && !force)
 		return FALSE
 
 	if(!istype(new_language))
@@ -922,10 +947,13 @@
 	if(.)
 		LAZYADD(languages, new_language)
 
-/mob/proc/remove_language(language_name)
+/mob/proc/remove_language(language_name, force)
 	var/result_flags = SEND_SIGNAL(src, COMSIG_LANG_PRE_ACT, language_name)
 	if(SEND_SIGNAL(src, COMSIG_MOB_LANGUAGE_REMOVE, language_name, result_flags) & DISEASE_MOB_LANGUAGE_PROCESSED)
 		return TRUE
+
+	if(HAS_TRAIT(src, TRAIT_LANGUAGE_LOCKED) && !force)
+		return FALSE
 
 	var/datum/language/rem_language = GLOB.all_languages[language_name]
 	if(!istype(rem_language))

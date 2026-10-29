@@ -19,6 +19,34 @@
 		var/obj/O = target
 		if(ismecha(O) || isspacepod(O)) //no fun allowed
 			return FALSE
+
+		if(istype(target, /obj/machinery/atmospherics/reactor_chamber))
+			var/obj/machinery/atmospherics/reactor_chamber/chamber = target
+			if(chamber.chamber_state != CHAMBER_OPEN) // we need to handle this a bit special
+				chamber.attack_hand(chassis.occupant)
+				return FALSE
+			if(chamber.held_rod)
+				if(length(chassis.cargo) >= chassis.cargo_capacity)
+					occupant_message(span_warning("Not enough room in the cargo compartment!"))
+					return FALSE
+				chamber.held_rod.add_hiddenprint(chassis.occupant)
+				chassis.visible_message(span_notice("[chassis] lifts [target] and starts to load it into the cargo compartment."))
+				LAZYADD(chassis.cargo,  chamber.held_rod)
+				chamber.held_rod.forceMove(chassis)
+				chamber.held_rod = null
+				playsound(chamber.loc, 'sound/machines/podopen.ogg', 50, 1)
+				chamber.update_icon(UPDATE_OVERLAYS)
+				return FALSE
+
+			for(var/obj/item/nuclear_rod/rod in chassis.cargo)
+				rod.add_hiddenprint(chassis.occupant)
+				chamber.held_rod = rod
+				rod.forceMove(chamber)
+				LAZYREMOVE(chassis.cargo, rod)
+				playsound(chamber.loc, 'sound/machines/podclose.ogg', 50, 1)
+				chamber.update_icon(UPDATE_OVERLAYS)
+				return FALSE
+
 		if(!O.anchored)
 			if(length(chassis.cargo) < chassis.cargo_capacity)
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
@@ -339,7 +367,10 @@
 
 /obj/item/mecha_parts/mecha_equipment/multimodule/handle_ui_act(action, list/params)
 	if(action == "switch_module")
-		targeted_module = locateUID(params["module"])
+		var/obj/item/mecha_parts/mecha_equipment/new_module = locateUID(params["module"])
+		if(!istype(new_module) || modules[new_module.type] != new_module)
+			return FALSE
+		targeted_module = new_module
 		occupant_message("Switched to [targeted_module]")
 		return TRUE
 
@@ -348,7 +379,7 @@
 /obj/item/mecha_parts/mecha_equipment/multimodule/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bible))
 		var/obj/item/mecha_parts/mecha_equipment/extinguisher/extinguisher = locate() in src
-		if(extinguisher?.reagents && user.mind?.isholy)
+		if(extinguisher?.reagents && user.mind && HAS_MIND_TRAIT(user, TRAIT_HOLY))
 			var/obj/item/storage/bible/bible = I
 			bible.add_holy_water(user, extinguisher)
 			return ATTACK_CHAIN_PROCEED
@@ -466,33 +497,17 @@
 	var/turf/new_turf = get_turf(M)
 	if(equip_ready || !istype(new_turf) || !dismantleFloor(new_turf))
 		return reset()
-	var/fdirn = turn(Dir, 180)
 	for(var/obj/structure/cable/LC in new_turf)		// check to make sure there's not a cable there already
-		if(LC.d1 == fdirn || LC.d2 == fdirn)
-			return reset()
+		return reset()
 	if(!use_cable(1))
 		return reset()
 	var/obj/structure/cable/NC = new(new_turf)
-	NC.cable_color("red")
-	NC.d1 = 0
-	NC.d2 = fdirn
+	NC.cable_color(CABLE_HEX_COLOR_RED)
 	NC.update_icon(UPDATE_ICON_STATE)
 
-	var/datum/powernet/PN
-	if(last_piece && last_piece.d2 != Dir)
-		last_piece.d1 = min(last_piece.d2, Dir)
-		last_piece.d2 = max(last_piece.d2, Dir)
-		last_piece.update_icon(UPDATE_ICON_STATE)
-		PN = last_piece.powernet
-
-	if(!PN)
-		PN = new()
-	NC.powernet = PN
-	PN.cables += NC
-	NC.mergeConnectedNetworks(NC.d2)
+	NC.mergeConnectedNetworks(NC)
 
 	//NC.mergeConnectedNetworksOnTurf()
-	last_piece = NC
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher
@@ -699,7 +714,10 @@
 
 /obj/item/mecha_parts/mecha_equipment/eng_toolset/handle_ui_act(action, list/params)
 	if(action == "change_tool")
-		selected_item = locateUID(params["selected_item"])
+		var/obj/item/new_item = locateUID(params["selected_item"])
+		if(!(new_item in items_list))
+			return FALSE
+		selected_item = new_item
 		occupant_message("Switched to [selected_item]")
 		return TRUE
 

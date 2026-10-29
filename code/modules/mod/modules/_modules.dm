@@ -111,7 +111,7 @@
 			var/list/slot_list = parse_slot_flags(slot)
 			slot_strings += russian_list(slot_list, and_text = " или ")
 		. += span_notice("Совместимые элементы МЭК: <b>[russian_list(slot_strings)]</b>")
-	. += span_notice("Стоимость модуля: <b>[complexity]</b> единиц[declension_ru(complexity, "а", "ы", "")].")
+	. += span_notice("Стоимость модуля: <b>[complexity]</b> единиц[DECL_A_Y_0(complexity)].")
 
 /// Looks through the MODsuit's parts to see if it has the parts required to support this module
 /obj/item/mod/module/proc/has_required_parts(list/parts, need_active = FALSE)
@@ -277,7 +277,7 @@
 /obj/item/mod/module/proc/on_special_click(mob/source, atom/target)
 	SIGNAL_HANDLER
 
-	on_select_use(target)
+	INVOKE_ASYNC(src, PROC_REF(on_select_use), target)
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Called on the MODsuit's process

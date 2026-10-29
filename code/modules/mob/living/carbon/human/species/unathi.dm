@@ -1,6 +1,7 @@
 /datum/species/unathi
 	name = SPECIES_UNATHI
 	name_plural = "Unathi"
+	ru_genitive = "унатха"
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
 	language = LANGUAGE_UNATHI
@@ -126,14 +127,6 @@
 
 /datum/species/unathi/on_species_gain(mob/living/carbon/human/H)
 	. = ..()
-	add_verb(H, list(
-		/mob/living/carbon/human/proc/emote_wag,
-		/mob/living/carbon/human/proc/emote_swag,
-		/mob/living/carbon/human/proc/emote_hiss_unathi,
-		/mob/living/carbon/human/proc/emote_roar,
-		/mob/living/carbon/human/proc/emote_threat,
-		/mob/living/carbon/human/proc/emote_whip,
-		/mob/living/carbon/human/proc/emote_whip_l))
 	var/datum/action/innate/tail_cut/lash = locate() in H.actions
 	if(!lash)
 		lash = new
@@ -144,14 +137,6 @@
 
 /datum/species/unathi/on_species_loss(mob/living/carbon/human/H)
 	. = ..()
-	remove_verb(H, list(
-		/mob/living/carbon/human/proc/emote_wag,
-		/mob/living/carbon/human/proc/emote_swag,
-		/mob/living/carbon/human/proc/emote_hiss_unathi,
-		/mob/living/carbon/human/proc/emote_roar,
-		/mob/living/carbon/human/proc/emote_threat,
-		/mob/living/carbon/human/proc/emote_whip,
-		/mob/living/carbon/human/proc/emote_whip_l))
 	var/datum/action/innate/tail_cut/lash = locate() in H.actions
 	lash?.Remove(H)
 
@@ -257,9 +242,9 @@
 
 /datum/species/unathi/ashwalker/shaman/on_species_gain(mob/living/carbon/human/owner)
 	. = ..()
-	var/obj/effect/proc_holder/spell/touch/healtouch/healtouch = locate() in owner.mob_spell_list
-	if(!healtouch)
-		owner.AddSpell(new /obj/effect/proc_holder/spell/touch/healtouch)
+	var/datum/action/cooldown/spell/touch/healtouch/shaman/spell = locate() in owner.mob_spell_list
+	if(!spell)
+		owner.AddSpell(new /datum/action/cooldown/spell/touch/healtouch/shaman)
 	var/datum/action/innate/shaman_gps/finder = locate() in owner.actions
 	if(!finder)
 		finder = new
@@ -271,7 +256,7 @@
 
 /datum/species/unathi/ashwalker/shaman/on_species_loss(mob/living/carbon/human/owner)
 	. = ..()
-	owner.RemoveSpell(/obj/effect/proc_holder/spell/touch/healtouch)
+	owner.RemoveSpell(/datum/action/cooldown/spell/touch/healtouch/shaman)
 	var/datum/action/innate/shaman_gps/finder = locate() in owner.actions
 	if(finder)
 		finder.Remove(owner)
@@ -347,7 +332,7 @@ They're basically just lizards with all-around marginally better stats and fire 
 /datum/action/innate/ignite_unathi/Activate()
 	var/mob/living/carbon/human/user = owner
 	if(world.time <= cooldown)
-		to_chat(user, span_warning("Ваша пасть болит из-за прошлой попытки. Подождите [round((cooldown - world.time) / 10)] секунд[DECL_SEC_MIN(round((cooldown - world.time) / 10))] и попробуйте ещё раз"))
+		to_chat(user, span_warning("Ваша пасть болит из-за прошлой попытки. Подождите [round((cooldown - world.time) / 10)] секунд[DECL_U_Y_0(round((cooldown - world.time) / 10))] и попробуйте ещё раз"))
 		return
 	if((user.head?.flags_cover & HEADCOVERSMOUTH) || (user.wear_mask?.flags_cover & MASKCOVERSMOUTH) && !user.wear_mask?.up)
 		user.balloon_alert(user, "ваша пасть закрыта!")

@@ -60,6 +60,8 @@
 #define RICOCHET_HARD (1<<1)
 /// If the thing can reflect ballistic bullets with low chance
 #define RICOCHET_BALLISTIC (1<<2)
+/// If the thing can reflect special weapons type
+#define RICOCHET_SPECIAL (1<<3)
 
 //Reagent flags
 #define REAGENT_NOREACT 1
@@ -162,6 +164,8 @@
 #define DF_VAR_EDITED (1<<1)
 #define DF_ISPROCESSING (1<<2)
 #define DF_UID_INVALID (1<<3)
+/// Set on datums that should be tracked by the event logger.
+#define DF_EVLOGGING (1<<4)
 
 //TURF FLAGS
 /// If a turf cant be jaunted through.
@@ -245,6 +249,11 @@
 #define GROSS (1<<11)
 #define TOXIC (1<<12)
 
+///Food preference enums
+#define FOOD_LIKED 1
+#define FOOD_DISLIKED 2
+#define FOOD_TOXIC 3
+
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 GLOBAL_LIST_INIT(more_bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288))
 
@@ -319,3 +328,19 @@ GLOBAL_LIST_INIT(more_bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024
 		REMOVE_TRAIT(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL);\
 	else if(!HAS_TRAIT(x, TRAIT_KEEP_TOGETHER))\
 		x.appearance_flags &= ~KEEP_TOGETHER
+
+//gun flags
+#define GUN_AMMO_COUNTER (1<<0)
+
+//EMP flags
+///Object will protect itself.
+#define EMP_PROTECT_SELF (1<<0)
+///Object will protect its contents from being EMPed.
+#define EMP_PROTECT_CONTENTS (1<<1)
+///Object will protect its wiring from being EMPed.
+#define EMP_PROTECT_WIRES (1<<2)
+///Don't indicate EMP protection in object examine text.
+#define EMP_NO_EXAMINE (1<<3)
+
+///Protects against all EMP types.
+#define EMP_PROTECT_ALL (EMP_PROTECT_SELF | EMP_PROTECT_CONTENTS | EMP_PROTECT_WIRES)

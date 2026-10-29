@@ -409,3 +409,27 @@
 /datum/gear/uniform/dress50s
 	index_name = "old Soviet dress"
 	path = /obj/item/clothing/under/dress50s
+
+/datum/gear/uniform/bandit_uniform
+	index_name = "bandit uniform"
+	path = /obj/item/clothing/under/bandit
+
+/datum/gear/uniform/goon_uniform
+	index_name = "goon uniform"
+	path = /obj/item/clothing/under/goon
+
+/datum/gear/uniform/gopnik_uniform
+	index_name = "gopnik uniform"
+	path = /obj/item/clothing/under/gopnik
+
+/datum/gear/uniform/chainsmoker
+	index_name = "chainsmoker uniform"
+	path = /obj/item/clothing/under/chainsmoker
+
+/datum/gear/uniform/male_club_uniform
+	index_name = "male club uniform"
+	path = /obj/item/clothing/under/maleclub
+
+/datum/gear/uniform/girl_club_uniform
+	index_name = "girl club uniform"
+	path = /obj/item/clothing/under/girlclub

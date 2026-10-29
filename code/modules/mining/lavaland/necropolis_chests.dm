@@ -81,13 +81,13 @@
 					new /obj/item/clothing/suit/space/hardsuit/champion(src)
 				if(2)
 					new /obj/item/clothing/suit/space/hardsuit/champion/templar(src)
-					new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
+					new /obj/item/reagent_containers/cup/glass/bottle/holywater/hell(src)
 				if(3)
 					new /obj/item/clothing/suit/space/hardsuit/champion/templar/premium(src)
-					new /obj/item/reagent_containers/food/drinks/bottle/holywater(src)
+					new /obj/item/reagent_containers/cup/glass/bottle/holywater(src)
 				if(4)
 					new /obj/item/clothing/suit/space/hardsuit/champion/inquisitor(src)
-					new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
+					new /obj/item/reagent_containers/cup/glass/bottle/holywater/hell(src)
 		if(25)
 			new /obj/item/eflowers(src)
 		if(26)
@@ -413,6 +413,7 @@
 	contents = newlist(/obj/item/cursed_katana)
 	sound_on = 'sound/weapons/swings/katana_swing4.ogg'
 	sound_off = 'sound/weapons/swings/katana_swing4.ogg'
+	emp_proof = TRUE
 
 /obj/item/organ/internal/cyberimp/arm/katana/get_ru_names()
 	return alist(
@@ -435,9 +436,6 @@
 
 	user.drop_item_ground(src, force = TRUE, silent = TRUE)
 	insert(user)
-
-/obj/item/organ/internal/cyberimp/arm/katana/emp_act() //Organic, no emp stuff
-	return
 
 /obj/item/organ/internal/cyberimp/arm/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item

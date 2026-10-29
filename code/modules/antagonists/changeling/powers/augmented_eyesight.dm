@@ -5,30 +5,39 @@
 	dna_cost = 1
 	button_icon_state = "augmented_eyesight"
 	power_type = CHANGELING_PURCHASABLE_POWER
+	var/obj/item/organ/internal/cyberimp/eyes/shield/ling/eyes = new(null)
 
 /datum/action/changeling/augmented_eyesight/on_purchase(mob/user, /datum/antagonist/changeling/antag)
 	if(!..())
 		return FALSE
 
-	var/obj/item/organ/internal/cyberimp/eyes/shield/ling/eyes = new(null)
 	eyes.insert(user)
 
 /datum/action/changeling/augmented_eyesight/sting_action(mob/living/carbon/user)
 	if(!istype(user))
 		return FALSE
 
-	var/obj/item/organ/internal/cyberimp/eyes/eyes
+	delete_organ_item()
+
 	if(active)
 		eyes = new /obj/item/organ/internal/cyberimp/eyes/shield/ling(null)
 		user.balloon_alert(user, "защитные мембраны")
 		active = FALSE
 	else
-		eyes = new /obj/item/organ/internal/cyberimp/eyes/thermals/ling(null)
+		eyes = new /obj/item/organ/internal/cyberimp/eyes/thermals/empproof/ling(null)
 		user.balloon_alert(user, "тепловые рецепторы")
 		active = TRUE
 
 	eyes.insert(user)
 	return TRUE
+
+/datum/action/changeling/augmented_eyesight/Remove(mob/user)
+	delete_organ_item()
+	return ..()
+
+/datum/action/changeling/augmented_eyesight/proc/delete_organ_item(mob/living/carbon/user)
+	var/obj/item/thing = eyes.remove(user)
+	qdel(thing)
 
 /obj/item/organ/internal/cyberimp/eyes/shield/ling
 	name = "protective membranes"
@@ -48,9 +57,6 @@
 		INSTRUMENTAL = "защитными мембранами",
 		PREPOSITIONAL = "защитных мембранах",
 	)
-
-/obj/item/organ/internal/cyberimp/eyes/shield/ling/emp_act(severity)
-	return
 
 /obj/item/organ/internal/cyberimp/eyes/shield/ling/on_life()
 	if(!QDELETED(owner))
@@ -74,7 +80,7 @@
 	object.reagents.add_reagent("oculine", 15)
 	return object
 
-/obj/item/organ/internal/cyberimp/eyes/thermals/ling
+/obj/item/organ/internal/cyberimp/eyes/thermals/empproof/ling
 	name = "heat receptors"
 	desc = "Эти тепловые рецепторы повысят вашу чувствительность к световому и тепловому излучению."
 	icon_state = "ling_thermal"
@@ -84,7 +90,7 @@
 	status = NONE
 	aug_message = "Рецепторы фокусируются и позволяют нам лучше видеть в темноте и сквозь препятствия."
 
-/obj/item/organ/internal/cyberimp/eyes/thermals/ling/get_ru_names()
+/obj/item/organ/internal/cyberimp/eyes/thermals/empproof/ling/get_ru_names()
 	return alist(
 		NOMINATIVE = "тепловые рецепторы",
 		GENITIVE = "тепловых рецепторов",
@@ -94,10 +100,7 @@
 		PREPOSITIONAL = "тепловых рецепторах",
 	)
 
-/obj/item/organ/internal/cyberimp/eyes/thermals/ling/emp_act(severity)
-	return
-
-/obj/item/organ/internal/cyberimp/eyes/thermals/ling/insert(mob/living/carbon/M, special = ORGAN_MANIPULATION_DEFAULT)
+/obj/item/organ/internal/cyberimp/eyes/thermals/empproof/ling/insert(mob/living/carbon/M, special = ORGAN_MANIPULATION_DEFAULT)
 	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/h_owner = owner
@@ -105,7 +108,7 @@
 		if(!h_owner.vision_type)
 			h_owner.set_vision_override(/datum/vision_override/nightvision)
 
-/obj/item/organ/internal/cyberimp/eyes/thermals/ling/remove(mob/living/carbon/M, special = ORGAN_MANIPULATION_DEFAULT)
+/obj/item/organ/internal/cyberimp/eyes/thermals/empproof/ling/remove(mob/living/carbon/M, special = ORGAN_MANIPULATION_DEFAULT)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/h_owner = owner
 		h_owner.weakeyes = FALSE

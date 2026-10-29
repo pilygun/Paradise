@@ -166,8 +166,6 @@
 		var/mob/living/carbon/C = AM
 		if(blood_data["diseases"])
 			for(var/datum/disease/virus/V in blood_data["diseases"])
-				if(V.spread_flags < BLOOD)
-					continue
 				V.Contract(C)
 		if(blood_id == C.get_blood_id() && !HAS_TRAIT(C, TRAIT_NO_BLOOD_RESTORE))//both mobs have the same blood substance
 			if(blood_id == "blood") //normal blood
@@ -394,8 +392,9 @@
  * Arguments:
  * * splatter_direction: Which direction the blood is flying
  * * splatter_strength: How many tiles it can go, and how many items it can pass over and dirty
+ * * damage_dealt: The final damage dealt to the mob (after armor), used to determine blood effects
  */
-/mob/living/proc/spray_blood(splatter_direction, splatter_strength = 3)
+/mob/living/proc/spray_blood(splatter_direction, splatter_strength = 3, damage_dealt = 0)
 	if(!isturf(loc))
 		return
 	var/splatter_color = get_blood_color()
@@ -406,6 +405,7 @@
 	our_splatter.blood_dna_info = get_blood_dna_list()
 	our_splatter.transfer_mob_blood_dna(src)
 	our_splatter.basecolor = splatter_color
+	our_splatter.damage_dealt = damage_dealt
 	our_splatter.update_appearance(UPDATE_ICON)
 	var/turf/target_turf = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(target_turf, splatter_strength)

@@ -24,9 +24,8 @@
 	explosion_block = 1
 	explosion_vertical_block = 1
 
-	flags_ricochet = RICOCHET_BALLISTIC
+	flags_ricochet = RICOCHET_BALLISTIC | RICOCHET_SPECIAL
 
-	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
 	var/melting = FALSE //TRUE if wall is currently being melted with thermite
@@ -207,6 +206,8 @@
 		return
 
 	if(mode == RPD_DISPOSALS_MODE && !our_rpd.ranged)
+		return
+	if(mode == RPD_LOGISTICS_MODE && !our_rpd.ranged)
 		return
 
 	return ..()

@@ -21,7 +21,7 @@
 			stack_trace("Mob [type] has improper ventcrawler_trait value.")
 
 	if(mobility_flags & MOBILITY_REST)
-		add_verb(src, /mob/living/proc/toggle_resting)
+		ASSIGN_GAME_VERB(src, /mob/living, toggle_resting)
 		if(!density)	// we want undense mobs to stay undense when they stop resting
 			ADD_TRAIT(src, TRAIT_UNDENSE, INNATE_TRAIT)
 
@@ -45,8 +45,6 @@
 		S.sharerDies(FALSE)
 		S.removeSoulsharer(src) //If a sharer is destroy()'d, they are simply removed
 	sharedSoullinks = null
-	if(ranged_ability)
-		ranged_ability.remove_ranged_ability(src)
 	remove_from_all_data_huds()
 	now_pushing = null
 	if(LAZYLEN(status_effects))
@@ -92,11 +90,7 @@
 	med_hud_set_status()
 
 /mob/living/ghostize(can_reenter_corpse = 1)
-	var/prev_client = client
 	. = ..()
-	if(.)
-		if(ranged_ability && prev_client)
-			ranged_ability.remove_mousepointer(prev_client)
 	SEND_SIGNAL(src, COMSIG_LIVING_GHOSTIZED)
 
 /mob/living/proc/OpenCraftingMenu()
@@ -104,11 +98,6 @@
 
 /mob/living/IsLying()
 	return body_position == LYING_DOWN
-
-/mob/living/canface()
-	if(!(mobility_flags & MOBILITY_MOVE))
-		return FALSE
-	return ..()
 
 /mob/living/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
 	if(!isopenspaceturf(impacted_turf))
@@ -227,12 +216,10 @@
 
 	// spread diseases
 	for(var/datum/disease/virus/virus in diseases)
-		if(virus.spread_flags & CONTACT)
-			virus.Contract(bumped_mob, act_type = CONTACT, need_protection_check = TRUE)
+		virus.Contract(bumped_mob, act_type = CONTACT, need_protection_check = TRUE)
 
 	for(var/datum/disease/virus/virus in bumped_mob.diseases)
-		if(virus.spread_flags & CONTACT)
-			virus.Contract(src, act_type = CONTACT, need_protection_check = TRUE)
+		virus.Contract(src, act_type = CONTACT, need_protection_check = TRUE)
 
 	if(bumped_mob.pulledby && bumped_mob.pulledby != src && HAS_TRAIT(bumped_mob, TRAIT_RESTRAINED))
 		if(!(world.time % 5))
@@ -518,7 +505,7 @@
 			return projectile_allow_through(mover, border_dir)
 		return TRUE
 	if(mover.throwing)
-		return body_position == LYING_DOWN || mover.throwing.thrower == src
+		return body_position == LYING_DOWN || mover.throwing.get_thrower() == src
 	if(pulling && pulling == mover && grab_state >= GRAB_NECK)	// pulled mob can step through us
 		return TRUE
 	if(buckled == mover)
@@ -585,18 +572,13 @@
 	update_pull_movespeed()
 	pullin?.update_icon(UPDATE_ICON_STATE)
 
-/mob/living/verb/stop_pulling1()
-	set name = "Прекратить тащить"
-	set category = VERB_CATEGORY_IC
-	stop_pulling()
-
 /mob/living/proc/stop_hand_bleedsuppress()
 	left_hand_bleed_suppress_lib = null
 	right_hand_bleed_suppress_lib = null
 	update_hands_HUD()
 
 //same as above
-/mob/living/pointed(atom/A as mob|obj|turf in view())
+/mob/living/pointed(atom/A)
 	if(incapacitated())
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_FAKEDEATH))
@@ -776,30 +758,48 @@
 	if(QDELETED(src))
 		return FALSE
 	rejuvenate()
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
 
-		if(C.handcuffed && !initial(C.handcuffed))
-			C.drop_item_ground(C.handcuffed, TRUE)
+/mob/living/carbon/revive()
+	if(reagents)
+		reagents.clear_reagents()
+		QDEL_LIST(reagents.addiction_list)
+		reagents.addiction_threshold_accumulated.Cut()
 
-		if(C.legcuffed && !initial(C.legcuffed))
-			C.drop_item_ground(C.legcuffed, TRUE)
+	if(iscultist(src))
+		if(SSticker.mode.cult_risen)
+			SSticker.mode.rise(src)
+		if(SSticker.mode.cult_ascendant)
+			SSticker.mode.ascend(src)
 
-		if(C.reagents)
-			C.reagents.clear_reagents()
-			QDEL_LIST(C.reagents.addiction_list)
-			C.reagents.addiction_threshold_accumulated.Cut()
-		if(iscultist(src))
-			if(SSticker.mode.cult_risen)
-				SSticker.mode.rise(src)
-			if(SSticker.mode.cult_ascendant)
-				SSticker.mode.ascend(src)
+	QDEL_LIST(processing_patches)
+	..()
 
-		QDEL_LIST(C.processing_patches)
+/mob/living/carbon/human/revive()
+	//Fix up all organs and replace lost ones.
+	check_and_regenerate_organs() //Regenerate limbs and organs only if they're really missing.
+
+	var/update_appearance = FALSE
+	if(remove_skeleton(update_appearance = FALSE))
+		update_appearance = TRUE
+	if(cure_husk(update_appearance = FALSE))
+		update_appearance = TRUE
+	if(update_appearance)
+		UpdateAppearance()
+	revive_no_clone_removal()
+
+	if(!client || !key) //Don't boot out anyone already in the mob.
+		for(var/obj/item/organ/internal/brain/H in world)
+			if(H.brainmob)
+				if(H.brainmob.real_name == src.real_name)
+					if(H.brainmob.mind)
+						H.brainmob.mind.transfer_to(src)
+						qdel(H)
+
+	..()
 
 // rejuvenate: Called by `revive` to get the mob into a revivable state
 // the admin "rejuvenate" command calls `revive`, not this proc.
-/mob/living/proc/rejuvenate()
+/mob/living/proc/rejuvenate(remove_disease = TRUE)
 	var/mob/living/carbon/human/human_mob = null //Get this declared for use later.
 
 	// shut down various types of badness
@@ -839,30 +839,12 @@
 	SetDeaf(0)
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
-	CureAllDiseases(FALSE)
-	fire_stacks = 0
-	fire_stacks = 0
-	on_fire = 0
+	if(remove_disease)
+		CureAllDiseases(FALSE)
 	suiciding = 0
 	if(buckled) //Unbuckle the mob and clear the alerts.
 		buckled.unbuckle_mob(src, force = TRUE)
 
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.uncuff()
-
-		for(var/thing in C.diseases)
-			var/datum/disease/D = thing
-			D.cure(need_immunity = FALSE)
-
-		// restore all of the human's blood and reset their shock stage
-		if(ishuman(src))
-			human_mob = src
-			human_mob.set_heartattack(FALSE)
-			human_mob.restore_blood()
-			human_mob.decaylevel = 0
-			human_mob.remove_all_embedded_objects()
-			human_mob.remove_all_parasites()
 	SEND_SIGNAL(src, COMSIG_LIVING_AHEAL)
 	restore_all_organs()
 	surgeries.Cut() //End all surgeries.
@@ -882,6 +864,17 @@
 		human_mob.update_dna()
 	return
 
+/mob/living/carbon/rejuvenate(remove_disease = TRUE)
+	. = ..()
+	uncuff()
+
+/mob/living/carbon/human/rejuvenate(remove_disease = TRUE)
+	. = ..()
+	set_heartattack(FALSE)
+	decaylevel = 0
+	remove_all_embedded_objects()
+	remove_all_parasites()
+
 /mob/living/proc/remove_CC()
 	SetWeakened(0)
 	SetStunned(0)
@@ -895,10 +888,7 @@
 /mob/living/proc/UpdateDamageIcon()
 	return
 
-/mob/living/proc/Examine_OOC()
-	set name = "Мета-инфа (OOC)"
-	set category = VERB_CATEGORY_OOC
-	set src in view()
+GAME_VERB_SRC(/mob/living, Examine_OOC, view(), "Мета-инфа (OOC)", VERB_CATEGORY_HIDDEN)
 
 	if(CONFIG_GET(flag/allow_metadata))
 		if(client)
@@ -1044,10 +1034,7 @@
 		return FALSE
 	return TRUE
 
-/mob/living/verb/resist()
-	set name = "Сопротивляться"
-	set category = VERB_CATEGORY_IC
-
+GAME_VERB(/mob/living, resist, "Сопротивляться", VERB_CATEGORY_IC)
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_resist)))
 
 ///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
@@ -1093,19 +1080,19 @@
 			if(vampire_grab)
 				. = vampire_grab.grab_resist_chances[MARTIAL_GRAB_AGGRESSIVE]
 			else
-				var/martial_override = grabber.mind?.martial_art?.get_resist_chance(GRAB_AGGRESSIVE)
+				var/martial_override = grabber.mind?.martial_art?.get_resist_chance(GRAB_AGGRESSIVE, grabber.pulling)
 				. = isnull(martial_override) ? GRAB_RESIST_CHANCE_AGGRESSIVE : martial_override
 		if(GRAB_NECK)
 			if(vampire_grab)
 				. = vampire_grab.grab_resist_chances[MARTIAL_GRAB_NECK]
 			else
-				var/martial_override = grabber.mind?.martial_art?.get_resist_chance(GRAB_NECK)
+				var/martial_override = grabber.mind?.martial_art?.get_resist_chance(GRAB_NECK, grabber.pulling)
 				. = isnull(martial_override) ? GRAB_RESIST_CHANCE_NECK : martial_override
 		if(GRAB_KILL)
 			if(vampire_grab)
 				. = vampire_grab.grab_resist_chances[MARTIAL_GRAB_KILL]
 			else
-				var/martial_override = grabber.mind?.martial_art?.get_resist_chance(GRAB_KILL)
+				var/martial_override = grabber.mind?.martial_art?.get_resist_chance(GRAB_KILL, grabber.pulling)
 				. = isnull(martial_override) ? GRAB_RESIST_CHANCE_KILL : martial_override
 	if(. > 0)
 		if(ishuman(src))
@@ -1590,12 +1577,10 @@
 
 			//Share diseases that are spread by touch
 			for(var/datum/disease/virus/virus in diseases)
-				if(virus.spread_flags & CONTACT)
-					virus.Contract(pulled_living, act_type = CONTACT, need_protection_check = TRUE, zone = zone_selected)
+				virus.Contract(pulled_living, act_type = CONTACT, need_protection_check = TRUE, zone = zone_selected)
 
 			for(var/datum/disease/virus/virus in pulled_living.diseases)
-				if(virus.spread_flags & CONTACT)
-					virus.Contract(src, act_type = CONTACT, need_protection_check = TRUE, zone = hand ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND)
+				virus.Contract(src, act_type = CONTACT, need_protection_check = TRUE, zone = hand ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND)
 
 			if(iscarbon(pulled_living) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
 				pulled_living.grabbedby(src)
@@ -1607,6 +1592,8 @@
 	update_pull_movespeed()
 
 /mob/living/proc/set_pull_offsets(mob/living/target, grab_state_to_offset = GRAB_PASSIVE, animate = TRUE)
+	if(HAS_TRAIT(target, TRAIT_FORCE_GRASPED))
+		return // Force Grab should not rotate or pixel-shift the victim.
 	if(target.buckled)
 		return //don't make them change direction or offset them if they're buckled into something.
 	var/offset = 0
@@ -1934,9 +1921,7 @@
 /mob/living/proc/get_transform_translation_size(value)
 	return (value-1) * get_cached_height() * 0.5
 
-/mob/living/proc/toggle_resting()
-	set name = "Лечь"
-	set category = VERB_CATEGORY_IC
+GAME_VERB_PROC(/mob/living, toggle_resting, "Лечь", VERB_CATEGORY_IC)
 
 	set_resting(!resting, silent = FALSE)
 
@@ -2137,10 +2122,10 @@
 
 	update_ssd_overlay()	// special SSD overlay handling
 
-/mob/living/verb/succumb()
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/mob/living, succumb, "succumb")
+	VERB_ARG(whispered, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 	// if you use the verb you better mean it
-	do_succumb(FALSE)
+	do_succumb(!whispered)
 
 /mob/living/proc/do_succumb(cancel_on_no_words)
 	if(stat == DEAD)
@@ -2190,19 +2175,19 @@
 
 /mob/living/magic_charge_act(mob/user)
 	if(LAZYLEN(mob_spell_list))
-		for(var/obj/effect/proc_holder/spell/spell as anything in mob_spell_list)
-			if(spell.cooldown_handler.is_on_cooldown())
+		for(var/datum/action/cooldown/spell/spell as anything in mob_spell_list)
+			if(spell.next_use_time >= world.time)
 				continue
 
-			spell.revert_cast()
+			spell.reset_spell_cooldown()
 			. |= RECHARGE_SUCCESSFUL
 
 	if(LAZYLEN(mind?.spell_list))
-		for(var/obj/effect/proc_holder/spell/spell as anything in mind?.spell_list)
-			if(spell.cooldown_handler.is_on_cooldown())
+		for(var/datum/action/cooldown/spell/spell as anything in mind?.spell_list)
+			if(spell.next_use_time >= world.time)
 				continue
 
-			spell.revert_cast()
+			spell.reset_spell_cooldown()
 			. |= RECHARGE_SUCCESSFUL
 
 	to_chat(src, span_notice("Вы чувствуете [(. & RECHARGE_SUCCESSFUL) ? "поток магической энергии, это приятно!" : "себя очень странно на мгновение, но это проходит."]"))
@@ -2419,3 +2404,15 @@
 
 /mob/living/proc/embed_item_inside(obj/item/thing, embedded_zone, silent = FALSE)
 	return
+
+/mob/living/proc/vomit(
+	lost_nutrition = VOMIT_NUTRITION_LOSS,
+	mode = NONE,
+	stun = VOMIT_STUN_TIME,
+	distance = VOMIT_DISTANCE,
+	message = TRUE
+)
+	return
+
+/mob/living/proc/check_brain_for_complex_interactions()
+	return getBrainLoss() < 60

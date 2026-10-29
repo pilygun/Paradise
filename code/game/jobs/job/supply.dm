@@ -31,6 +31,7 @@
 		/datum/skill/combat/fists = SKILL_LEVEL_BEGINNER,
 		/datum/skill/service/mining = SKILL_LEVEL_ADVANCED,
 	)
+	discount_skill_category = list(/datum/skill/general, /datum/skill/service/mining)
 
 /datum/outfit/job/qm
 	name = JOB_TITLE_RU_QUARTERMASTER
@@ -62,6 +63,7 @@
 	exp_requirements = 600
 	exp_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_CREW
+	discount_skill_category = list(/datum/skill/general)
 
 /datum/job/supply/cargo_tech
 	title = JOB_TITLE_CARGOTECH
@@ -115,6 +117,7 @@
 		/datum/skill/combat/fists = SKILL_LEVEL_BEGINNER,
 		/datum/skill/service/mining = SKILL_LEVEL_ADVANCED,
 	)
+	discount_skill_category = list(/datum/skill/combat, /datum/skill/service/mining, /datum/skill/general/carrying)
 
 /datum/outfit/job/mining
 	name = JOB_TITLE_RU_MINER
@@ -180,6 +183,7 @@
 	exp_type = EXP_TYPE_MEDICAL
 	skill_levels = list(
 		/datum/skill/general/carrying = SKILL_LEVEL_BASIC,
+		/datum/skill/general/mech_drive = SKILL_LEVEL_BEGINNER,
 		/datum/skill/general/mod_use = SKILL_LEVEL_BEGINNER,
 		/datum/skill/service/cleaning = SKILL_LEVEL_BEGINNER,
 		/datum/skill/general/cooking = SKILL_LEVEL_BEGINNER,
@@ -187,6 +191,7 @@
 		/datum/skill/medical/heal = SKILL_LEVEL_BASIC,
 		/datum/skill/medical/chemistry = SKILL_LEVEL_BEGINNER,
 	)
+	discount_skill_category = list(/datum/skill/medical, /datum/skill/general/carrying, /datum/skill/general/mod_use)
 
 /datum/outfit/job/mining_medic
 	name = JOB_TITLE_RU_MINING_MEDIC

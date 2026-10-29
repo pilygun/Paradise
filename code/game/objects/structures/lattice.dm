@@ -198,7 +198,7 @@
 	icon = 'icons/obj/smooth_structures/strong_catwalk.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	number_of_rods = 3
-	give_turf_traits = list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_TURF_IGNORE_SLOWDOWN)
+	give_turf_traits = list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_IMMERSE_STOPPED)
 
 /obj/structure/lattice/catwalk/fireproof/wirecutter_act(mob/living/user, obj/item/I)
 	to_chat(user, span_notice("Вы начали срезать усиленные прутья, это займёт некоторое время..."))
@@ -209,12 +209,19 @@
 	new /obj/item/stack/rods/fireproof(get_turf(src), 3)
 	deconstruct()
 
+/obj/structure/lattice/catwalk/fireproof/swarmer_catwalk
+	name = "swarmer catwalk"
+	desc = "Сетчатая конструкция, напоминающая мостик, создаваемая \"Свармерами\" для перемещения по опасной местности."
+	icon = 'icons/obj/smooth_structures/swarmer_catwalk.dmi'
+	base_icon_state = "swarmer_catwalk"
+	icon_state = "swarmer_catwalk-0"
+
 /obj/structure/lattice/catwalk/mapping
 	name = "reinforced catwalk"
 	desc = "A heavily reinforced catwalk used to build bridges in hostile environments. It doesn't look like anything could make this budge."
 	resistance_flags = INDESTRUCTIBLE
 	icon = 'icons/obj/smooth_structures/strong_catwalk.dmi'
-	give_turf_traits = list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_TURF_IGNORE_SLOWDOWN)
+	give_turf_traits = list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_IMMERSE_STOPPED)
 
 /obj/structure/lattice/catwalk/mapping/deconstruction_hints(mob/user)
 	return

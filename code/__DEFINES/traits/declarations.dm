@@ -1,13 +1,15 @@
 // This file contains all of the "static" define strings that tie to a trait.
 // Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
 
-// atom traits
+// MARK: atom traits
 /// Trait used to prevent an atom from component radiation emission (see radioactivity.dm)
 #define TRAIT_BLOCK_RADIATION "block_radiation"
 /// Is this atom being actively shocked? Used to prevent repeated shocks.
 #define TRAIT_BEING_SHOCKED "being_shocked" // Used together with WAS_SHOCKED instead of flag SHOCKED_2 from the Official Paradise.
 /// Trait that determines, if object under floor.
 #define TRAIT_UNDERFLOOR "underfloor"
+/// Machinery can accept a logistics interface board when its panel is open.
+#define TRAIT_LOGISTICS_COMPATIBLE "logistics_compatible"
 
 /// Weather immunities, also protect mobs inside them.
 #define TRAIT_LAVA_IMMUNE "lava_immune" //Used by lava turfs and The Floor Is Lava.
@@ -18,7 +20,7 @@
 #define TRAIT_BLOBSTORM_IMMUNE "blobstorm_immune"
 #define TRAIT_WEATHER_IMMUNE "weather_immune" //Immune to ALL weather effects.
 
-// atom/movable traits
+// MARK: atom/movable traits
 /// Buckling yourself to objects with this trait won't immobilize you
 #define TRAIT_NO_IMMOBILIZE "no_immobilize"
 ///Chasms will be safe to cross if there is something with this trait on it
@@ -32,7 +34,7 @@
 
 #define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
 
-// turf traits
+// MARK: turf traits
 /// Prevent mobs on the turf from being affected by anything below that turf, such as a pulse demon going under it. Added by a /obj/structure with creates_cover set to TRUE
 #define TRAIT_TURF_COVERED "turf_covered"
 ///Turf slowdown will be ignored when this trait is added to a turf.
@@ -46,7 +48,7 @@
 ///Lava will be safe to cross while it has this trait.
 #define TRAIT_LAVA_STOPPED "lava_stopped"
 
-// mob traits
+// MARK: mob traits
 #define TRAIT_GODMODE "godmode"
 #define TRAIT_PACIFISM "pacifism"
 #define TRAIT_NO_DEATH "nodeath"
@@ -58,7 +60,12 @@
 #define TRAIT_MUTE "mute"
 #define TRAIT_DEAF "deaf"
 #define TRAIT_SECDEATH "secdeath"
+/// Immune to hallucinations entirely.
+#define TRAIT_HALLUCINATION_IMMUNE "hallucination_immune"
+/// Immune to madness-based hallucinations (used by hallucination_pulse / visible_hallucination_pulse).
+#define TRAIT_MADNESS_IMMUNE "madness_immune"
 #define TRAIT_AI_UNTRACKABLE "AI_untrackable"
+#define TRAIT_NINJA_INVISIBILITY "ninja_invisibility"
 /// Does nothing on its own, applied via status effect.
 #define TRAIT_STASIS "in_stasis"
 /// Makes the owner appear as dead to most forms of medical examination
@@ -118,6 +125,7 @@
 /// "Magic" trait that blocks the mob from moving or interacting with anything. Used for transient stuff like mob transformations or incorporality in special cases.
 /// Will block movement, `Life()` (!!!), and other stuff based on the mob.
 #define TRAIT_NO_TRANSFORM "block_transformations"
+
 /// This mob heals from ash tendril
 #define TRAIT_HEALS_FROM_ASH_TENDRIL "heals_from_ash_tendril"
 /// This mob heals from carp rifts.
@@ -132,6 +140,8 @@
 #define TRAIT_HEALS_FROM_BINGLE_HOLES "heals_from_bingle_holes"
 #define TRAIT_CULT_VEIL_SIGHT "cult_veil_sight"
 #define TRAIT_CULT_CONCEALED "cult_concealed"
+/// This mob heals from swarmer cores.
+#define TRAIT_HEALS_FROM_SWARMER_CORES "heals_from_swarmer_cores"
 
 #define TRAIT_LASEREYES "laser_eyes"	//traits that should be properly converted to genetic mutations one day
 /// Forces the user to stay unconscious.
@@ -217,7 +227,7 @@
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
 
-//***** ITEM TRAITS *****//
+// MARK: item traits
 #define TRAIT_CMAGGED "cmagged"
 /// Trait to toggle Inugami Gloves built-in defibrillator mode
 #define TRAIT_DEFIB_BLOCKED "defib_blocked"
@@ -262,7 +272,7 @@
 /// Disables the floating animation. See above.
 #define TRAIT_NO_FLOATING_ANIM "no-floating-animation"
 
-// old mutation traits
+// MARK: old mutation traits
 #define	TRAIT_TELEKINESIS "telekinesis"
 #define TRAIT_RESIST_COLD "cold_resistance"
 #define TRAIT_RESIST_HEAT "heat_resistance"
@@ -286,7 +296,7 @@
 #define TRAIT_COLORBLIND "colorblind"
 #define TRAIT_WEAK_EARS "weak_ears"
 
-// old species traits
+// MARK: old species traits
 /// This human mob doesn't bleed
 #define TRAIT_NO_BLOOD "no_blood"
 /// This human mob will only regenerate blood through the transfusion
@@ -413,6 +423,8 @@
 /// Owner mob sometimes will headbutts airlocks as if it had 60+ braindamage.
 #define TRAIT_AIRLOCK_HIT "airlock_hit"
 
+/// If a mob is grasped with force grab
+#define TRAIT_FORCE_GRASPED "force_grasped"
 
 /// Anti stun reagent in blood
 #define TRAIT_ANTI_STUN_REAGENT "anti_stun_reagent"
@@ -457,13 +469,19 @@
 
 #define TRAIT_CLEAVE_BLOCKED "cleave_blocked"
 
+/// Block any stamina regeneration for mob
+#define TRAIT_BLOCK_STAMINA_REGEN "block_stamina_regen"
+
+/// Block reagent metabolization for mob
+#define TRAIT_BLOCK_METABOLIZE "block_metabolize"
+
 #define TRAIT_PRESSURE_VISION "pressure_vision"
 
 /// GLOB trait, applied whenever something in the world wants to use the distortion plane
 /// Distortion is an expensive effect, so it's worthwhile to keep it off until we care
 #define TRAIT_DISTORTION_IN_USE(z_layer) "distortion_in_use_#[z_layer]"
 
-/// Traits given by station traits
+// MARK: Station Traits
 #define STATION_TRAIT_CARP_INFESTATION "station_trait_carp_infestation"
 #define STATION_TRAIT_LATE_ARRIVALS "station_trait_late_arrivals"
 #define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
@@ -474,6 +492,9 @@
 #define STATION_TRAIT_POST_WAR_TRASH "station_trait_post_war_trash"
 #define STATION_TRAIT_CRAMPED_INTERNALS "station_trait_cramped_internals"
 #define STATION_TRAIT_LOOTED_ARMORY "station_trait_looted_armory"
+#define STATION_TRAIT_HITSCAN_ARMORY "station_trait_hitscan_armory"
+#define STATION_TRAIT_ACCUMULATOR_RIFLE_ARMORY "station_trait_accumulator_rifle_armory"
+#define STATION_TRAIT_AUTOMATIC_LASER_ARMORY "station_trait_automatic_laser_armory"
 #define STATION_TRAIT_SPIKED_DRINKS "station_trait_spiked_drinks"
 #define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
 #define STATION_TRAIT_MIMANIUM_SHIPMENTS "station_trait_mimanium_shipments"
@@ -489,7 +510,7 @@
 #define STATION_TRAIT_GREEN_ENERGY "station_trait_green_energy"
 #define STATION_TRAIT_OUTDATED_HARDSUITS "station_trait_outdated_hardsuits"
 
-// Radiation defines
+// MARK: Radiation
 /// Marks that this object is irradiated
 #define TRAIT_IRRADIATED "irradiated"
 /// Immune to being irradiated
@@ -504,7 +525,7 @@
 /// Basically, without this, COMSIG_IN_RANGE_OF_IRRADIATION won't fire once the object is irradiated.
 #define TRAIT_BYPASS_EARLY_IRRADIATED_CHECK "radiation_bypass_early_irradiated_check"
 
-// METABOLISMS
+// MARK: Metabolism
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
 // example. Through years of training/abuse, their livers have taken
@@ -540,7 +561,7 @@
 /// eignore blindness or blurriness or nearsightedness
 #define TRAIT_SIGHT_BYPASS "perfect_sight"
 
-// Hud traits
+// MARK: Hud traits
 /// This hud is owned by a client with an open escape menu
 #define TRAIT_ESCAPE_MENU_OPEN "escape_menu_open"
 /// This hud has parallax displayed on it
@@ -561,6 +582,19 @@
 
 /// An item is ALWAYS considered baseline reachable and will pipe into CanBeReached().
 #define TRAIT_SKIP_BASIC_REACH_CHECK "skip_basic_reach_check"
+
+/// The mob has an active mime vow of silence, and thus is unable to speak and has other mime things going on
+#define TRAIT_MIMING "miming"
+
+/// This atom can have spells cast from it if a mob is within it
+/// This means the "caster" of the spell is changed to the mob's loc
+/// Note this doesn't mean all spells are guaranteed to work or the mob is guaranteed to cast
+#define TRAIT_CASTABLE_LOC "castable_loc"
+
+/// Needs above trait to work.
+/// This trait makes it so that any cast spells will attempt to transfer to the location's location.
+/// For example, a heretic inside the haunted blade's spells would emanate from the mob wielding the sword.
+#define TRAIT_SPELLS_TRANSFER_TO_LOC "spells_transfer_to_loc"
 
 #define TRAIT_GUN_BURST_FIRING "burst_firing"
 
@@ -592,6 +626,8 @@
 #define TRAIT_DISCO_DANCER "disco_dancer"
 
 #define TRAIT_GIVE_READY "give_ready"
+
+#define TRAIT_NO_WIZARD_CLOTHES "no_wizard_clothes"
 
 /// Mob has fov applied to it
 #define TRAIT_FOV_APPLIED "fov_applied"
@@ -639,3 +675,29 @@
 #define TRAIT_ITEM_ACTIVE "item_active"
 
 #define TRAIT_HAS_ANTAG_SKILLS "has_antag_skills"
+
+/// A general trait for tracking whether a zombie owned the organ or limb
+#define TRAIT_I_WANT_BRAINS_ORGAN "zombie_organ"
+
+#define TRAIT_PLAGUE_ZOMBIE "plague_zombie" // For checking if this is a wizard plague zombie
+
+#define TRAIT_ATTACK_ON_THROW_IMPACT "attack_on_throw_impact"
+
+#define TRAIT_NECROMANT_CURSED "necromant_cursed"
+
+#define TRAIT_I_WANT_BRAINS "mob_zombie" // A general trait for tracking if the mob is a zombie.
+#define TRAIT_NON_INFECTIOUS_ZOMBIE "non_infectious_zombie" // A trait for checking if a zombie shouldn't be able to infect other people
+#define TRAIT_NPC_ZOMBIE "npc_zombie" // A trait for checking if a zombie should act like an NPC and attack
+#define TRAIT_ABSTRACT_HANDS "abstract_hands" // Mobs with this trait can only pick up abstract items.
+#define TRAIT_LANGUAGE_LOCKED "language_locked" // cant add/remove languages until removed (excludes babel because fuck everything i guess)
+/// The mob is holy and resistance to cult magic
+#define TRAIT_HOLY "holy"
+/// This mob is antimagic, and immune to spells / cannot cast spells
+#define TRAIT_ANTIMAGIC "anti_magic"
+/// This allows a person who has antimagic to cast spells without getting blocked
+#define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
+/// This mob recently blocked magic with some form of antimagic
+#define TRAIT_RECENTLY_BLOCKED_MAGIC "recently_blocked_magic"
+
+/// Trait that allows an item to perform holy rites akin to a nullrod
+#define TRAIT_NULLROD_ITEM "nullrod_item"

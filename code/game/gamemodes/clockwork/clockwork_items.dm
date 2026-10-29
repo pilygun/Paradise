@@ -130,7 +130,7 @@
 			visible_message(span_warning("[user]'s [src] sparks for a moment with bright light!"))
 			user.mob_light(LIGHT_COLOR_HOLY_MAGIC, 3, duration = 2) //No questions
 
-			if(living.null_rod_check())
+			if(living.can_block_magic())
 				visible_message(span_warning("[target]'s holy weapon absorbs the light!"))
 				deplete_spell()
 				return
@@ -153,7 +153,7 @@
 		if(KNOCK_SPELL)
 			if(!proximity_flag) //magical key only works if you're close enough
 				return
-			if(istype(target, /obj/machinery/door))
+			if(is_door(target))
 				var/obj/machinery/door/door = target
 				if(istype(door, /obj/machinery/door/airlock/hatch/gamma))
 					return
@@ -165,7 +165,7 @@
 				deplete_spell()
 			else if(iscloset(target))
 				var/obj/structure/closet/closet = target
-				if(istype(closet, /obj/structure/closet/secure_closet))
+				if(is_secure_closet(closet))
 					var/obj/structure/closet/secure_closet/SC = closet
 					SC.locked = FALSE
 				playsound(get_turf(usr), 'sound/magic/knock.ogg', 20, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -283,7 +283,7 @@
 			if(!iscarbon(target))
 				return
 			var/mob/living/carbon/carbon = target
-			if(carbon.mind?.isholy)
+			if(carbon.mind && HAS_MIND_TRAIT(carbon, TRAIT_HOLY))
 				to_chat(carbon, span_danger("You feel as foreigner thoughts tries to pierce your mind..."))
 				deplete_spell()
 				return
@@ -344,7 +344,7 @@
 			if(!iscarbon(target))
 				return
 			var/mob/living/carbon/carbon = target
-			if(carbon.mind?.isholy)
+			if(carbon.mind && HAS_MIND_TRAIT(carbon, TRAIT_HOLY))
 				to_chat(carbon, span_danger("You feel as foreigner thoughts tries to pierce your mind..."))
 				deplete_spell()
 				return
@@ -448,9 +448,9 @@
 		if(CRUSH_SPELL)
 			if(ishuman(living))
 				var/mob/living/carbon/human/human = living
-				var/obj/item/rod = human.null_rod_check()
-				if(rod)
-					human.visible_message(span_danger("[human]'s [rod] shines as it deflects magic from [user]!"))
+				var/atom/antimagic_source = human.can_block_magic_and_get_source()
+				if(antimagic_source)
+					human.visible_message(span_danger("[antimagic_source] shines as it deflects magic from [user]!"))
 					deplete_spell()
 					return
 				var/obj/item/organ/external/BP = pick(human.bodyparts)
@@ -608,7 +608,7 @@
 	enchants = GLOB.shield_spells
 
 /obj/item/shield/clock_buckler/add_parry_component()
-	AddComponent(/datum/component/parry, _stamina_constant = 2, _stamina_coefficient = 0.4, _parryable_attack_types = ALL_ATTACK_TYPES)
+	AddComponent(/datum/component/parry, _stamina_constant = 2, _stamina_coefficient = 0.4, _parry_time_out_time = PARRY_SHIELD_TIMEOUT, _parryable_attack_types = ALL_ATTACK_TYPES)
 
 /obj/item/shield/clock_buckler/update_overlays()
 	. = ..()
@@ -854,6 +854,11 @@
 	normal_armor = armor //initialize, so it will be easier to change armors stats
 	harden_armor = getArmor(arglist(harden_armor))
 
+/obj/item/clothing/suit/armor/clockwork/Destroy()
+	normal_armor = null
+	harden_armor = null
+	return ..()
+
 /obj/item/clothing/suit/armor/clockwork/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
 	if(enchant_type == ABSORB_SPELL && isclocker(owner))
 		owner.visible_message(span_danger("[attack_text] is absorbed by [src] sparks!"))
@@ -865,10 +870,10 @@
 
 /obj/item/clothing/suit/armor/clockwork/IsReflect(def_zone)
 	if(!ishuman(loc))
-		return FALSE
+		return REFLECT_NOTHING
 	var/mob/living/carbon/human/owner = loc
 	if(owner.wear_suit != src)
-		return FALSE
+		return REFLECT_NOTHING
 	if(enchant_type == REFLECT_SPELL && isclocker(owner))
 		playsound(loc, "sparks", 100, TRUE)
 		new /obj/effect/temp_visual/ratvar/sparks(get_turf(owner))
@@ -877,8 +882,8 @@
 			deplete_spell()
 		else
 			reflect_uses--
-		return TRUE
-	return FALSE
+		return REFLECT_NORMAL
+	return REFLECT_NOTHING
 
 /obj/item/clothing/suit/armor/clockwork/attack_self(mob/user)
 	. = ..()
@@ -999,7 +1004,7 @@
 		return
 	if(enchant_type == STUNHAND_SPELL && isliving(A))
 		var/mob/living/living = A
-		if(living.null_rod_check())
+		if(living.can_block_magic())
 			src.visible_message(span_warning("[living]'s holy weapon absorbs the light!"))
 			deplete_spell()
 			return
@@ -1220,9 +1225,7 @@
 		apc = loc
 	else
 		stack_trace("Invalid location for Integration cog")
-
-/obj/machinery/integration_cog/emp_act(severity)
-	return
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 
 /obj/machinery/integration_cog/process(seconds_per_tick)
 	if(apc.cell?.charge > 0 && apc.operating)
@@ -1269,10 +1272,9 @@
 	var/obj/item/borg/upgrade/vtec/vtec_upgrade = locate() in robot.upgrades
 	if(!vtec_upgrade)
 		vtec_upgrade = new
-		if(vtec_upgrade.action(robot))
-			robot.install_upgrade(vtec_upgrade)
-		else
+		if(!robot.install_upgrade(vtec_upgrade, user))
 			qdel(vtec_upgrade)
+			return .
 
 // A drone shell. Just click on it and it will boot up itself!
 /obj/item/clockwork/cogscarab
@@ -1582,10 +1584,10 @@
 	. = ..()
 	playsound(src, soundin = 'sound/magic/clockwork/heart_beat.ogg', vol = 100, vary = FALSE, extrarange = radius, pressure_affected = FALSE, falloff_distance = radius)
 
-/obj/effect/temp_visual/ratvar/reconstruct/heart_pulse/Initialize(mapload)
-	radius = GLOB.heart.pulse_range
-	sleep_time = 1 * GLOB.heart.pulse_range
-	duration = 1 * GLOB.heart.pulse_range
+/obj/effect/temp_visual/ratvar/reconstruct/heart_pulse/Initialize(mapload, pulse_range)
+	radius = pulse_range
+	sleep_time = 1 * pulse_range
+	duration = 1 * pulse_range
 	. = ..()
 
 /obj/effect/temp_visual/ratvar/reconstruct/heart_pulse/heal

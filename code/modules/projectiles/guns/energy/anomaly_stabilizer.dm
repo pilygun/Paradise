@@ -13,6 +13,7 @@
 	cell_type = /obj/item/stock_parts/cell/high
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	weapon_weight = WEAPON_LIGHT
 	var/cur_ammo_type = /obj/item/ammo_casing/energy/anomaly/stabilizer
 	/// Cores inserted into this anomaly stabilizer.
 	var/list/obj/item/assembly/signaler/core/cores = list()
@@ -231,7 +232,7 @@
 	. = ..()
 	var/shots = round(cell.charge / get_req_ecost())
 	. += span_notice("Индикатор заряда сообщает: [cell.charge]\\[cell.maxcharge].")
-	. += span_notice("Этого хватит на [shots] [declension_ru(shots, "выстрел", "выстрела", "выстрелов")] и изменение стабильности аномалии на [shots * stability_delta] [declension_ru(shots * stability_delta, "единицу", "единицы", "единиц")] при текущих настройках.")
+	. += span_notice("Этого хватит на [shots] выстрел[DECL_0_A_OV(shots)] и изменение стабильности аномалии на [shots * stability_delta] единиц[DECL_U_Y_0(shots * stability_delta)] при текущих настройках.")
 
 /obj/item/gun/energy/anomaly_stabilizer/proc/get_req_ecost()
 	var/cost = /obj/item/ammo_casing/energy/anomaly::e_cost

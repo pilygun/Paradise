@@ -30,6 +30,7 @@
 	UpdateAppearance()
 	GLOB.human_list += src
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
+	GLOB.interaction_panel.register_mob(src)
 
 /mob/living/carbon/human/Destroy()
 	bleeding_bodyparts.Cut()
@@ -38,6 +39,7 @@
 	SSmobs.cubemonkeys -= src
 	GLOB.human_list -= src
 	SEND_SIGNAL(src, COMSIG_HUMAN_DESTROYED)
+	GLOB.interaction_panel.unregister_mob(src)
 	return ..()
 
 /// This proc is for holding effects applied when a mob is missing certain organs
@@ -487,7 +489,7 @@
 		return .
 	if(!(flags & SHOCK_ILLUSION))
 		if(shock_damage * siemens_coeff >= 5)
-			INVOKE_ASYNC(src, PROC_REF(forcesay))
+			INVOKE_ASYNC(src, PROC_REF(force_say))
 		if(undergoing_cardiac_arrest() && (shock_damage * siemens_coeff >= 1) && prob(25))
 			if(set_heartattack(FALSE) && stat == CONSCIOUS)
 				to_chat(src, span_warning("Вы чувствуете, как ваше сердце вновь бьётся!"))
@@ -580,7 +582,7 @@
 			if(prob(bodypart.fracture.reattach_chance)) //success
 				bodypart.fracture = FRACTURE_TYPE_CLOSED
 				return
-			bodypart.owner.custom_pain("Ваш[GEND_A_E_I(bodypart)] [bodypart.declent_ru(NOMINATIVE)] горит огнем!")
+			bodypart.owner.custom_pain("Ваш[GEND_A_E_I(bodypart)] [bodypart.declent_ru_base(NOMINATIVE)] горит огнем!")
 			bodypart.external_receive_damage(brute = bodypart.fracture.reattach_fail_damage)
 			bodypart.bleeding_amount = min(bodypart.bleeding_amount, bodypart.max_bleeding_amount)
 			return
@@ -813,21 +815,15 @@
 		return .
 	if(HAS_TRAIT(src, TRAIT_DEAF))
 		return HEARING_PROTECTION_TOTAL
-	if(l_ear)
-		if(l_ear.item_flags & BANGPROTECT_TOTAL)
-			return HEARING_PROTECTION_TOTAL
-		if(l_ear.item_flags & BANGPROTECT_MINOR)
-			return HEARING_PROTECTION_MINOR
-	if(r_ear)
-		if(r_ear.item_flags & BANGPROTECT_TOTAL)
-			return HEARING_PROTECTION_TOTAL
-		if(r_ear.item_flags & BANGPROTECT_MINOR)
-			return HEARING_PROTECTION_MINOR
-	if(head)
-		if(head.item_flags & BANGPROTECT_TOTAL)
-			return HEARING_PROTECTION_TOTAL
-		if(head.item_flags & BANGPROTECT_MINOR)
-			return HEARING_PROTECTION_MINOR
+
+	if(!(l_ear || r_ear || head))
+		return
+
+	if((head && head?.item_flags & HEARING_PROTECTION_TOTAL) || (l_ear && l_ear?.item_flags & HEARING_PROTECTION_TOTAL) || (r_ear && r_ear?.item_flags & HEARING_PROTECTION_TOTAL))
+		return HEARING_PROTECTION_TOTAL
+
+	if((head && head?.item_flags & BANGPROTECT_MINOR) || (l_ear && l_ear?.item_flags & BANGPROTECT_MINOR) || (r_ear && r_ear?.item_flags & BANGPROTECT_MINOR))
+		return BANGPROTECT_MINOR
 
 /mob/living/carbon/human/abiotic(full_body = FALSE)
 	if(full_body && ((src.l_hand && !(src.l_hand.item_flags & ABSTRACT)) || (src.r_hand && !(src.r_hand.item_flags & ABSTRACT)) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.l_ear || src.r_ear || src.gloves)))
@@ -954,31 +950,6 @@
 	recalculate_limbs_status()
 	return TRUE
 
-/mob/living/carbon/human/revive()
-	//Fix up all organs and replace lost ones.
-	restore_all_organs() //Rejuvenate and reset all existing organs.
-	check_and_regenerate_organs() //Regenerate limbs and organs only if they're really missing.
-	surgeries.Cut() //End all surgeries.
-
-	var/update_appearance = FALSE
-	if(remove_skeleton(update_appearance = FALSE))
-		update_appearance = TRUE
-	if(cure_husk(update_appearance = FALSE))
-		update_appearance = TRUE
-	if(update_appearance)
-		UpdateAppearance()
-	revive_no_clone_removal()
-
-	if(!client || !key) //Don't boot out anyone already in the mob.
-		for(var/obj/item/organ/internal/brain/H in world)
-			if(H.brainmob)
-				if(H.brainmob.real_name == src.real_name)
-					if(H.brainmob.mind)
-						H.brainmob.mind.transfer_to(src)
-						qdel(H)
-
-	..()
-
 /mob/living/carbon/human/proc/is_lung_ruptured()
 	var/obj/item/organ/internal/lungs/L = get_int_organ(/obj/item/organ/internal/lungs)
 	if(!L)
@@ -1008,10 +979,7 @@
 		dna.real_name = name
 	return name
 
-/mob/living/carbon/human/verb/check_pulse()
-	set name = "Проверить пульс"
-	set desc = "Посчитать частоту сердечного ритма гуманоида."
-	set src in view(1)
+GAME_VERB_SRC(/mob/living/carbon/human, check_pulse, view(1), "Проверить пульс", VERB_CATEGORY_HIDDEN)
 	var/self = 0
 
 	if(!isliving(usr) || usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
@@ -1047,18 +1015,6 @@
 	else
 		to_chat(usr, span_notice("[self ? "Ваш пульс" : "Пульс [declent_ru(ACCUSATIVE)]"] – [src.get_pulse(GETPULSE_HAND)]."))
 		balloon_alert(usr, "пульс замерен")
-
-/mob/living/carbon/human/verb/begin_strip()
-	set name = "Обыскать"
-	set desc = "Обыскать цель."
-	set src in view(1)
-
-	if(!isliving(usr) || usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
-		return
-
-	if(usr == src)
-		check_self_for_injuries()
-		return
 
 /**
  * Set up DNA and species.
@@ -1336,6 +1292,9 @@
 	return species_check
 
 /mob/living/carbon/human/get_default_language()
+	if(HAS_TRAIT(src, TRAIT_I_WANT_BRAINS)) // you're not allowed to speak common
+		return GLOB.all_languages[LANGUAGE_ZOMBIE]
+
 	if(default_language)
 		return default_language
 
@@ -1343,10 +1302,7 @@
 		return null
 	return dna.species.default_language ? GLOB.all_languages[dna.species.default_language] : null
 
-/mob/living/carbon/human/proc/bloody_doodle()
-	set category = VERB_CATEGORY_IC
-	set name = "Рисовать кровью"
-	set desc = "Используйте кровь на ваших руках, чтобы рисовать ею на полу и на стенах."
+GAME_VERB_PROC_DESC(/mob/living/carbon/human, bloody_doodle, "Рисовать кровью", "Используйте кровь на ваших руках, чтобы рисовать ею на полу и на стенах.", VERB_CATEGORY_IC)
 
 	if(usr != src)
 		return 0 //something is terribly wrong
@@ -1354,7 +1310,7 @@
 		balloon_alert(src, "невозможно в данный момент!")
 		return
 	if(!bloody_hands)
-		remove_verb(src, /mob/living/carbon/human/proc/bloody_doodle)
+		UNASSIGN_GAME_VERB(src, /mob/living/carbon/human, bloody_doodle)
 
 	if(gloves)
 		balloon_alert(src, "перчатки мешают!")
@@ -1384,7 +1340,7 @@
 	/// tweeter style
 	var/max_length = bloody_hands * 30
 
-	var/message = tgui_input_text(src, "Напишите сообщение. Максимальная длина — [max_length] символ[DECL_CREDIT(max_length)].", "Письмо кровью", max_length = max_length)
+	var/message = tgui_input_text(src, "Напишите сообщение. Максимальная длина — [max_length] символ[DECL_0_A_OV(max_length)].", "Письмо кровью", max_length = max_length)
 	if(origin != loc)
 		balloon_alert(src, "не двигайтесь во время письма!")
 		return
@@ -1422,7 +1378,7 @@
 	var/obj/item/organ/external/head/head_organ = get_organ(BODY_ZONE_HEAD)
 	if(!istype(head_organ))
 		return
-	var/datum/sprite_accessory/hair/hair_style = GLOB.hair_styles_full_list[head_organ.h_style]
+	var/datum/sprite_accessory/hair/hair_style = SSaccessories.hairstyles_list[head_organ.h_style]
 	var/mutable_appearance/MA
 	if(hair_style)
 		var/icon/hair = new /icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
@@ -1662,12 +1618,12 @@ Eyes need to have significantly high darksight to shine unless the mob has the X
 
 /mob/living/carbon/human/forceFed(obj/item/reagent_containers/food/toEat, mob/user, fullness)
 	if(!istype(toEat, /obj/item/reagent_containers/food/pill/patch) && !check_has_mouth())
-		if(!((istype(toEat, /obj/item/reagent_containers/food/drinks) && (ismachineperson(src)))))
+		if(!((istype(toEat, /obj/item/reagent_containers/cup/glass) && (ismachineperson(src)))))
 			balloon_alert(user, "у цели нет рта!")
 			return FALSE
 	return ..()
 
-/mob/living/carbon/human/selfDrink(obj/item/reagent_containers/food/drinks/toDrink)
+/mob/living/carbon/human/selfDrink(obj/item/reagent_containers/cup/glass/toDrink)
 	if(!check_has_mouth())
 		if(!ismachineperson(src))
 			balloon_alert(src, "у вас нет рта!")
@@ -1900,7 +1856,7 @@ Eyes need to have significantly high darksight to shine unless the mob has the X
 	brains.original_body = WEAKREF(self_chest)
 
 /mob/living/carbon/human/is_literate()
-	return getBrainLoss() < 100
+	return check_brain_for_complex_interactions()
 
 /mob/living/carbon/human/fakefire()
 	ADD_TRAIT(src, TRAIT_FAKE_FIRE, FAKEFIRE_TRAIT)
@@ -1947,18 +1903,10 @@ Eyes need to have significantly high darksight to shine unless the mob has the X
 		arm.attack_self(src)
 	return ..()
 
-/mob/living/carbon/human/verb/pose()
-	set name = "Задать позу"
-	set desc = "Устанавливает короткое описание отображаемое при омотре вас."
-	set category = VERB_CATEGORY_IC
-
+GAME_VERB_DESC(/mob/living/carbon/human, pose, "Задать позу", "Устанавливает короткое описание отображаемое при омотре вас.", VERB_CATEGORY_IC)
 	pose = tgui_input_text(usr, "Это [declent_ru(NOMINATIVE)]. [capitalize(GEND_HE_SHE(src))]...", "Выбор позы", pose)
 
-/mob/living/carbon/human/verb/set_flavor()
-	set name = "Описание внешности"
-	set desc = "Устанавливает подробное описание внешности вашего персонажа."
-	set category = VERB_CATEGORY_IC
-
+GAME_VERB_DESC(/mob/living/carbon/human, set_flavor, "Описание внешности", "Устанавливает подробное описание внешности вашего персонажа.", VERB_CATEGORY_IC)
 	update_flavor_text()
 
 /mob/living/carbon/human/harvest(mob/living/user)
@@ -2206,3 +2154,9 @@ Eyes need to have significantly high darksight to shine unless the mob has the X
 			[wear_mask?.icon] [wear_mask?.icon_state] \
 			[back?.icon] [back?.icon_state] \
 			[belt?.icon] [belt?.icon_state]"
+
+/mob/living/carbon/human/proc/get_unarmed_attack()
+	var/datum/antagonist/zombie/zombie = mind?.has_antag_datum(/datum/antagonist/zombie)
+	if(!istype(zombie))
+		return dna.species.unarmed
+	return zombie.claw_attack

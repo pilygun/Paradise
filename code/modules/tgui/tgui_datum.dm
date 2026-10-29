@@ -83,7 +83,7 @@
  *
  * return bool - TRUE if a new pooled window is opened, FALSE in all other situations including if a new pooled window didn't open because one already exists.
  */
-/datum/tgui/proc/open()
+/datum/tgui/proc/open(datum/tgui_window/custom_window = null)
 	if(!user.client)
 		return FALSE
 	if(window)
@@ -91,7 +91,7 @@
 	process_status()
 	if(status < UI_UPDATE)
 		return FALSE
-	window = SStgui.request_pooled_window(user)
+	window = custom_window || SStgui.request_pooled_window(user)
 	if(!window)
 		return FALSE
 	opened_at = world.time
@@ -115,6 +115,8 @@
 /datum/tgui/proc/send_assets()
 	var/flushqueue = window.send_asset(get_asset_datum(
 		/datum/asset/simple/namespaced/fontawesome))
+	flushqueue |= window.send_asset(get_asset_datum(
+		/datum/asset/simple/namespaced/tgfont))
 	flushqueue |= window.send_asset(get_asset_datum(
 		/datum/asset/json/icon_ref_map))
 	for(var/datum/asset/asset in src_object.ui_assets(user))

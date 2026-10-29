@@ -65,7 +65,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/danger_point = 60
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_EMERGENCY]
 	var/emergency_point = 75
-	var/emergency_channel = null // Need null to actually broadcast, lol.
+	var/emergency_channel = PUB_FREQ // Need null to actually broadcast, lol.
 	///The point at which we delam [SUPERMATTER_STATUS_DELAMINATING].
 	var/explosion_point = 100
 	///Are we exploding?
@@ -1150,7 +1150,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /// Adds the hat flavor text when examined
 ///obj/machinery/power/supermatter_crystal/proc/holiday_hat_examine(atom/source, mob/user, list/examine_list)
 //	SIGNAL_HANDLER
-//	examine_list += span_info("There's a santa hat placed atop it. How it got there without being dusted is a mystery.")
+//	examine_list += span_notice("There's a santa hat placed atop it. How it got there without being dusted is a mystery.")
 
 #undef BIKE
 #undef COIL

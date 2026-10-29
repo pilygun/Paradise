@@ -1,5 +1,5 @@
 /mob/living/carbon/human/Life(seconds, times_fired)
-	set invisibility = 0
+	set invisibility = FALSE
 
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
@@ -852,7 +852,7 @@
 	if(HAS_TRAIT(src, TRAIT_NO_DECAY))
 		return
 
-	if(reagents.has_reagent("formaldehyde")) //embalming fluid stops decay
+	if(reagents?.has_reagent("formaldehyde")) //embalming fluid stops decay
 		return
 
 	if(decaytime <= 6000) //10 minutes for decaylevel1 -- stinky

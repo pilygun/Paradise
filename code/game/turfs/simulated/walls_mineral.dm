@@ -128,7 +128,6 @@
 	icon = 'icons/turf/walls/plasma_wall.dmi'
 	icon_state = "plasma"
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
-	thermal_conductivity = 0.04
 	base_icon_state = "plasma_wall"
 	canSmoothWith = SMOOTH_GROUP_PLASMA_WALLS
 	smoothing_groups = SMOOTH_GROUP_PLASMA_WALLS
@@ -266,7 +265,7 @@
 	icon_state = "shuttle-0"
 	base_icon_state = "shuttle"
 	explosion_block = 3
-	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD | RICOCHET_BALLISTIC
+	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD | RICOCHET_BALLISTIC | RICOCHET_SPECIAL
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	canSmoothWith = SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE + SMOOTH_GROUP_AIRLOCK

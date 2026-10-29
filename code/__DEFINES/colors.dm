@@ -339,6 +339,8 @@
 #define LIGHT_COLOR_HOLY_MAGIC "#fff743"
 /// deep crimson
 #define LIGHT_COLOR_BLOOD_MAGIC "#d00000"
+/// Dimmed yellow, leaning kaki. rgb(225, 225, 125)
+#define LIGHT_COLOR_YELLOW "#e1e17d"
 
 // These ones aren't a direct colour like the ones above, because nothing would fit
 /// Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
@@ -641,3 +643,7 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 #define COLOR_COLD_ANCIENT_ROCK "#575764"
 
 #define COLOR_DMI_MASK "#a0a0a000"
+
+
+/// Color for dead external organs/zombies
+#define	COLORTONE_DEAD_EXT_ORGAN "#0A3200"

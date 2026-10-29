@@ -1,6 +1,7 @@
 /datum/species/diona
 	name = SPECIES_DIONA
 	name_plural = "Dionaea"
+	ru_genitive = "дионы"
 	icobase = 'icons/mob/human_races/r_diona.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
 	language = LANGUAGE_DIONA
@@ -103,11 +104,9 @@
 /datum/species/diona/on_species_gain(mob/living/carbon/human/H)
 	. = ..()
 	H.gender = NEUTER
-	add_verb(H, /mob/living/carbon/human/proc/emote_creak)
 
 /datum/species/diona/on_species_loss(mob/living/carbon/human/H)
 	. = ..()
-	remove_verb(H, /mob/living/carbon/human/proc/emote_creak)
 	H.clear_alert("nolight")
 
 /datum/species/diona/handle_reagents(mob/living/carbon/human/H, datum/reagent/R)

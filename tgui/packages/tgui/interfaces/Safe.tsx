@@ -1,7 +1,7 @@
-import { resolveAsset } from '../assets';
 import { Fragment } from 'react';
+import { Box, Button, Icon, Image, Section } from 'tgui-core/components';
+import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Section, Image } from '../components';
 import { Window } from '../layouts';
 
 type SafeData = {
@@ -41,13 +41,13 @@ export const Safe = (_properties) => {
               src={resolveAsset('safe_dial.png')}
               fixBlur
               style={{
-                transform: 'rotate(-' + 3.6 * dial + 'deg)',
+                transform: `rotate(-${3.6 * dial}deg)`,
                 zIndex: 0,
               }}
             />
           )}
+          {!open && <Help />}
         </Box>
-        {!open && <Help />}
       </Window.Content>
     </Window>
   );
@@ -61,7 +61,7 @@ const Dialer = (_properties) => {
       <Button
         key={amount}
         disabled={open || (right && !locked)}
-        icon={'arrow-' + (right ? 'right' : 'left')}
+        icon={`arrow-${right ? 'right' : 'left'}`}
         iconPosition={right ? 'right' : ''}
         onClick={() =>
           act(!right ? 'turnright' : 'turnleft', {
@@ -114,7 +114,7 @@ const Contents = (_properties) => {
             }
           >
             <Image
-              src={item.sprite + '.png'}
+              src={`${item.sprite}.png`}
               verticalAlign="middle"
               ml="-6px"
               mr="0.5rem"

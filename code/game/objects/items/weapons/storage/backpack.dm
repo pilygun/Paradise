@@ -10,8 +10,7 @@
 	item_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK	//ERROOOOO
+	slot_flags = ITEM_SLOT_BACK
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 21
 	storage_slots = 21
@@ -24,6 +23,12 @@
 	equip_sound = 'sound/items/handling/equip/backpack_equip.ogg'
 	pickup_sound = 'sound/items/handling/pickup/backpack_pickup.ogg'
 	drop_sound = 'sound/items/handling/drop/backpack_drop.ogg'
+	dynamic_storage_size = TRUE
+
+/obj/item/storage/backpack/ComponentInitialize()
+	. = ..()
+	if(dynamic_storage_size)
+		AddComponent(/datum/component/differentiate_storage_size, storage_with_item_size)
 
 /obj/item/storage/backpack/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -212,7 +217,7 @@
 	new /obj/item/toy/crayon/rainbow(src)
 	new /obj/item/storage/fancy/crayons(src)
 	new /obj/item/reagent_containers/spray/waterflower(src)
-	new /obj/item/reagent_containers/food/drinks/bottle/bottleofbanana(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/bottleofbanana(src)
 	new /obj/item/instrument/bikehorn(src)
 	new /obj/item/bikehorn(src)
 	new /obj/item/clown_recorder(src)
@@ -518,10 +523,7 @@
 	resistance_flags = FIRE_PROOF
 	var/strap_side_straight = FALSE
 
-/obj/item/storage/backpack/satchel/verb/switch_strap()
-	set name = "Перекинуть ремешок"
-	set category = VERB_CATEGORY_OBJECT
-	set src in usr
+GAME_VERB_SRC(/obj/item/storage/backpack/satchel, switch_strap, usr, "Перекинуть ремешок", VERB_CATEGORY_HIDDEN)
 
 	if(usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
@@ -538,10 +540,10 @@
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
-	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 	max_combined_w_class = 15
 	level = 1
 	cant_hold = list(/obj/item/storage/backpack/satchel_flat) //muh recursive backpacks
+	dynamic_storage_size = FALSE
 
 /obj/item/storage/backpack/satchel_flat/Initialize(mapload)
 	. = ..()
@@ -706,7 +708,7 @@
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
-	new /obj/item/gun/projectile/automatic/smg/c20r(src)
+	new /obj/item/gun/projectile/automatic/smg/c20r/auto(src)
 	new /obj/item/gun_module/muzzle/suppressor(src)
 
 /obj/item/storage/backpack/duffel/syndie/bulldogbundle
@@ -735,7 +737,7 @@
 	new /obj/item/bodyanalyzer/advanced(src)
 	new /obj/item/reagent_containers/hypospray/autoinjector/nanocalcium(src)
 	new /obj/item/stack/medical/splint(src)
-	new /obj/item/reagent_containers/glass/bottle/atropine(src)
+	new /obj/item/reagent_containers/cup/bottle/atropine(src)
 
 /obj/item/storage/backpack/duffel/syndie/c4/populate_contents()
 	for(var/i in 1 to 10)
@@ -761,7 +763,7 @@
 	new /obj/item/bonegel(src)
 	new /obj/item/bonesetter(src)
 	new /obj/item/FixOVein(src)
-	new /obj/item/reagent_containers/glass/bottle/morphine(src)
+	new /obj/item/reagent_containers/cup/bottle/morphine(src)
 	new /obj/item/reagent_containers/syringe/antiviral(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)

@@ -11,7 +11,7 @@
 	belt_icon = "hypospray"
 	possible_transfer_amounts = list(1, 2, 3, 4, 5, 10, 15, 20, 25, 30)
 	resistance_flags = ACID_PROOF
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER | NO_SPLASH
 	slot_flags = ITEM_SLOT_BELT
 	custom_price = PAYCHECK_LOWER
 	var/ignore_flags = FALSE
@@ -55,10 +55,10 @@
 	var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 
 	if(safety_hypo)
-		visible_message(span_warning("[user] вкалыва[PLUR_ET_YUT(user)] [target] <b>[trans]</b> единиц[DECL_SEC_MIN(trans)] вещества \"[primary_reagent_name]\"."))
+		visible_message(span_warning("[user] вкалыва[PLUR_ET_YUT(user)] [target] <b>[trans]</b> единиц[DECL_U_Y_0(trans)] вещества \"[primary_reagent_name]\"."))
 		playsound(loc, 'sound/goonstation/items/hypo.ogg', 80)
 
-	to_chat(user, span_notice("Вы вкалываете <b>[trans]</b> единиц[DECL_SEC_MIN(trans)]. В [declent_ru(PREPOSITIONAL)] осталось ещё <b>[reagents.total_volume]</b> единиц[declension_ru(reagents.total_volume, "а", "ы", "")]."))
+	to_chat(user, span_notice("Вы вкалываете <b>[trans]</b> единиц[DECL_U_Y_0(trans)]. В [declent_ru(PREPOSITIONAL)] осталось ещё <b>[reagents.total_volume]</b> единиц[DECL_A_Y_0(reagents.total_volume)]."))
 	add_attack_logs(user, target, "Injected with [src] containing ([english_list(injected)])", reagents.harmless_helper() ? ATKLOG_ALMOSTALL : null)
 
 /obj/item/reagent_containers/hypospray/on_reagent_change()
@@ -203,7 +203,7 @@
 	name = "combat stimulant injector"
 	desc = "Модифицированный автоинъектор с воздушной иглой, используемый оперативниками поддержки для быстрого заживления ран в бою."
 	amount_per_transfer_from_this = 15
-	possible_transfer_amounts = null
+	has_variable_transfer_amount = FALSE
 	icon_state = "combat_hypo"
 	volume = 90
 	ignore_flags = 1 // So they can heal their comrades.
@@ -363,7 +363,7 @@
 	item_state = "autoinjector"
 	belt_icon = "autoinjector"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = null
+	has_variable_transfer_amount = FALSE
 	volume = 10
 	ignore_flags = TRUE //so you can medipen through hardsuits
 	container_type = DRAWABLE
@@ -459,10 +459,6 @@
 	if(loc != user)
 		return FALSE
 	return TRUE
-
-/obj/item/reagent_containers/hypospray/autoinjector/empty()
-	set hidden = TRUE
-	return
 
 /obj/item/reagent_containers/hypospray/autoinjector/attack(mob/living/carbon/target, mob/living/user, params, def_zone, skip_attack_anim = FALSE)
 	if(!reagents.total_volume || spent)
@@ -735,4 +731,73 @@
 		ACCUSATIVE = "автоинъектор (Сангвиний)",
 		INSTRUMENTAL = "автоинъектором (Сангвиний)",
 		PREPOSITIONAL = "автоинъекторе (Сангвиний)",
+	)
+
+/obj/item/reagent_containers/hypospray/autoinjector/zombiecure
+	name = "Anti-Plague Sequence Alpha autoinjector"
+	desc = "Небольшой автоинъектор, содержащий 15 единиц противовирусной сыворотки Альфа. Предотвращает заражение, лечит заражение 1-го уровня."
+	icon_state = "zombiepen"
+	amount_per_transfer_from_this = 15
+	volume = 15
+	container_type = NONE // No sucking out the reagent
+	list_reagents = list("zombiecure1" = 15)
+
+/obj/item/reagent_containers/hypospray/autoinjector/zombiecure/get_ru_names()
+	return alist(
+		NOMINATIVE = "автоинъектор (Противовирусная сыворотка Альфа)",
+		GENITIVE = "автоинъектора (Противовирусная сыворотка Альфа)",
+		DATIVE = "автоинъектору (Противовирусная сыворотка Альфа)",
+		ACCUSATIVE = "автоинъектор (Противовирусная сыворотка Альфа)",
+		INSTRUMENTAL = "автоинъектором (Противовирусная сыворотка Альфа)",
+		PREPOSITIONAL = "автоинъекторе (Противовирусная сыворотка Альфа)",
+	)
+
+/obj/item/reagent_containers/hypospray/autoinjector/zombiecure/afterattack(atom/target, mob/user, proximity_flag, list/modifiers, status)
+	. = ..()
+	if(proximity_flag)
+		playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 20, TRUE) //Sucker for sounds, also gets zombies attention.
+
+/obj/item/reagent_containers/hypospray/autoinjector/zombiecure/zombiecure2
+	name = "Anti-Plague Sequence Beta autoinjector"
+	desc = "Небольшой автоинъектор, содержащий 15 единиц противовирусной сыворотки Бета. Ослабляет зомби, лечит слабые заражения."
+	list_reagents = list("zombiecure2" = 15)
+
+/obj/item/reagent_containers/hypospray/autoinjector/zombiecure/zombiecure2/get_ru_names()
+	return alist(
+		NOMINATIVE = "автоинъектор (Противовирусная сыворотка Бета)",
+		GENITIVE = "автоинъектора (Противовирусная сыворотка Бета)",
+		DATIVE = "автоинъектору (Противовирусная сыворотка Бета)",
+		ACCUSATIVE = "автоинъектор (Противовирусная сыворотка Бета)",
+		INSTRUMENTAL = "автоинъектором (Противовирусная сыворотка Бета)",
+		PREPOSITIONAL = "автоинъекторе (Противовирусная сыворотка Бета)",
+	)
+
+/obj/item/reagent_containers/hypospray/autoinjector/zombiecure/zombiecure3
+	name = "Anti-Plague Sequence Gamma autoinjector"
+	desc = "Небольшой автоинъектор, содержащий 15 единиц противовирусной сыворотки Гамма. Снижает исцеление зомби. Лечит заражение 5-й стадии и замедляет заражение 6-й стадии."
+	list_reagents = list("zombiecure3" = 15)
+
+/obj/item/reagent_containers/hypospray/autoinjector/zombiecure/zombiecure3/get_ru_names()
+	return alist(
+		NOMINATIVE = "автоинъектор (Противовирусная сыворотка Гамма)",
+		GENITIVE = "автоинъектора (Противовирусная сыворотка Гамма)",
+		DATIVE = "автоинъектору (Противовирусная сыворотка Гамма)",
+		ACCUSATIVE = "автоинъектор (Противовирусная сыворотка Гамма)",
+		INSTRUMENTAL = "автоинъектором (Противовирусная сыворотка Гамма)",
+		PREPOSITIONAL = "автоинъекторе (Противовирусная сыворотка Гамма)",
+	)
+
+/obj/item/reagent_containers/hypospray/autoinjector/zombiecure/zombiecure4
+	name = "Anti-Plague Sequence Omega autoinjector"
+	desc = "Небольшой автоинъектор, содержащий 15 единиц противовирусной сыворотки Омега. Лечит все случаи некротизирующей чумы. Также исцеляет мёртвые конечности."
+	list_reagents = list("zombiecure4" = 15)
+
+/obj/item/reagent_containers/hypospray/autoinjector/zombiecure/zombiecure4/get_ru_names()
+	return alist(
+		NOMINATIVE = "автоинъектор (Противовирусная сыворотка Омега)",
+		GENITIVE = "автоинъектора (Противовирусная сыворотка Омега)",
+		DATIVE = "автоинъектору (Противовирусная сыворотка Омега)",
+		ACCUSATIVE = "автоинъектор (Противовирусная сыворотка Омега)",
+		INSTRUMENTAL = "автоинъектором (Противовирусная сыворотка Омега)",
+		PREPOSITIONAL = "автоинъекторе (Противовирусная сыворотка Омега)",
 	)

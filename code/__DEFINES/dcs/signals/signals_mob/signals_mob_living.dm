@@ -38,6 +38,8 @@
 #define COMSIG_LIVING_EARLY_DEATH "living_early_death"
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
+/// From /mob/living/proc/cause_hallucination(): (datum/hallucination)
+#define COMSIG_LIVING_HALLUCINATING "living_hallucinating"
 //sent from mobs when they exit their body as a ghost
 #define COMSIG_LIVING_GHOSTIZED "ghostized"
 //sent from mobs when they re-enter their body as a ghost
@@ -153,6 +155,8 @@
 
 /// Source: /mob/living/UnarmedAttack (atom/atom, proximity_flag)
 #define COMSIG_LIVING_UNARMED_ATTACK "living_unarmed_attack"
+/// Source: /mob/living/right_click_attack_chain (atom/target, list/modifiers)
+#define COMSIG_LIVING_RIGHT_CLICK_ATTACK "living_unarmed_right_click_attack"
 
 /// from /proc/healthscan(): (list/scan_results, advanced, mob/user, mode)
 /// Consumers are allowed to mutate the scan_results list to add extra information
@@ -166,13 +170,19 @@
 ///from base of /obj/item/bodypart/proc/attach_limb(): (new_limb, special) allows you to fail limb attachment
 #define COMSIG_LIVING_ATTACH_LIMB "living_attach_limb"
 	#define COMPONENT_NO_ATTACH (1<<0)
+///From /proc/wabbajack(): (randomize_type)
+#define COMSIG_LIVING_PRE_WABBAJACKED "living_mob_wabbajacked"
+	/// Return to stop the rest of the wabbajack from triggering.
+	#define STOP_WABBAJACK (1<<0)
+///From mob/living/proc/on_wabbajack(): (mob/living/new_mob)
+#define COMSIG_LIVING_ON_WABBAJACKED "living_wabbajacked"
+/// From /datum/status_effect/shapechange_mob/on_apply(): (mob/living/shape)
+#define COMSIG_LIVING_SHAPESHIFTED "living_shapeshifted"
+/// From /datum/status_effect/shapechange_mob/after_unchange(): (mob/living/caster)
+#define COMSIG_LIVING_UNSHAPESHIFTED "living_unshapeshifted"
 
 /// From /mob/living/update_offsets(animate) : (new_x, new_y, new_w, new_z, animate)
 #define COMSIG_LIVING_UPDATE_OFFSETS "living_update_offsets"
-
-///From mob/living/proc/on_wabbajack(): (mob/living/new_mob)
-#define COMSIG_LIVING_ON_WABBAJACKED "living_wabbajacked"
-
 
 /// From /mob/living/changeNext_move() : (next_move, delay)
 #define COMSIG_LIVING_CHANGENEXT_MOVE "living_changenext_move"
